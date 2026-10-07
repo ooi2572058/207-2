@@ -1,0 +1,25 @@
+<mxfile host="Electron">
+  <diagram name="ページ-1" id="5DpTDeodh8Y9dqthAYLC">
+    <mxGraphModel dx="1479" dy="819" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="odiSUF75Ki_zjxQFx_k6-5" edge="1" parent="1" source="odiSUF75Ki_zjxQFx_k6-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;" target="odiSUF75Ki_zjxQFx_k6-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="odiSUF75Ki_zjxQFx_k6-1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" value="利用者&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="30" x="60" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="odiSUF75Ki_zjxQFx_k6-4" parent="1" style="html=1;whiteSpace=wrap;" value="アカウント" vertex="1">
+          <mxGeometry height="50" width="110" x="230" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="odiSUF75Ki_zjxQFx_k6-7" edge="1" parent="1" source="odiSUF75Ki_zjxQFx_k6-6" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamondThin;endFill=0;" target="odiSUF75Ki_zjxQFx_k6-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="odiSUF75Ki_zjxQFx_k6-6" parent="1" style="html=1;whiteSpace=wrap;" value="Email&lt;br&gt;パスワード" vertex="1">
+          <mxGeometry height="50" width="110" x="230" y="220" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
