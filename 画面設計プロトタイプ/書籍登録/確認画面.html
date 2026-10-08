@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍登録（確認・同シリーズ展開表示） - しょかんくん</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- 統合されたCSSスタイル -->
+    <style>
+        @charset "UTF-8";
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --accent-color: #e74c3c;
+            --bg-light: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            border-color: #1a252f;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー / ナビゲーションバー -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <i class="fa-solid fa-book-open me-2"></i>しょかんくん
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
+                        </li>   
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"><i class="fa-solid fa-barcode me-1"></i>書籍登録</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0 text-secondary"><i class="fa-solid fa-circle-check me-2"></i>書籍登録内容の確認</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <form>
+                                <p class="text-muted mb-4">検索条件に基づいてヒットした書籍を表示しています。同シリーズが存在する場合は右側のボタンを押すと、2枚目と同じ形式で同シリーズの書籍を2つ目の画像デザインのまま展開・選択できます。</p>
+
+                                <!-- ヒットしたもの枠 -->
+                                <div class="card border mb-4">
+                                    <div class="card-header bg-light text-primary">
+                                        <i class="fa-solid fa-magnifying-glass me-2"></i>ヒットしたもの
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive mb-0">
+                                            <table class="table align-middle mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col" style="width: 50px;" class="text-center">登録</th>
+                                                        <th scope="col" style="width: 80px;">表紙</th>
+                                                        <th scope="col">書籍情報</th>
+                                                        <th scope="col">ISBN</th>
+                                                        <th scope="col" class="text-end" style="width: 180px;">著者 / 出版社</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 書籍 1行目 -->
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <input class="form-check-input" type="checkbox" checked id="hit1">
+                                                        </td>
+                                                        <td>
+                                                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded" style="width: 50px; height: 70px; font-size: 0.65rem;">No Image</div>
+                                                        </td>
+                                                        <td>
+                                                            <label class="form-check-label fw-bold cursor-pointer" for="hit1">詳解 ソフトウェアアーキテクチャ (第2版)</label>
+                                                            <div><span class="badge bg-success mt-1">ヒット</span></div>
+                                                        </td>
+                                                        <td>978-4-296-12345-6</td>
+                                                        <td class="text-end">
+                                                            <small class="d-block text-muted">太郎 技評</small>
+                                                            <small class="text-muted d-block mb-2">技術評論社</small>
+                                                            <!-- 画像の赤丸の位置にあるボタン -->
+                                                            <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2" style="font-size: 0.75rem;" onclick="toggleSeriesRow(1)">
+                                                                <i class="fa-solid fa-layer-group me-1"></i>同シリーズを表示
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- 同シリーズ 1行目（初期非表示 / 2枚目のデザイン形式） -->
+                                                    <tr id="seriesRow1" class="table-light" style="display: none;">
+                                                        <td class="text-center">
+                                                            <input class="form-check-input" type="checkbox" id="series1">
+                                                        </td>
+                                                        <td>
+                                                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded" style="width: 50px; height: 70px; font-size: 0.65rem;">No Image</div>
+                                                        </td>
+                                                        <td>
+                                                            <label class="form-check-label fw-bold cursor-pointer" for="series1">詳解 ソフトウェアアーキテクチャ (入門編)</label>
+                                                            <div><span class="badge bg-info text-dark mt-1">同シリーズ</span></div>
+                                                        </td>
+                                                        <td>978-4-296-12000-1</td>
+                                                        <td class="text-end">
+                                                            <small class="d-block text-muted">太郎 技評</small>
+                                                            <small class="text-muted">技術評論社</small>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- 書籍 2行目 -->
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <input class="form-check-input" type="checkbox" checked id="hit2">
+                                                        </td>
+                                                        <td>
+                                                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded" style="width: 50px; height: 70px; font-size: 0.65rem;">No Image</div>
+                                                        </td>
+                                                        <td>
+                                                            <label class="form-check-label fw-bold cursor-pointer" for="hit2">実践プログラミング継続的インテグレーション</label>
+                                                            <div><span class="badge bg-success mt-1">ヒット</span></div>
+                                                        </td>
+                                                        <td>978-4-873-11987-2</td>
+                                                        <td class="text-end">
+                                                            <small class="d-block text-muted">次郎 プロ</small>
+                                                            <small class="text-muted d-block mb-2">O'Reilly Japan</small>
+                                                            <!-- 画像の赤丸の位置にあるボタン -->
+                                                            <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2" style="font-size: 0.75rem;" onclick="toggleSeriesRow(2)">
+                                                                <i class="fa-solid fa-layer-group me-1"></i>同シリーズを表示
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- 同シリーズ 2行目（初期非表示 / 2枚目のデザイン形式） -->
+                                                    <tr id="seriesRow2" class="table-light" style="display: none;">
+                                                        <td class="text-center">
+                                                            <input class="form-check-input" type="checkbox" id="series2">
+                                                        </td>
+                                                        <td>
+                                                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded" style="width: 50px; height: 70px; font-size: 0.65rem;">No Image</div>
+                                                        </td>
+                                                        <td>
+                                                            <label class="form-check-label fw-bold cursor-pointer" for="series2">実践プログラミング テスト駆動開発入門</label>
+                                                            <div><span class="badge bg-info text-dark mt-1">同シリーズ</span></div>
+                                                        </td>
+                                                        <td>978-4-873-11988-9</td>
+                                                        <td class="text-end">
+                                                            <small class="d-block text-muted">次郎 プロ</small>
+                                                            <small class="text-muted">O'Reilly Japan</small>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ボタン群 -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="#" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>条件を修正する</a>
+                                    <button type="submit" class="btn btn-primary px-4"><i class="fa-solid fa-check me-1"></i>選択した書籍を登録する</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">チーム開発書籍管理システム</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 & 展開切替用スクリプト -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSeriesRow(id) {
+            const row = document.getElementById('seriesRow' + id);
+            if (row.style.display === 'none') {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
