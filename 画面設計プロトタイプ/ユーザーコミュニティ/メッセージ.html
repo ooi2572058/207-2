@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>しょかんくん - メッセージ</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- 統合されたCSSスタイル -->
+    <style>
+        @charset "UTF-8";
+
+        /* ==========================================================================
+           全体基本設定
+           ========================================================================== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --accent-color: #e74c3c;
+            --bg-light: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* ==========================================================================
+           ヘッダー・ナビゲーション
+           ========================================================================== */
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        /* 通知バッジ */
+        .notification-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.65rem;
+            padding: 0.25em 0.4em;
+        }
+
+        /* ==========================================================================
+           カード & コンポーネントスタイル
+           ========================================================================== */
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        /* ボタンカスタム */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            border-color: #1a252f;
+        }
+
+        .btn-secondary-custom {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            border-color: var(--secondary-color);
+        }
+
+        .btn-secondary-custom:hover {
+            background-color: #128f76;
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           ユーザーコミュニティ用（星評価・メッセージ）
+           ========================================================================== */
+        /* 星評価の入力（右から左に並べて、選択した星より左をすべて点灯させる） */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 0.25rem;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 2rem;
+            line-height: 1;
+            color: #ced4da;
+            cursor: pointer;
+        }
+
+        .star-rating input:checked~label,
+        .star-rating label:hover,
+        .star-rating label:hover~label {
+            color: #f1c40f;
+        }
+
+        /* 表示用の星 */
+        .stars {
+            color: #f1c40f;
+        }
+
+        /* メッセージ画面 */
+        .chat-area {
+            height: 55vh;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #ffffff;
+        }
+
+        .msg-row {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .msg-row.sent {
+            align-items: flex-end;
+        }
+
+        .bubble {
+            max-width: 70%;
+            padding: 0.5rem 0.9rem;
+            border-radius: 16px;
+            background-color: var(--border-color);
+        }
+
+        .msg-row.sent .bubble {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+        }
+
+        .msg-time {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-top: 0.15rem;
+        }
+
+        /* ==========================================================================
+           フッター
+           ========================================================================== */
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー / ナビゲーションバー -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <!-- ロゴ / システム名 -->
+                <a class="navbar-brand" href="#">
+                    <i class="fa-solid fa-book-open me-2"></i>しょかんくん
+                </a>
+
+                <!-- スマホ用トグルボタン -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- ナビゲーションリンク -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-barcode me-1"></i>書籍登録</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                        </li>
+                    </ul>
+
+                    <!-- 検索フォーム -->
+                    <form class="d-flex me-3" role="search">
+                        <div class="input-group">
+                            <input class="form-control form-control-sm" type="search" placeholder="ISBN・タイトル検索"
+                                aria-label="Search">
+                            <button class="btn btn-outline-light btn-sm" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- ユーザー / 通知ドロップダウン -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item me-2">
+                            <a class="nav-link position-relative" href="#">
+                                <i class="fa-solid fa-bell"></i>
+                                <span class="badge rounded-pill bg-danger notification-badge">3</span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i
+                                            class="fa-solid fa-paper-plane me-2"></i>購入リクエスト</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger" href="#"><i
+                                            class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+            <div class="d-flex align-items-center mb-4">
+                <a href="message-list.html" class="btn btn-outline-secondary me-3"><i class="fa-solid fa-arrow-left"></i></a>
+                <h2 class="mb-0"><i class="fa-solid fa-circle-user me-2 text-secondary"></i>ユーザーA</h2>
+            </div>
+
+            <div class="card">
+                <!-- メッセージ閲覧 -->
+                <div class="chat-area" id="chatArea">
+                    <div class="msg-row">
+                        <div class="bubble">こんにちは。「サンプル書籍タイトル」を登録されていましたよね。</div>
+                        <div class="msg-time">10/07 10:20</div>
+                    </div>
+                    <div class="msg-row sent">
+                        <div class="bubble">はい、登録しています。</div>
+                        <div class="msg-time">10/07 10:22</div>
+                    </div>
+                    <div class="msg-row">
+                        <div class="bubble">その本、来週お借りしてもいいですか？</div>
+                        <div class="msg-time">10/07 10:24</div>
+                    </div>
+                </div>
+
+                <!-- メッセージ送信 -->
+                <div class="card-body border-top">
+                    <form id="sendForm" class="d-flex gap-2">
+                        <input id="msgInput" class="form-control" placeholder="メッセージを入力" aria-label="メッセージ" required>
+                        <button type="submit" class="btn btn-secondary-custom text-nowrap">
+                            <i class="fa-solid fa-paper-plane me-1"></i>送信
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">チーム開発書籍管理システム</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 送信したメッセージを画面に追加（プロトタイプ用） -->
+    <script>
+        const area = document.getElementById('chatArea');
+        area.scrollTop = area.scrollHeight;
+        document.getElementById('sendForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const input = document.getElementById('msgInput');
+            const now = new Date();
+            const row = document.createElement('div');
+            row.className = 'msg-row sent';
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.textContent = input.value;
+            const time = document.createElement('div');
+            time.className = 'msg-time';
+            time.textContent = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+            row.append(bubble, time);
+            area.appendChild(row);
+            area.scrollTop = area.scrollHeight;
+            input.value = '';
+        });
+    </script>
+</body>
+
+</html>

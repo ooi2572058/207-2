@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出品履歴 | しょかんくん</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @charset "UTF-8";
+
+        /* ==========================================================================
+           全体基本設定
+           ========================================================================== */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --accent-color: #e74c3c;
+            --bg-light: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* ==========================================================================
+           ヘッダー・ナビゲーション
+           ========================================================================== */
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        /* 通知バッジ */
+        .notification-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.65rem;
+            padding: 0.25em 0.4em;
+        }
+
+        /* ==========================================================================
+           カード & コンポーネントスタイル
+           ========================================================================== */
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        /* ボタンカスタム */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            border-color: #1a252f;
+        }
+
+        .btn-secondary-custom {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            border-color: var(--secondary-color);
+        }
+
+        .btn-secondary-custom:hover {
+            background-color: #128f76;
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           購入フロー用（ステップ表示・確認項目）
+           ========================================================================== */
+        .steps {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .steps li {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 6px;
+            background-color: var(--border-color);
+            color: #6c757d;
+        }
+
+        .steps li.done {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .steps li.active {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        dl.confirm dt {
+            color: #6c757d;
+            font-weight: normal;
+        }
+
+        dl.confirm dd {
+            margin-bottom: 0.75rem;
+        }
+
+        /* ==========================================================================
+           出品画面用（このページ固有の追加スタイル）
+           ========================================================================== */
+        .page-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-left: 5px solid var(--secondary-color);
+            padding-left: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-desc {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+            padding-left: 1.1rem;
+        }
+
+        .book-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .book-thumb {
+            height: 160px;
+            background: #e9ecef;
+            color: #adb5bd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* ==========================================================================
+           フッター
+           ========================================================================== */
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><i class="fa-solid fa-book-open me-2"></i>しょかんくん</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="listing_new.html"><i class="fa-solid fa-pen-to-square me-1"></i>出品登録</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listing_list.html"><i class="fa-solid fa-list me-1"></i>出品一覧</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="listing_history.html"><i class="fa-solid fa-clock-rotate-left me-1"></i>出品履歴</a></li>
+                    </ul>
+                    <form class="d-flex me-3" role="search">
+                        <div class="input-group">
+                            <input class="form-control form-control-sm" type="search" placeholder="ISBN・タイトル検索" aria-label="Search">
+                            <button class="btn btn-outline-light btn-sm" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </form>
+                    <ul class="navbar-nav">
+                        <button type="button" class="btn btn-outline-info">ログイン</button>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-4">
+        <div class="container">
+            <h1 class="page-title">出品履歴</h1>
+            <p class="page-desc">これまでの出品の履歴を表示します。</p>
+
+            <div class="card">
+                <div class="card-header"><i class="fa-solid fa-clock-rotate-left me-2"></i>履歴一覧</div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>日時</th>
+                                <th>商品名</th>
+                                <th>操作</th>
+                                <th class="text-end">価格</th>
+                                <th>ステータス</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- サンプルデータ -->
+                            <tr>
+                                <td>2026/10/08 18:30</td>
+                                <td>サンプル書籍タイトル 1</td>
+                                <td>出品</td>
+                                <td class="text-end">¥1,500</td>
+                                <td><span class="badge bg-success">出品中</span></td>
+                            </tr>
+                            <tr>
+                                <td>2026/10/07 12:10</td>
+                                <td>サンプル書籍タイトル 2</td>
+                                <td>編集（価格変更）</td>
+                                <td class="text-end">¥800</td>
+                                <td><span class="badge bg-success">出品中</span></td>
+                            </tr>
+                            <tr>
+                                <td>2026/10/01 09:45</td>
+                                <td>サンプル書籍タイトル 3</td>
+                                <td>出品</td>
+                                <td class="text-end">¥600</td>
+                                <td><span class="badge bg-secondary">売却済み</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center"><p class="mb-0">チーム開発書籍管理システム</p></div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
