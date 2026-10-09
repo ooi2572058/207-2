@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍一覧 - 書籍管理システム</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #2c3e50 !important;
+        }
+
+        /* 横スクロールリスト構造 */
+        .horizontal-scroll-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            padding-bottom: 12px;
+            scroll-behavior: smooth;
+        }
+
+        /* スクロールバーのカスタムデザイン */
+        .horizontal-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .horizontal-scroll-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        /* 書籍カード単位 */
+        .book-item {
+            flex: 0 0 130px;
+            /* 横幅固定 */
+            width: 130px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .book-item:hover {
+            transform: translateY(-3px);
+        }
+
+        /* 表紙画像枠 */
+        .book-cover {
+            width: 130px;
+            height: 180px;
+            border-radius: 6px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 8px;
+            position: relative;
+        }
+
+        /* タイトル文字列の省略処理（幅オーバー時に「…」） */
+        .book-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        /* 評価（星）バッジ表示 */
+        .rating-badge {
+            font-size: 0.75rem;
+            color: #f39c12;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        /* セクションヘッダー */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* 0冊の場合の非所蔵メッセージ */
+        .empty-message {
+            background-color: #ffffff;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <nav class="navbar navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#">
+                    <i class="fa-solid fa-book-open me-2 text-info"></i>書籍管理システム
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+
+            <!-- 項目1：最新入荷書籍上位10冊 -->
+            <section class="mb-5">
+                <h2 class="section-title">最新入荷書籍（上位10冊）</h2>
+                <div class="horizontal-scroll-container">
+                    <!-- 1~10冊目のダミー書籍 -->
+                    <div class="book-item">
+                        <div class="book-cover">Javaプログラミング入門 第2版</div>
+                        <div class="book-title" title="Javaプログラミング入門 第2版">Javaプログラミング入門 第2版</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                            Webデザイン完全ガイド実践編</div>
+                        <div class="book-title" title="Webデザイン完全ガイド実践編">Webデザイン完全ガイド実践編</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                            Go言語実践開発テクニック</div>
+                        <div class="book-title" title="Go言語実践開発テクニック">Go言語実践開発テクニック</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #f39c12, #d35400);">
+                            Pythonデータ分析実践ハンドブック</div>
+                        <div class="book-title" title="Pythonデータ分析実践ハンドブック">Pythonデータ分析実践ハンドブック</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                            SQLデータベース構築・運用大全</div>
+                        <div class="book-title" title="SQLデータベース構築・運用大全">SQLデータベース構築・運用大全</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover">Node.jsバックエンド開発超入門</div>
+                        <div class="book-title" title="Node.jsバックエンド開発超入門">Node.jsバックエンド開発超入門</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #1abc9c, #16a085);">
+                            HTML5/CSS3モダンコーディングノウハウ</div>
+                        <div class="book-title" title="HTML5/CSS3モダンコーディングノウハウ">HTML5/CSS3モダンコーディングノウハウ</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #34495e, #2c3e50);">
+                            JavaScript完全解説プログラミング</div>
+                        <div class="book-title" title="JavaScript完全解説プログラミング">JavaScript完全解説プログラミング</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #e67e22, #d35400);">
+                            Git/GitHubチーム開発運用ガイド</div>
+                        <div class="book-title" title="Git/GitHubチーム開発運用ガイド">Git/GitHubチーム開発運用ガイド</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #7f8c8d, #95a5a6);">
+                            Linuxサーバー構築基礎マスター</div>
+                        <div class="book-title" title="Linuxサーバー構築基礎マスター">Linuxサーバー構築基礎マスター</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 項目2：書籍評価機能により評価されているすべての書籍の上位10冊 -->
+            <section class="mb-5">
+                <h2 class="section-title">高評価書籍（全ジャンル総合）</h2>
+                <div class="horizontal-scroll-container">
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #f1c40f, #f39c12);">
+                            スッキリわかるJava入門 第3版</div>
+                        <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.9</div>
+                        <div class="book-title" title="スッキリわかるJava入門 第3版">スッキリわかるJava入門 第3版</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                            オブジェクト指向で解く設計デザインパターン</div>
+                        <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.8</div>
+                        <div class="book-title" title="オブジェクト指向で解く設計デザインパターン">オブジェクト指向で解く設計デザインパターン</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #3498db, #2980b9);">達人プログラマー
+                            職人から名匠へ</div>
+                        <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.7</div>
+                        <div class="book-title" title="達人プログラマー 職人から名匠へ">達人プログラマー 職人から名匠へ</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">リーダブルコード
+                            読みやすいコードを描く技術</div>
+                        <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.7</div>
+                        <div class="book-title" title="リーダブルコード 読みやすいコードを描く技術">リーダブルコード 読みやすいコードを描く技術</div>
+                    </div>
+                    <div class="book-item">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">Webを支える技術
+                            HTTP・URI・HTML</div>
+                        <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.6</div>
+                        <div class="book-title" title="Webを支える技術 HTTP・URI・HTML">Webを支える技術 HTTP・URI・HTML</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 項目3：ジャンル別の評価上位10冊 -->
+            <section class="mb-5">
+                <h2 class="section-title">ジャンル別 評価上位書籍</h2>
+
+                <!-- ジャンル1：プログラミング・Web開発 -->
+                <div class="mb-4">
+                    <h5 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-code me-1"></i> プログラミング・Web開発</h5>
+                    <div class="horizontal-scroll-container">
+                        <div class="book-item">
+                            <div class="book-cover">Javaプログラミング入門 第2版</div>
+                            <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.8</div>
+                            <div class="book-title" title="Javaプログラミング入門 第2版">Javaプログラミング入門 第2版</div>
+                        </div>
+                        <div class="book-item">
+                            <div class="book-cover" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                                Go言語実践開発テクニック</div>
+                            <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.5</div>
+                            <div class="book-title" title="Go言語実践開発テクニック">Go言語実践開発テクニック</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ジャンル2：デザイン・フロントエンド -->
+                <div class="mb-4">
+                    <h5 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-palette me-1"></i> デザイン・フロントエンド</h5>
+                    <div class="horizontal-scroll-container">
+                        <div class="book-item">
+                            <div class="book-cover" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                                Webデザイン完全ガイド実践編</div>
+                            <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.6</div>
+                            <div class="book-title" title="Webデザイン完全ガイド実践編">Webデザイン完全ガイド実践編</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ジャンル3：インフラ・データベース -->
+                <div class="mb-4">
+                    <h5 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-server me-1"></i> インフラ・データベース</h5>
+                    <div class="horizontal-scroll-container">
+                        <div class="book-item">
+                            <div class="book-cover" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                                SQLデータベース構築・運用大全</div>
+                            <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.7</div>
+                            <div class="book-title" title="SQLデータベース構築・運用大全">SQLデータベース構築・運用大全</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4つ目以降のジャンル（アコーディオンで展開） -->
+                <div class="collapse" id="moreGenres">
+                    <!-- ジャンル4 -->
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-shield-halved me-1"></i> セキュリティ
+                        </h5>
+                        <div class="horizontal-scroll-container">
+                            <div class="book-item">
+                                <div class="book-cover" style="background: linear-gradient(135deg, #34495e, #2c3e50);">
+                                    体系的に学ぶ Webアプリケーションの作り方</div>
+                                <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.9</div>
+                                <div class="book-title" title="体系的に学ぶ Webアプリケーションの作り方">体系的に学ぶ Webアプリケーションの作り方</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ジャンル5 -->
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-brain me-1"></i> 人工知能・AI</h5>
+                        <div class="horizontal-scroll-container">
+                            <div class="book-item">
+                                <div class="book-cover" style="background: linear-gradient(135deg, #16a085, #117a65);">
+                                    ゼロから作るDeep Learning</div>
+                                <div class="rating-badge"><i class="fa-solid fa-star"></i> 4.8</div>
+                                <div class="book-title" title="ゼロから作るDeep Learning">ゼロから作るDeep Learning</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- もっと表示 ボタン -->
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-secondary px-4 rounded-pill" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#moreGenres" aria-expanded="false" id="toggleGenreBtn">
+                        もっと表示 <i class="fa-solid fa-chevron-down ms-1"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 項目4：過去に自分が検索した書籍10冊 (1冊もない場合の表示サンプル) -->
+            <section class="mb-5">
+                <h2 class="section-title">過去に検索した書籍</h2>
+                <!-- 0冊の場合の表示 -->
+                <div class="empty-message">
+                    <i class="fa-solid fa-circle-info me-2 text-primary"></i>表示できる書籍を所蔵していません
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 書籍管理システム All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ジャンル「もっと表示 / 閉じる」ボタンのテキスト切り替え
+        const toggleBtn = document.getElementById('toggleGenreBtn');
+        const moreGenres = document.getElementById('moreGenres');
+
+        moreGenres.addEventListener('show.bs.collapse', function () {
+            toggleBtn.innerHTML = '閉じる <i class="fa-solid fa-chevron-up ms-1"></i>';
+        });
+        moreGenres.addEventListener('hide.bs.collapse', function () {
+            toggleBtn.innerHTML = 'もっと表示 <i class="fa-solid fa-chevron-down ms-1"></i>';
+        });
+    </script>
+</body>
+
+</html>

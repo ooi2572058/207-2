@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入リクエスト検索 - 書籍管理システム</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: sans-serif;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #2c3e50 !important;
+        }
+
+        .card-custom {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header-custom {
+            background-color: #2c3e50;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0 !important;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#"><i
+                        class="fa-solid fa-book-open me-2 text-info"></i>書籍管理システム</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!-- 検索フォーム -->
+                    <div class="card card-custom mb-4">
+                        <div class="card-header card-header-custom py-3">
+                            <h5 class="mb-0"><i class="fa-solid fa-cart-plus me-2"></i>購入リクエスト書籍の検索</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <p class="text-muted small mb-3">購入してほしい書籍のタイトルを入力してください。楽天ブックスから候補を検索します。</p>
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">書籍タイトル <span
+                                            class="badge bg-danger">必須</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-lg" value="Javaプログラミング入門"
+                                            placeholder="例: 翔泳社 Java">
+                                        <button type="button" class="btn btn-primary px-4"><i
+                                                class="fa-solid fa-magnifying-glass me-1"></i> 外部検索</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 所蔵済みチェック警告（システム内の所蔵チェック結果） -->
+                    <div class="alert alert-warning border-warning shadow-sm rounded-3 p-3 mb-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fa-solid fa-triangle-exclamation fa-2x text-warning me-3"></i>
+                            <div>
+                                <h6 class="alert-heading fw-bold mb-0">この書籍はすでに所蔵されています！</h6>
+                                <small class="text-dark">リクエストしようとした書籍（または類似本）が館内に存在します。</small>
+                            </div>
+                        </div>
+                        <hr class="my-2">
+                        <div class="bg-white p-3 rounded border">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="badge bg-secondary mb-1">管理ID: BK-00123</span>
+                                    <div class="fw-bold fs-6">Javaプログラミング入門 第2版</div>
+                                    <small class="text-muted"><i class="fa-solid fa-location-dot me-1"></i>保管場所：A棚 -
+                                        2段目（貸出可能）</small>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary">この本を借りる</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 書籍管理システム All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

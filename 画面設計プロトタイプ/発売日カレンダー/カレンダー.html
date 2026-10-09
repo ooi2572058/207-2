@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>発売日カレンダー (通知設定書籍のみ) - しょかんくん</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- 統合されたCSSスタイル -->
+    <style>
+        @charset "UTF-8";
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --accent-color: #e74c3c;
+            --bg-light: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        /* カレンダー固有スタイル */
+        .calendar-table th {
+            text-align: center;
+            width: 14.28%;
+            background-color: #f1f3f5;
+        }
+
+        .calendar-day {
+            height: 110px;
+            vertical-align: top;
+            background-color: #ffffff;
+            transition: background-color 0.2s;
+        }
+
+        .calendar-day:hover {
+            background-color: #f8f9fa;
+        }
+
+        .calendar-day.other-month {
+            background-color: #fcfcfc;
+            color: #adb5bd;
+        }
+
+        .day-number {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .calendar-event {
+            font-size: 0.75rem;
+            background-color: rgba(24, 188, 156, 0.15);
+            color: #128f76;
+            border-left: 3px solid var(--secondary-color);
+            padding: 2px 4px;
+            margin-bottom: 2px;
+            border-radius: 2px;
+            text-decoration: none;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .calendar-event:hover {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー / ナビゲーションバー -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <i class="fa-solid fa-book-open me-2"></i>しょかんくん
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
+                        </li>   
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-barcode me-1"></i>書籍登録</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-bell me-1"></i>通知一覧</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+            <!-- タイトルと月切り替えコントロール -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold text-secondary mb-1"><i class="fa-solid fa-calendar-days me-2"></i>発売日カレンダー</h3>
+                    <p class="text-muted small mb-0"><i class="fa-solid fa-circle-info me-1"></i>通知設定を行っている書籍の発売日のみ表示しています。</p>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-chevron-left"></i> 前の月</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm px-3 fw-bold">2026年 5月</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm">次の月 <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- カレンダー本体 -->
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-bordered calendar-table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-danger">日</th>
+                                            <th>月</th>
+                                            <th>火</th>
+                                            <th>水</th>
+                                            <th>木</th>
+                                            <th>金</th>
+                                            <th class="text-primary">土</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- 第1週 -->
+                                        <tr>
+                                            <td class="calendar-day other-month"><div class="day-number">26</div></td>
+                                            <td class="calendar-day other-month"><div class="day-number">27</div></td>
+                                            <td class="calendar-day other-month"><div class="day-number">28</div></td>
+                                            <td class="calendar-day other-month"><div class="day-number">29</div></td>
+                                            <td class="calendar-day"><div class="day-number">1</div></td>
+                                            <td class="calendar-day"><div class="day-number">2</div></td>
+                                            <td class="calendar-day"><div class="day-number">3</div></td>
+                                        </tr>
+                                        <!-- 第2週 -->
+                                        <tr>
+                                            <td class="calendar-day"><div class="day-number">4</div></td>
+                                            <td class="calendar-day"><div class="day-number">5</div></td>
+                                            <td class="calendar-day"><div class="day-number">6</div></td>
+                                            <td class="calendar-day"><div class="day-number">7</div></td>
+                                            <td class="calendar-day"><div class="day-number">8</div></td>
+                                            <td class="calendar-day"><div class="day-number">9</div></td>
+                                            <td class="calendar-day"><div class="day-number">10</div></td>
+                                        </tr>
+                                        <!-- 第3週 -->
+                                        <tr>
+                                            <td class="calendar-day"><div class="day-number">11</div></td>
+                                            <td class="calendar-day"><div class="day-number">12</div></td>
+                                            <td class="calendar-day"><div class="day-number">13</div></td>
+                                            <td class="calendar-day"><div class="day-number">14</div></td>
+                                            <td class="calendar-day">
+                                                <div class="day-number">15</div>
+                                                <!-- 通知設定済み書籍のみ表示 -->
+                                                <a href="#" class="calendar-event" title="詳解 ソフトウェアアーキテクチャ">
+                                                    <i class="fa-solid fa-bell me-1"></i>詳解 ソフトウェア...
+                                                </a>
+                                            </td>
+                                            <td class="calendar-day"><div class="day-number">16</div></td>
+                                            <td class="calendar-day"><div class="day-number">17</div></td>
+                                        </tr>
+                                        <!-- 第4週 -->
+                                        <tr>
+                                            <td class="calendar-day"><div class="day-number">18</div></td>
+                                            <td class="calendar-day"><div class="day-number">19</div></td>
+                                            <td class="calendar-day"><div class="day-number">20</div></td>
+                                            <td class="calendar-day"><div class="day-number">21</div></td>
+                                            <td class="calendar-day"><div class="day-number">22</div></td>
+                                            <td class="calendar-day"><div class="day-number">23</div></td>
+                                            <td class="calendar-day"><div class="day-number">24</div></td>
+                                        </tr>
+                                        <!-- 第5週 -->
+                                        <tr>
+                                            <td class="calendar-day"><div class="day-number">25</div></td>
+                                            <td class="calendar-day"><div class="day-number">26</div></td>
+                                            <td class="calendar-day"><div class="day-number">27</div></td>
+                                            <td class="calendar-day"><div class="day-number">28</div></td>
+                                            <td class="calendar-day"><div class="day-number">29</div></td>
+                                            <td class="calendar-day"><div class="day-number">30</div></td>
+                                            <td class="calendar-day other-month"><div class="day-number">1</div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- サイドバー：通知設定済みの今月の発売予定リスト -->
+                <div class="col-lg-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0 text-secondary"><i class="fa-solid fa-bell me-2"></i>通知設定中の発売予定 (5月)</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0 py-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="badge bg-secondary">05/15 (金)</span>
+                                        <span class="badge bg-success"><i class="fa-solid fa-check me-1"></i>通知設定中</span>
+                                    </div>
+                                    <h6 class="fw-bold mb-1">詳解 ソフトウェアアーキテクチャ</h6>
+                                    <p class="text-muted small mb-0">技術評論社 / ￥3,800</p>
+                                </li>
+                            </ul>
+                            <div class="text-center mt-3">
+                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-plus me-1"></i>通知を追加する</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">チーム開発書籍管理システム</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

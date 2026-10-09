@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>検索結果一覧 - 購入リクエスト</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: sans-serif;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #2c3e50 !important;
+        }
+
+        .book-card {
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .book-img {
+            width: 90px;
+            height: 120px;
+            object-fit: cover;
+            background-color: #e9ecef;
+            border-radius: 4px;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#"><i
+                        class="fa-solid fa-book-open me-2 text-info"></i>書籍管理システム</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-list me-2"></i>楽天ブックス 検索結果 (候補 3件)</h5>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">検索条件を変える</button>
+                    </div>
+
+                    <!-- 書籍リストアイテム 1 -->
+                    <div class="card book-card mb-3 p-3">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-auto me-3 text-center">
+                                <div class="book-img d-flex align-items-center justify-content-center text-muted">
+                                    <i class="fa-solid fa-book fa-2x"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <span class="badge bg-info text-dark mb-1">ISBN: 9784798150000</span>
+                                <h5 class="fw-bold mb-1">スッキリわかるJava入門 第3版</h5>
+                                <p class="text-muted small mb-1">著者：中山 清喬 | 出版社：インプレス | 価格：¥2,860</p>
+                                <span
+                                    class="badge bg-success-subtle text-success border border-success">未所蔵（リクエスト可能）</span>
+                            </div>
+                            <div class="col-auto text-end">
+                                <button type="button" class="btn btn-primary px-4 fw-bold">この本をリクエスト</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 書籍リストアイテム 2 -->
+                    <div class="card book-card mb-3 p-3">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-auto me-3 text-center">
+                                <div class="book-img d-flex align-items-center justify-content-center text-muted">
+                                    <i class="fa-solid fa-book fa-2x"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <span class="badge bg-info text-dark mb-1">ISBN: 9784774198000</span>
+                                <h5 class="fw-bold mb-1">Java言語で学ぶデザインパターン入門</h5>
+                                <p class="text-muted small mb-1">著者：結城 浩 | 出版社：SBクリエイティブ | 価格：¥3,960</p>
+                                <span
+                                    class="badge bg-success-subtle text-success border border-success">未所蔵（リクエスト可能）</span>
+                            </div>
+                            <div class="col-auto text-end">
+                                <button type="button" class="btn btn-primary px-4 fw-bold">この本をリクエスト</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 書籍管理システム All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
