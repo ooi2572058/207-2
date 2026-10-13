@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入完了 - しょかんくん</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- base.html 統合スタイル -->
+    <style>
+        @charset "UTF-8";
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --accent-color: #e74c3c;
+            --bg-light: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            border-color: #1a252f;
+        }
+
+        /* 評価用星アイコンのスタイル */
+        .rating-star-group {
+            direction: rtl;
+            font-size: 1.8rem;
+            unicode-bidi: bidi-override;
+            display: inline-flex;
+        }
+
+        .rating-star-group input {
+            display: none;
+        }
+
+        .rating-star-group label {
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .rating-star-group input:checked ~ label,
+        .rating-star-group label:hover,
+        .rating-star-group label:hover ~ label {
+            color: #f39c12;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー / ナビゲーションバー -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <i class="fa-solid fa-book-open me-2"></i>しょかんくん
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
+                        </li>   
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"><i class="fa-solid fa-store me-1"></i>古本出品・マーケット</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!-- 完了メッセージカード -->
+                    <div class="card text-center p-4 mb-4">
+                        <div class="card-body">
+                            <div class="mb-3 text-success">
+                                <i class="fa-solid fa-circle-check fa-4x"></i>
+                            </div>
+                            <h3 class="fw-bold text-secondary mb-2">ご購入ありがとうございました！</h3>
+                            <p class="text-muted mb-4">
+                                注文の手続きが正常に完了いたしました。<br>
+                                出品者からの発送をお待ちください。（注文番号: #SH-2026-8921）
+                            </p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="#" class="btn btn-outline-primary"><i class="fa-solid fa-list me-1"></i>購入履歴を見る</a>
+                                <a href="#" class="btn btn-primary"><i class="fa-solid fa-store me-1"></i>マーケットに戻る</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 出品ユーザーの評価入力カード -->
+                    <div class="card">
+                        <div class="card-header bg-white py-3">
+                            <h5 class="mb-0 text-secondary"><i class="fa-solid fa-star me-2"></i>出品者への評価・コメント</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <p class="text-muted small mb-4">今回の取引はいかがでしたか？出品ユーザー（本好きエンジニア太郎さん）の対応や商品の状態について評価を入力してください。</p>
+
+                            <form>
+                                <!-- 星評価選択 (1〜5段階) -->
+                                <div class="mb-4 text-center">
+                                    <label class="form-label fw-bold d-block mb-2">満足度評価</label>
+                                    <div class="rating-star-group">
+                                        <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5点"><i class="fa-solid fa-star"></i></label>
+                                        <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4点"><i class="fa-solid fa-star"></i></label>
+                                        <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3点"><i class="fa-solid fa-star"></i></label>
+                                        <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2点"><i class="fa-solid fa-star"></i></label>
+                                        <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1点"><i class="fa-solid fa-star"></i></label>
+                                    </div>
+                                </div>
+
+                                <!-- コメント入力 -->
+                                <div class="mb-4">
+                                    <label for="reviewComment" class="form-label fw-bold">評価コメント（任意）</label>
+                                    <textarea class="form-control" id="reviewComment" rows="3" placeholder="例：迅速なご対応と丁寧な梱包ありがとうございました！本も非常に綺麗でした。"></textarea>
+                                </div>
+
+                                <!-- 評価送信ボタン -->
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-secondary-custom px-4">
+                                        <i class="fa-solid fa-paper-plane me-1"></i>評価を送信する
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">チーム開発書籍管理システム</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

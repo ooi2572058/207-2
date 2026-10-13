@@ -11,6 +11,7 @@
     <!-- Font Awesome (アイコン) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+
     <!-- 統合されたCSSスタイル -->
     <style>
         @charset "UTF-8";
@@ -147,26 +148,99 @@
 <body>
 
     <!-- ヘッダー / ナビゲーションバー -->
-    
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <!-- ロゴ / システム名 -->
+                <a class="navbar-brand" href="#">
+                    <i class="fa-solid fa-book-open me-2"></i>しょかんくん
+                </a>
+
+                <!-- スマホ用トグルボタン -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- ナビゲーションリンク -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-barcode me-1"></i>書籍登録</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-hand-holding-hand me-1"></i>貸出管理</a>
+                        </li>-->
+                    </ul>
+
+                    <!-- 検索フォーム -->
+                    <form class="d-flex me-3" role="search">
+                        <div class="input-group">
+                            <input class="form-control form-control-sm" type="search" placeholder="ISBN・タイトル検索"
+                                aria-label="Search">
+                            <button class="btn btn-outline-light btn-sm" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- ユーザー / 通知ドロップダウン -->
+                    <ul class="navbar-nav">
+                        <button type="button" class="btn btn-outline-info">ログイン</button>
+                        <!--li class="nav-item me-2">
+                            <a class="nav-link position-relative" href="#">
+                                <i class="fa-solid fa-bell"></i>
+                                <span class="badge rounded-pill bg-danger notification-badge">3</span>
+                            </a>
+                        </!--li>
+                        <li-- class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i
+                                            class="fa-solid fa-paper-plane me-2"></i>購入リクエスト</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger" href="#"><i
+                                            class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li-->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
     <!-- メインコンテンツ -->
     <main class="py-4">
         <div class="container">
             <!-- ここに記述-->
             <div class="formstyle">
-                <form action="法人パスワード再登録2.html" method="post">
-                    <h3>パスワードリセット</h3>
-                    <input type="tel" name="tel" placeholder="電話番号を入力"><br>
+                <form action="一般アカウント.html" method="post">
+                    <h2>ログイン（一般）</h2>
+                    <input type="text" name="username" placeholder="ユーザー名"><br>
+                    <input type="email" name="mailaddress" placeholder="メールアドレス"><br>
+                    <input type="password" name="password" placeholder="パスワード"><br>
                     
-                    
-                    <input type="submit" value="次へ">
+                    <input type="submit" value="ログイン">
                 </form>
             </div>
-
-            
         </div>
-        <div class="atag">
-        <a href="../ログイン（山根弥月）/login（法人）.html">戻る</a>
+        <div class="atag2">
+        <a href="../パスワードリセット/一般パスワード再登録.html">パスワードを忘れた場合</a>
         </div>
     </main>
 
