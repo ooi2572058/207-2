@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホーム | しょかんくん</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- 統合されたCSSスタイル -->
+    <style>
+        @charset "UTF-8";
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --accent-color: #e74c3c;
+            --bg-light: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.65rem;
+            padding: 0.25em 0.4em;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            border-color: #1a252f;
+        }
+
+        .btn-secondary-custom {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            border-color: var(--secondary-color);
+        }
+
+        .btn-secondary-custom:hover {
+            background-color: #128f76;
+            color: #ffffff;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー / ナビゲーションバー -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="home.html">
+                    <i class="fa-solid fa-book-open me-2"></i>しょかんくん
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="home.html"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="book_list.html"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="listing_list.html"><i class="fa-solid fa-store me-1"></i>古本マーケット</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="calendar.html"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                        </li>
+                    </ul>
+
+                    <!-- 検索フォーム -->
+                    <form class="d-flex me-3" role="search">
+                        <div class="input-group">
+                            <input class="form-control form-control-sm" type="search" placeholder="ISBN・タイトル検索" aria-label="Search">
+                            <button class="btn btn-outline-light btn-sm" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </form>
+
+                    <!-- ログイン時右側表示 -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item me-2">
+                            <a class="nav-link position-relative" href="notifications.html">
+                                <i class="fa-solid fa-bell"></i>
+                                <span class="badge rounded-pill bg-danger notification-badge">3</span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>本好き太郎
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="account_settings.html"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="index.html"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+            <!-- ユーザー歓迎メッセージ -->
+            <div class="d-flex align-items-center justify-content-between mb-4 bg-white p-3 rounded shadow-sm border">
+                <div>
+                    <h4 class="fw-bold mb-1 text-secondary">
+                        おかえりなさい、本好き太郎 さん！
+                    </h4>
+                    <p class="text-muted small mb-0">本日も書籍の登録・検索やマーケットの取引をチェックしましょう。</p>
+                </div>
+                <div>
+                    <a href="notifications.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-bell me-1"></i>通知一覧 (3件)</a>
+                </div>
+            </div>
+
+            <!-- メイン機能カードグリッド -->
+            <h5 class="fw-bold text-secondary mb-3"><i class="fa-solid fa-border-all me-2"></i>ダッシュボード・主要機能</h5>
+            <div class="row g-4">
+                <!-- 書籍登録 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card p-3 text-center">
+                        <div class="mb-2"><i class="fa-solid fa-barcode feature-icon"></i></div>
+                        <h6 class="fw-bold">書籍登録</h6>
+                        <p class="text-muted small mb-3">ISBNやキーワードから新しい書籍情報を検索して登録します。</p>
+                        <a href="book_search.html" class="btn btn-primary btn-sm w-100"><i class="fa-solid fa-plus me-1"></i>登録画面へ</a>
+                    </div>
+                </div>
+
+                <!-- 書籍一覧 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card p-3 text-center">
+                        <div class="mb-2"><i class="fa-solid fa-list feature-icon"></i></div>
+                        <h6 class="fw-bold">登録書籍一覧</h6>
+                        <p class="text-muted small mb-3">所有している書籍リストの閲覧・編集・状態管理が行えます。</p>
+                        <a href="book_list.html" class="btn btn-outline-primary btn-sm w-100"><i class="fa-solid fa-book me-1"></i>一覧を見る</a>
+                    </div>
+                </div>
+
+                <!-- 古本マーケット -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card p-3 text-center">
+                        <div class="mb-2"><i class="fa-solid fa-store feature-icon"></i></div>
+                        <h6 class="fw-bold">古本マーケット</h6>
+                        <p class="text-muted small mb-3">出品されている古本の購入や自分の不要になった本の出品を行います。</p>
+                        <a href="listing_list.html" class="btn btn-secondary-custom btn-sm w-100"><i class="fa-solid fa-cart-shopping me-1"></i>マーケットへ</a>
+                    </div>
+                </div>
+
+                <!-- 発売日カレンダー -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card p-3 text-center">
+                        <div class="mb-2"><i class="fa-solid fa-calendar-days feature-icon"></i></div>
+                        <h6 class="fw-bold">発売日カレンダー</h6>
+                        <p class="text-muted small mb-3">新刊の発売予定日や通知設定した書籍の予定を確認します。</p>
+                        <a href="calendar.html" class="btn btn-outline-secondary btn-sm w-100"><i class="fa-solid fa-calendar me-1"></i>カレンダーへ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">チーム開発書籍管理システム - しょかんくん</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古本詳細 - しょかんくん</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- 統合されたCSSスタイル -->
+    <style>
+        @charset "UTF-8";
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --accent-color: #e74c3c;
+            --bg-light: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            border-color: #1a252f;
+        }
+
+        /* サムネイルのスクロールエリア設定 */
+        .thumbnail-scroll-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 5px;
+        }
+
+        .thumbnail-item {
+            flex: 0 0 75px;
+            height: 75px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .thumbnail-item:hover,
+        .thumbnail-item.active {
+            opacity: 1;
+            border: 2px solid var(--secondary-color) !important;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー / ナビゲーションバー -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <i class="fa-solid fa-book-open me-2"></i>しょかんくん
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
+                        </li>   
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"><i class="fa-solid fa-store me-1"></i>古本出品・マーケット</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+            <div class="row">
+                <!-- 左側：複数画像プレビューエリア（スクロール対応） -->
+                <div class="col-lg-5 mb-4">
+                    <div class="card p-3">
+                        <!-- メインプレビュー画像 -->
+                        <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded mb-3" style="height: 350px;">
+                            <span class="fs-5"><i class="fa-solid fa-image me-2"></i>メイン画像プレビュー</span>
+                        </div>
+                        
+                        <!-- 横スクロール可能なサムネイル一覧エリア -->
+                        <div class="thumbnail-scroll-container">
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item active" style="font-size: 0.7rem;">表紙</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">背表紙</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">裏表紙</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">状態1</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">状態2</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">付属品</div>
+                        </div>
+                        <div class="form-text text-center mt-2">左右にスクロールして他の画像を確認できます</div>
+                    </div>
+                </div>
+
+                <!-- 右側：古本詳細・出品情報エリア -->
+                <div class="col-lg-7">
+                    <div class="card p-4 h-100">
+                        <div class="card-body p-0">
+                            <!-- タイトルとステータス -->
+                            <div class="mb-3">
+                                <span class="badge bg-success mb-2">出品中</span>
+                                <h3 class="fw-bold text-secondary">詳解 ソフトウェアアーキテクチャ (第2版)</h3>
+                                <p class="text-muted small">技術評論社 / 著者: 太郎 技評 / ISBN: 978-4-296-12345-6</p>
+                            </div>
+
+                            <!-- 値段 -->
+                            <div class="mb-4 bg-light p-3 rounded border">
+                                <span class="text-muted small d-block">販売価格（税込）</span>
+                                <h2 class="text-danger fw-bold mb-0">￥2,400 <span class="fs-6 text-muted fw-normal">（送料込み）</span></h2>
+                            </div>
+
+                            <!-- 古本の状態 -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-circle-info me-1"></i>商品の状態</h6>
+                                <span class="badge bg-primary fs-6 py-2 px-3">やや傷あり</span>
+                                <p class="text-muted small mt-2 mb-0">
+                                    カバーに微細なスレ傷がありますが、中身のページは書き込みや折れもなく綺麗な状態です。読書には支障ありません。
+                                </p>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- 出品ユーザー情報 -->
+                            <div class="d-flex align-items-center justify-content-between mb-4 bg-white p-3 rounded border">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fa-solid fa-circle-user text-secondary" style="font-size: 2.5rem;"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">本好きエンジニア太郎</h6>
+                                        <div class="text-warning small">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star-half-stroke"></i>
+                                            <span class="text-dark fw-bold ms-1">4.7</span>
+                                            <span class="text-muted ms-1">(評価 52件)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="#" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-user me-1"></i>プロフィール</a>
+                                </div>
+                            </div>
+
+                            <!-- アクションボタン群（一時保存、購入、出品者へ連絡） -->
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="#" class="btn btn-outline-primary flex-fill">
+                                    <i class="fa-regular fa-bookmark me-1"></i>一時保存（お気に入り）
+                                </a>
+                                <a href="#" class="btn btn-outline-secondary flex-fill">
+                                    <i class="fa-solid fa-envelope me-1"></i>出品者へ連絡する
+                                </a>
+                                <a href="#" class="btn btn-danger flex-fill py-2 fw-bold">
+                                    <i class="fa-solid fa-cart-shopping me-1"></i>購入手続きへ進む
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">チーム開発書籍管理システム</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
