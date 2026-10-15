@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+
+actor "一般ユーザー" as user
+actor "管理者 (アドミン)" as admin
+
+rectangle 書籍管理システム_お問い合わせ {
+usecase "問い合わせを入力・送信する" as UC_SendInquiry
+usecase "問い合わせ一覧・内容を閲覧する" as UC_ViewInquiry
+
+user -- UC_SendInquiry
+admin -- UC_ViewInquiry
+}
+@enduml
