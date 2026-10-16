@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホーム (未ログイン) - しょかんくん</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 2.5rem 1rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-3px);
+        }
+
+        .book-thumb {
+            width: 100%;
+            height: 160px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 8px;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#">
+                    <i class="fa-solid fa-book-open me-2 text-info"></i>しょかんくん
+                </a>
+                <div class="d-flex align-items-center">
+                    <a href="login.html" class="btn btn-outline-light btn-sm me-2 fw-bold">ログイン</a>
+                    <a href="signup.html" class="btn btn-info btn-sm text-white fw-bold">新規会員登録</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+
+            <!-- ヒーローバナー -->
+            <div class="hero-section text-center shadow">
+                <h2 class="fw-bold mb-2">みんなでつくる・共有する 書籍管理システム</h2>
+                <p class="mb-3 text-light small">蔵書の検索・閲覧や、ユーザー同士の書籍出品一覧・レビューを自由にチェックできます。</p>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form action="search_result.html" method="get" class="input-group input-group-lg">
+                            <input type="text" class="form-control fs-6" placeholder="タイトル・著者名・ISBNコードで検索...">
+                            <button class="btn btn-info text-white fw-bold fs-6" type="submit">
+                                <i class="fa-solid fa-magnifying-glass me-1"></i> 検索
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 機能クイックアクセス (公開機能) -->
+            <div class="row row-cols-2 row-cols-md-4 g-3 mb-5">
+                <div class="col">
+                    <a href="search.html" class="text-decoration-none">
+                        <div class="card card-custom p-3 text-center h-100">
+                            <i class="fa-solid fa-magnifying-glass text-primary fa-2x mb-2"></i>
+                            <h6 class="fw-bold text-dark mb-0">書籍検索</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="exhibition_list.html" class="text-decoration-none">
+                        <div class="card card-custom p-3 text-center h-100">
+                            <i class="fa-solid fa-store text-success fa-2x mb-2"></i>
+                            <h6 class="fw-bold text-dark mb-0">みんなの出品一覧</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="review_list.html" class="text-decoration-none">
+                        <div class="card card-custom p-3 text-center h-100">
+                            <i class="fa-solid fa-star text-warning fa-2x mb-2"></i>
+                            <h6 class="fw-bold text-dark mb-0">最新レビュー一覧</h6>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="inquiry.html" class="text-decoration-none">
+                        <div class="card card-custom p-3 text-center h-100">
+                            <i class="fa-solid fa-envelope text-danger fa-2x mb-2"></i>
+                            <h6 class="fw-bold text-dark mb-0">お問い合わせ</h6>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 注目の蔵書・新着書籍 (閲覧可能) -->
+            <section class="mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-book me-2 text-primary"></i>注目の登録書籍</h5>
+                    <a href="book_list.html" class="small text-decoration-none fw-bold">すべて見る &raquo;</a>
+                </div>
+                <div class="row row-cols-2 row-cols-md-4 g-3">
+                    <div class="col">
+                        <div class="card card-custom p-2 h-100">
+                            <div class="book-thumb mb-2">Javaプログラミング入門</div>
+                            <h6 class="fw-bold small mb-1 text-truncate">Javaプログラミング入門 第2版</h6>
+                            <small class="text-muted">★ 4.8 (12件)</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-custom p-2 h-100">
+                            <div class="book-thumb mb-2" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                                Webデザイン入門</div>
+                            <h6 class="fw-bold small mb-1 text-truncate">Webデザイン完全ガイド</h6>
+                            <small class="text-muted">★ 4.5 (8件)</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-custom p-2 h-100">
+                            <div class="book-thumb mb-2" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                                Go言語実践開発</div>
+                            <h6 class="fw-bold small mb-1 text-truncate">Go言語実践開発テクニック</h6>
+                            <small class="text-muted">★ 4.6 (5件)</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-custom p-2 h-100">
+                            <div class="book-thumb mb-2" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
+                                データベース基礎</div>
+                            <h6 class="fw-bold small mb-1 text-truncate">SQL & DB基本のきほん</h6>
+                            <small class="text-muted">★ 4.9 (15件)</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
