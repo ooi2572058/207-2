@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ダッシュボード - しょかんくん</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --admin-color: #c0392b;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar-admin {
+            background-color: var(--admin-color) !important;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー (管理者専用カラー: 赤系) -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-admin">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#">
+                    <i class="fa-solid fa-user-shield me-2"></i>しょかんくん【管理者管理画面】
+                </a>
+                <div class="d-flex align-items-center">
+                    <span class="text-white small me-3 fw-bold"><i class="fa-solid fa-lock me-1"></i>管理者ログイン中</span>
+                    <a href="logout_completed.html" class="btn btn-outline-light btn-sm">ログアウト</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold text-dark mb-0"><i class="fa-solid fa-gauge me-2 text-danger"></i>システム管理ダッシュボード</h4>
+                <small class="text-muted">最終更新: 2026/10/16 11:30</small>
+            </div>
+
+            <!-- システム要監視ステータス -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="card card-custom p-3 bg-white border-start border-danger border-4">
+                        <div class="text-muted small fw-bold">未対応の通報レビュー</div>
+                        <h3 class="fw-bold text-danger my-1">3 <small class="fs-6">件</small></h3>
+                        <a href="admin_reviews.html" class="small text-decoration-none">詳細・削除対応 &raquo;</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-custom p-3 bg-white border-start border-warning border-4">
+                        <div class="text-muted small fw-bold">未対応の通報出品物</div>
+                        <h3 class="fw-bold text-warning my-1">1 <small class="fs-6">件</small></h3>
+                        <a href="admin_exhibitions.html" class="small text-decoration-none">詳細・削除対応 &raquo;</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-custom p-3 bg-white border-start border-primary border-4">
+                        <div class="text-muted small fw-bold">未回答のお問い合わせ</div>
+                        <h3 class="fw-bold text-primary my-1">5 <small class="fs-6">件</small></h3>
+                        <a href="admin_inquiries.html" class="small text-decoration-none">問い合わせ一覧 &raquo;</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-custom p-3 bg-white border-start border-success border-4">
+                        <div class="text-muted small fw-bold">総登録会員数</div>
+                        <h3 class="fw-bold text-success my-1">128 <small class="fs-6">名</small></h3>
+                        <a href="admin_users.html" class="small text-decoration-none">会員管理 &raquo;</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 管理機能メニューエリア -->
+            <div class="card card-custom p-4 bg-white mb-4">
+                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-list-check me-2 text-danger"></i>管理者メニュー</h5>
+                <div class="row row-cols-1 row-cols-md-3 g-3">
+                    <div class="col">
+                        <a href="admin_reviews.html" class="btn btn-outline-danger w-100 p-3 text-start h-100">
+                            <div class="fw-bold mb-1"><i class="fa-solid fa-comment-slash me-2"></i>レビュー管理・削除</div>
+                            <small class="text-muted">ユーザーからの通報・不適切なコメントの削除を行います。</small>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="admin_exhibitions.html" class="btn btn-outline-danger w-100 p-3 text-start h-100">
+                            <div class="fw-bold mb-1"><i class="fa-solid fa-box-archive me-2"></i>出品物管理・削除</div>
+                            <small class="text-muted">規約違反出品や通報のあった出品物の強制削除・停止を行います。</small>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="admin_inquiries.html" class="btn btn-outline-primary w-100 p-3 text-start h-100">
+                            <div class="fw-bold mb-1"><i class="fa-solid fa-inbox me-2"></i>お問い合わせ対応</div>
+                            <small class="text-muted">ユーザーからの質問・不具合報告の確認を行います。</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん（管理モード）</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
