@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカウント削除 - しょかんくん</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <nav class="navbar navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold text-white" href="#">
+                    <i class="fa-solid fa-book-open me-2 text-info"></i>しょかんくん
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 d-flex justify-content-center">
+
+                    <div class="card card-custom p-4 bg-white">
+                        <div class="text-center mb-4">
+                            <h4 class="fw-bold text-danger"><i class="fa-solid fa-user-xmark me-2"></i>アカウント削除の確認</h4>
+                            <p class="text-muted small mb-0">退会手続きを行う前に、以下の注意事項をご確認ください。</p>
+                        </div>
+
+                        <!-- 警告エリア -->
+                        <div class="alert alert-warning border-warning text-dark mb-4 small" role="alert">
+                            <h6 class="fw-bold text-danger mb-2"><i
+                                    class="fa-solid fa-triangle-exclamation me-1"></i>ご注意ください</h6>
+                            <ul class="mb-0 ps-3">
+                                <li>アカウントを削除すると、これまでの登録書籍データやレビュー・メッセージ履歴などはすべて復元できなくなります。</li>
+                                <li>現在出品中の商品や、取引進行中のデータがある場合は手続き完了まで削除できません。</li>
+                            </ul>
+                        </div>
+
+                        <form action="account_delete_complete.html" method="post">
+                            <!-- 削除理由（任意） -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">退会理由（任意）</label>
+                                <select class="form-select form-select-sm">
+                                    <option value="" selected>選択してください</option>
+                                    <option value="1">利用しなくなったため</option>
+                                    <option value="2">欲しい本が見つからなかったため</option>
+                                    <option value="3">使い方が分からなかったため</option>
+                                    <option value="4">その他</option>
+                                </select>
+                            </div>
+
+                            <!-- 本人確認パスワード -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold small">パスワードの確認 <span
+                                        class="badge bg-danger">必須</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                    <input type="password" name="password" class="form-control"
+                                        placeholder="現在使用中のパスワードを入力" required>
+                                </div>
+                                <div class="form-text">セキュリティ保護のため、パスワードの再入力をお願いします。</div>
+                            </div>
+
+                            <!-- 同意チェックボックス -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" value="" id="confirmCheck" required>
+                                <label class="form-check-input-label small text-dark fw-bold" for="confirmCheck">
+                                    注意事項を理解した上で、アカウントの削除に同意します。
+                                </label>
+                            </div>
+
+                            <!-- アクションボタン -->
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" class="btn btn-danger fw-bold py-2">
+                                    <i class="fa-solid fa-trash-can me-2"></i>アカウントを完全に削除する
+                                </button>
+                                <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                                    キャンセルして戻る
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
