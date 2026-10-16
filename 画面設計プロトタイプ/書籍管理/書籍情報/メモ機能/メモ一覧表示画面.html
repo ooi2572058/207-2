@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メモのある書籍一覧 | しょかんくん管理者</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --admin-color: #c0392b;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar-admin {
+            background-color: var(--admin-color) !important;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-dark navbar-admin">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#"><i
+                        class="fa-solid fa-user-shield me-2"></i>しょかんくん【管理者】</a>
+                <span class="text-white small fw-bold"><i class="fa-solid fa-list-check me-1"></i>メモ一覧</span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-4">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-dark mb-0">
+                    <i class="fa-solid fa-note-sticky me-2 text-warning"></i>メモのある書籍一覧
+                    <span class="badge bg-danger fs-6 ms-2">3 件のメモ登録</span>
+                </h5>
+                <a href="admin_memo_search.html" class="btn btn-warning btn-sm text-dark fw-bold">
+                    <i class="fa-solid fa-plus me-1"></i>新規メモを追加する
+                </a>
+            </div>
+
+            <!-- メモ一覧カードテーブル -->
+            <div class="card card-custom bg-white p-3">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small">
+                            <tr>
+                                <th>状態区分</th>
+                                <th>書籍タイトル / ISBN</th>
+                                <th>メモ内容</th>
+                                <th>登録日</th>
+                                <th class="text-end">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small">
+                            <!-- 件数 1 -->
+                            <tr>
+                                <td><span class="badge bg-danger">破損</span></td>
+                                <td>
+                                    <div class="fw-bold">SQL & DB基本のきほん</div>
+                                    <div class="text-muted extra-small">ISBN: 9784999999999</div>
+                                </td>
+                                <td>カバー背表紙部分に大きな破損あり。保管場所B-2へ移動済み。</td>
+                                <td class="text-muted">2026/10/15</td>
+                                <td class="text-end">
+                                    <a href="admin_memo_process.html"
+                                        class="btn btn-outline-primary btn-sm fw-bold">編集</a>
+                                </td>
+                            </tr>
+                            <!-- 件数 2 -->
+                            <tr>
+                                <td><span class="badge bg-warning text-dark">不備</span></td>
+                                <td>
+                                    <div class="fw-bold">PythonWebフレームワーク</div>
+                                    <div class="text-muted extra-small">ISBN: 9784888888888</div>
+                                </td>
+                                <td>付属CD-ROM欠品。貸出時に注意喚起が必要。</td>
+                                <td class="text-muted">2026/10/10</td>
+                                <td class="text-end">
+                                    <a href="admin_memo_process.html"
+                                        class="btn btn-outline-primary btn-sm fw-bold">編集</a>
+                                </td>
+                            </tr>
+                            <!-- 件数 3 -->
+                            <tr>
+                                <td><span class="badge bg-dark">紛失</span></td>
+                                <td>
+                                    <div class="fw-bold">アルゴリズム図鑑</div>
+                                    <div class="text-muted extra-small">ISBN: 9784777777777</div>
+                                </td>
+                                <td>棚卸しにて所在不明を確認。再調査中。</td>
+                                <td class="text-muted">2026/10/01</td>
+                                <td class="text-end">
+                                    <a href="admin_memo_process.html"
+                                        class="btn btn-outline-primary btn-sm fw-bold">編集</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="mt-3 text-start">
+                <a href="home_admin.html" class="btn btn-outline-secondary btn-sm">
+                    <i class="fa-solid fa-arrow-left me-1"></i>管理者ホームへ戻る
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

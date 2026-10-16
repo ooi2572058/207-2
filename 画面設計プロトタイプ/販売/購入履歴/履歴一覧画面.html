@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入履歴 - しょかんくん</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 商品サムネイル用ダミー */
+        .item-thumb {
+            width: 70px;
+            height: 70px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #18bc9c, #128f76);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .item-thumb-book {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <nav class="navbar navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#">
+                    <i class="fa-solid fa-book-open me-2 text-info"></i>しょかんくん
+                </a>
+                <div class="d-flex align-items-center">
+                    <a href="shop_top.html" class="btn btn-outline-info btn-sm me-2">ショップTOP</a>
+                    <a href="home_user.html" class="btn btn-outline-light btn-sm">マイページ</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+
+            <!-- パンくずリスト導線 -->
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb small">
+                    <li class="breadcrumb-item"><a href="home_user.html" class="text-decoration-none">ホーム</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">購入履歴</li>
+                </ol>
+            </nav>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold text-dark mb-0">
+                    <i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>購入履歴
+                </h4>
+                <span class="badge bg-secondary fs-6">全 2 件の注文</span>
+            </div>
+
+            <!-- 注文履歴カード 1 -->
+            <div class="card card-custom mb-4 bg-white">
+                <div class="card-header bg-light d-flex flex-wrap justify-content-between align-items-center py-3">
+                    <div class="me-3 mb-1 mb-md-0">
+                        <span class="small text-muted me-2">注文日: <strong>2026年10月15日</strong></span>
+                        <span class="small text-muted">注文番号: <strong>#ORD-20261015-01</strong></span>
+                    </div>
+                    <div>
+                        <span class="badge bg-success me-2"><i class="fa-solid fa-truck-fast me-1"></i>発送完了</span>
+                        <span class="fw-bold text-dark fs-5">合計: ¥1,760</span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+
+                    <!-- 注文商品リスト -->
+                    <div class="d-flex align-items-center border-bottom pb-3 mb-3">
+                        <div class="item-thumb me-3">
+                            <i class="fa-solid fa-bookmark"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="fw-bold text-dark mb-1">しょかんくん特製 真鍮メタルしおり（透かし彫りデザイン）</h6>
+                            <p class="small text-muted mb-0">著者 / 制作者: しょかんくん公式デザイン部</p>
+                            <small class="text-secondary">単価: ¥880 × 数量: 2</small>
+                        </div>
+                        <div class="text-end ms-3">
+                            <a href="shop_item_detail.html" class="btn btn-outline-primary btn-sm fw-bold">再度購入する</a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center small text-muted">
+                        <div>
+                            <i class="fa-solid fa-credit-card me-1"></i> 支払い方法: クレジットカード決済
+                        </div>
+                        <div>
+                            <a href="#" class="text-decoration-none me-3"><i
+                                    class="fa-solid fa-file-invoice me-1"></i>領収書を表示</a>
+                            <a href="#" class="text-decoration-none"><i
+                                    class="fa-solid fa-box-open me-1"></i>配送状況を確認</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 注文履歴カード 2 -->
+            <div class="card card-custom mb-4 bg-white">
+                <div class="card-header bg-light d-flex flex-wrap justify-content-between align-items-center py-3">
+                    <div class="me-3 mb-1 mb-md-0">
+                        <span class="small text-muted me-2">注文日: <strong>2026年09月28日</strong></span>
+                        <span class="small text-muted">注文番号: <strong>#ORD-20260928-04</strong></span>
+                    </div>
+                    <div>
+                        <span class="badge bg-secondary me-2"><i class="fa-solid fa-box-check me-1"></i>配達完了</span>
+                        <span class="fw-bold text-dark fs-5">合計: ¥2,400</span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+
+                    <!-- 注文商品リスト -->
+                    <div class="d-flex align-items-center border-bottom pb-3 mb-3">
+                        <div class="item-thumb item-thumb-book me-3">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="fw-bold text-dark mb-1">Webデザイン完全ガイド 第3版</h6>
+                            <p class="small text-muted mb-0">著者 / 出版: 技術出版 / 一般ユーザー出品古本</p>
+                            <small class="text-secondary">単価: ¥2,400 × 数量: 1</small>
+                        </div>
+                        <div class="text-end ms-3">
+                            <a href="review_post.html" class="btn btn-outline-success btn-sm fw-bold"><i
+                                    class="fa-solid fa-star me-1"></i>レビューを書く</a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center small text-muted">
+                        <div>
+                            <i class="fa-solid fa-store me-1"></i> 販売元: しょかんくん ユーザー売買マーケット
+                        </div>
+                        <div>
+                            <a href="#" class="text-decoration-none"><i
+                                    class="fa-solid fa-file-invoice me-1"></i>領収書を表示</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 戻るボタン -->
+            <div class="mt-4 text-start">
+                <a href="home_user.html" class="btn btn-outline-secondary btn-sm">
+                    <i class="fa-solid fa-arrow-left me-1"></i>ホーム（マイページ）へ戻る
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

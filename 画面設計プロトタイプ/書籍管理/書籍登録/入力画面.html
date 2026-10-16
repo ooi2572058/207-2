@@ -14,6 +14,7 @@
     <!-- 統合されたCSSスタイル -->
     <style>
         @charset "UTF-8";
+
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #18bc9c;
@@ -113,7 +114,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
-                        </li>   
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#"><i class="fa-solid fa-barcode me-1"></i>書籍登録</a>
                         </li>
@@ -123,13 +124,18 @@
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown">
                                 <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow">
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger" href="#"><i
+                                            class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -148,19 +154,22 @@
                             <h5 class="mb-0 text-secondary"><i class="fa-solid fa-barcode me-2"></i>書籍登録・検索入力</h5>
                         </div>
                         <div class="card-body p-4">
-                            <p class="text-muted small mb-4">タイトル、ISBNコード、または表紙写真のいずれかの方法（または複数同時）で公開データベースから書籍を検索し、登録候補を指定できます。</p>
-                            
+                            <p class="text-muted small mb-4">
+                                タイトル、ISBNコード、または表紙写真のいずれかの方法（または複数同時）で公開データベースから書籍を検索し、登録候補を指定できます。</p>
+
                             <form>
                                 <!-- タイトル検索 -->
                                 <div class="mb-3">
                                     <label for="bookTitle" class="form-label fw-bold">タイトル名で検索</label>
-                                    <input type="text" class="form-control" id="bookTitle" placeholder="例：詳解 ソフトウェアアーキテクチャ">
+                                    <input type="text" class="form-control" id="bookTitle"
+                                        placeholder="例：詳解 ソフトウェアアーキテクチャ">
                                 </div>
 
                                 <!-- ISBNコード検索（複数対応可） -->
                                 <div class="mb-3">
                                     <label for="bookIsbn" class="form-label fw-bold">ISBNコード（バーコード）検索</label>
-                                    <textarea class="form-control" id="bookIsbn" rows="2" placeholder="978-4-XXXXXXXX-X （複数入力する場合は改行区切りで複数冊同時に検索可能）"></textarea>
+                                    <textarea class="form-control" id="bookIsbn" rows="2"
+                                        placeholder="978-4-XXXXXXXX-X （複数入力する場合は改行区切りで複数冊同時に検索可能）"></textarea>
                                     <div class="form-text">バーコードリーダー読み取り、または複数冊のISBNコードを一度に入力できます。</div>
                                 </div>
 
@@ -176,7 +185,8 @@
                                 <!-- ボタン群 -->
                                 <div class="d-flex justify-content-end gap-2">
                                     <button type="reset" class="btn btn-secondary">リセット</button>
-                                    <a href="#" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass me-1"></i>データベースから検索する</a>
+                                    <a href="#" class="btn btn-primary"><i
+                                            class="fa-solid fa-magnifying-glass me-1"></i>データベースから検索する</a>
                                 </div>
                             </form>
                         </div>
