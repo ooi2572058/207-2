@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新しいパスワードの設定 - しょかんくん</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#">
+                    <i class="fa-solid fa-book-open me-2 text-info"></i>しょかんくん
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-5">
+        <div class="container d-flex justify-content-center">
+            <div class="card card-custom p-4 bg-white">
+                <div class="text-center mb-4">
+                    <h4 class="fw-bold text-dark"><i class="fa-key fa-solid me-2 text-primary"></i>新しいパスワードの設定</h4>
+                    <p class="text-muted small mb-0">新しいパスワードを入力してください。</p>
+                </div>
+
+                <form action="login.html" method="post">
+                    <!-- トークン保持（非表示） -->
+                    <input type="hidden" name="token" value="abc123xyz_sample_token">
+
+                    <!-- 新しいパスワード -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">新しいパスワード</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-lock fa-solid"></i></span>
+                            <input type="password" name="new_password" class="form-control" placeholder="半角英数8文字以上"
+                                required>
+                        </div>
+                    </div>
+
+                    <!-- 新しいパスワード（確認用） -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small">新しいパスワード（確認用）</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-shield-halved fa-solid"></i></span>
+                            <input type="password" name="new_password_confirm" class="form-control"
+                                placeholder="もう一度入力してください" required>
+                        </div>
+                    </div>
+
+                    <!-- 変更確定ボタン -->
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-primary fw-bold py-2">
+                            <i class="fa-check fa-solid me-1"></i>パスワードを変更してログインへ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
