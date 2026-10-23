@@ -141,6 +141,7 @@
                             <tr>
                                 <th style="width: 40px;" class="text-center">選択</th>
                                 <th>管理ID / 書籍名</th>
+                                <th>貸出元</th>
                                 <th>ジャンル</th>
                                 <th>返却予定日</th>
                                 <th>元の保管場所</th>
@@ -150,11 +151,14 @@
                             <!-- 借りている本 1 -->
                             <tr>
                                 <td class="text-center">
-                                    <input class="form-check-input book-checkbox" type="checkbox" value="Javaプログラミング入門 第2版" data-location="A棚 - 2段目">
+                                    <input class="form-check-input book-checkbox" type="checkbox" value="Javaプログラミング入門 第2版" data-corp="株式会社テックブックス" data-location="A棚 - 2段目">
                                 </td>
                                 <td>
                                     <span class="badge bg-secondary d-inline-block mb-1">BK-00123</span>
                                     <div class="fw-bold text-dark">Javaプログラミング入門 第2版</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-dark text-white"><i class="fa-solid fa-building me-1 text-info"></i>株式会社テックブックス</span>
                                 </td>
                                 <td><span class="badge bg-info text-dark">プログラミング</span></td>
                                 <td><span class="text-danger fw-bold">2026/11/25</span></td>
@@ -164,15 +168,35 @@
                             <!-- 借りている本 2 -->
                             <tr>
                                 <td class="text-center">
-                                    <input class="form-check-input book-checkbox" type="checkbox" value="リーダブルコード" data-location="A棚 - 2段目">
+                                    <input class="form-check-input book-checkbox" type="checkbox" value="リーダブルコード" data-corp="株式会社テックブックス" data-location="A棚 - 2段目">
                                 </td>
                                 <td>
                                     <span class="badge bg-secondary d-inline-block mb-1">BK-00125</span>
                                     <div class="fw-bold text-dark">リーダブルコード</div>
                                 </td>
+                                <td>
+                                    <span class="badge bg-dark text-white"><i class="fa-solid fa-building me-1 text-info"></i>株式会社テックブックス</span>
+                                </td>
                                 <td><span class="badge bg-info text-dark">プログラミング</span></td>
                                 <td><span class="text-dark">2026/11/25</span></td>
                                 <td><i class="fa-solid fa-location-dot text-danger me-1"></i>A棚 - 2段目</td>
+                            </tr>
+
+                            <!-- 借りている本 3（別法人の例） -->
+                            <tr>
+                                <td class="text-center">
+                                    <input class="form-check-input book-checkbox" type="checkbox" value="Pythonではじめる機械学習" data-corp="未来テクノロジー株式会社" data-location="B棚 - 1段目">
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary d-inline-block mb-1">BK-00301</span>
+                                    <div class="fw-bold text-dark">Pythonではじめる機械学習</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary text-white"><i class="fa-solid fa-building me-1 text-warning"></i>未来テクノロジー株式会社</span>
+                                </td>
+                                <td><span class="badge bg-info text-dark">AI・データサイエンス</span></td>
+                                <td><span class="text-danger fw-bold">2026/11/10</span></td>
+                                <td><i class="fa-solid fa-location-dot text-danger me-1"></i>B棚 - 1段目</td>
                             </tr>
                         </tbody>
                     </table>
@@ -249,15 +273,16 @@
             const checkedBoxes = document.querySelectorAll('.book-checkbox:checked');
             checkedBoxes.forEach(box => {
                 const bookTitle = box.value;
+                const corpName = box.getAttribute('data-corp');
                 const location = box.getAttribute('data-location');
                 
                 const li = document.createElement('li');
                 li.className = 'list-group-item d-flex justify-content-between align-items-center';
-                li.innerHTML = `${bookTitle} <span class="badge bg-secondary">返却先: ${location}</span>`;
+                li.innerHTML = `<div><strong>${bookTitle}</strong><br><small class="text-muted"><i class="fa-solid fa-building me-1"></i>${corpName}</small></div> <span class="badge bg-secondary">返却先: ${location}</span>`;
                 modalBookList.appendChild(li);
             });
         }
     </script>
 </body>
 
-</html>
+</html> 
