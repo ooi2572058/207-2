@@ -54,6 +54,20 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
+        .qr-placeholder {
+            width: 120px;
+            height: 120px;
+            background-color: #ffffff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 3rem;
+            margin: 0 auto;
+        }
+
         .footer {
             background-color: #2c3e50;
             color: #ffffff;
@@ -122,6 +136,32 @@
                 </div>
                 <div class="mt-2 mt-md-0">
                     <span class="badge bg-warning text-dark p-2">承認待ち申請: <strong>2</strong> 件</span>
+                </div>
+            </div>
+
+            <!-- 非メンバー・共有アクセス用 QR/URL案内カード -->
+            <div class="card card-custom p-4 mb-4 bg-light border-start border-success border-4">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center mb-3 mb-md-0">
+                        <!-- QRコードプレビュー（実際のプロジェクトではQR生成ライブラリや画像に置き換え） -->
+                        <div class="qr-placeholder shadow-sm">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <span class="small text-muted d-block mt-2">社内掲示・本棚用QRコード</span>
+                    </div>
+                    <div class="col-md-9">
+                        <h5 class="fw-bold text-dark mb-2"><i class="fa-solid fa-share-nodes me-2 text-success"></i>非メンバー・ゲスト向け 貸出選択アクセス案内</h5>
+                        <p class="text-muted small mb-3">
+                            アカウント登録やログインをしていないメンバー外の方でも、下記の専用URLまたはQRコードを読み取ることで、簡易的に貸出選択画面へアクセスして申請を行うことができます。
+                        </p>
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white" id="publicRentalUrl" value="https://shokan-kun.app/public/rental/corp_tech_books" readonly>
+                            <button class="btn btn-outline-success fw-bold px-3" type="button" onclick="copyPublicUrl()">
+                                <i class="fa-solid fa-copy me-1"></i>URLをコピー
+                            </button>
+                        </div>
+                        <div class="form-text small text-success mt-1" id="copyMsg" style="display: none;"><i class="fa-solid fa-check me-1"></i>専用URLをクリップボードにコピーしました！</div>
+                    </div>
                 </div>
             </div>
 
@@ -199,7 +239,7 @@
                 </div>
             </div>
 
-            <!-- 処理済み履歴セクション（折りたたみまたは別タブ想定） -->
+            <!-- 処理済み履歴セクション -->
             <div class="card card-custom p-4">
                 <h5 class="fw-bold text-muted mb-3"><i class="fa-solid fa-history me-2"></i>本日の処理済み履歴</h5>
                 <div class="table-responsive">
@@ -264,6 +304,20 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function copyPublicUrl() {
+            const urlInput = document.getElementById('publicRentalUrl');
+            urlInput.select();
+            urlInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(urlInput.value);
+
+            const copyMsg = document.getElementById('copyMsg');
+            copyMsg.style.display = 'block';
+            setTimeout(() => {
+                copyMsg.style.display = 'none';
+            }, 3000);
+        }
+    </script>
 </body>
 
 </html>
