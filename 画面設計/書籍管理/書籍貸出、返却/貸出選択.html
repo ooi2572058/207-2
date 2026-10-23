@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍の貸出申請（選択数制限付き） - しょかんくん</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #2c3e50 !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: #18bc9c;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .card-custom {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー / base.html同期ナビゲーション（一般ユーザー向け） -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand" href="home.html">
+                    <i class="fa-solid fa-book-open me-2"></i>しょかんくん
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="home.html"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="my_library.html"><i class="fa-solid fa-book-bookmark me-1"></i>個人ライブラリ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="listing_list.html"><i class="fa-solid fa-store me-1"></i>古本マーケット</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="user_rental_request.html"><i class="fa-solid fa-hand-holding-book me-1"></i>法人蔵書を借りる</a>
+                        </li>
+                    </ul>
+
+                    <!-- ユーザーメニュー -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>本好き太郎
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="account_settings.html"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="index.html"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+
+            <!-- ページヘッダー -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold text-secondary mb-1"><i class="fa-solid fa-hand-holding-book me-2"></i>法人ライブラリ 蔵書一覧・一括貸出申請</h3>
+                    <p class="text-muted small mb-0">一度に最大2冊までチェックを入れて、まとめて貸出申請を行うことができます。</p>
+                </div>
+                <div class="mt-2 mt-md-0">
+                    <span class="badge bg-primary p-2" id="selectionCountBadge">選択中: <strong>0</strong> / 2 冊</span>
+                </div>
+            </div>
+
+            <!-- 検索・絞り込みフォーム -->
+            <div class="card card-custom p-3 mb-4">
+                <form class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                            <input type="text" class="form-control" placeholder="書籍名やキーワードで検索...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select">
+                            <option value="">すべてのステータス</option>
+                            <option value="available" selected>貸出可能のみ</option>
+                            <option value="rented">貸出中</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-filter me-1"></i>検索</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 蔵書一覧テーブル -->
+            <div class="card card-custom p-4">
+                <!-- 一括操作アクションバー -->
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                    <span class="text-muted small"><i class="fa-solid fa-circle-info me-1"></i>最大2冊まで選択できます。</span>
+                    <button type="button" class="btn btn-primary btn-sm fw-bold px-3" id="openModalBtn" data-bs-toggle="modal" data-bs-target="#userBatchRentalModal" disabled>
+                        <i class="fa-solid fa-book-medical me-1"></i>選択した本を一括で借りる手続き (<span id="selectedCountBtn">0</span>/2)
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 40px;" class="text-center">選択</th>
+                                <th>管理ID / 書籍名</th>
+                                <th>ジャンル</th>
+                                <th>保管場所</th>
+                                <th>貸出ステータス</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 書籍 1 -->
+                            <tr>
+                                <td class="text-center">
+                                    <input class="form-check-input book-checkbox" type="checkbox" value="Javaプログラミング入門 第2版" data-location="A棚 - 2段目">
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary d-inline-block mb-1">BK-00123</span>
+                                    <div class="fw-bold text-dark">Javaプログラミング入門 第2版</div>
+                                </td>
+                                <td><span class="badge bg-info text-dark">プログラミング</span></td>
+                                <td><i class="fa-solid fa-location-dot text-danger me-1"></i>A棚 - 2段目</td>
+                                <td><span class="badge bg-success px-2 py-1"><i class="fa-solid fa-circle-check me-1"></i>貸出可能</span></td>
+                            </tr>
+
+                            <!-- 書籍 2（貸出中） -->
+                            <tr>
+                                <td class="text-center">
+                                    <input class="form-check-input" type="checkbox" disabled>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary d-inline-block mb-1">BK-00124</span>
+                                    <div class="fw-bold text-dark">スッキリわかるJava入門 第3版</div>
+                                </td>
+                                <td><span class="badge bg-info text-dark">プログラミング</span></td>
+                                <td><i class="fa-solid fa-location-dot text-danger me-1"></i>A棚 - 2段目</td>
+                                <td><span class="badge bg-warning text-dark px-2 py-1"><i class="fa-solid fa-clock me-1"></i>貸出中（他のメンバー）</span></td>
+                            </tr>
+
+                            <!-- 書籍 3 -->
+                            <tr>
+                                <td class="text-center">
+                                    <input class="form-check-input book-checkbox" type="checkbox" value="リーダブルコード" data-location="A棚 - 2段目">
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary d-inline-block mb-1">BK-00125</span>
+                                    <div class="fw-bold text-dark">リーダブルコード</div>
+                                </td>
+                                <td><span class="badge bg-info text-dark">プログラミング</span></td>
+                                <td><i class="fa-solid fa-location-dot text-danger me-1"></i>A棚 - 2段目</td>
+                                <td><span class="badge bg-success px-2 py-1"><i class="fa-solid fa-circle-check me-1"></i>貸出可能</span></td>
+                            </tr>
+
+                            <!-- 書籍 4 -->
+                            <tr>
+                                <td class="text-center">
+                                    <input class="form-check-input book-checkbox" type="checkbox" value="Pythonではじめる機械学習" data-location="B棚 - 1段目">
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary d-inline-block mb-1">BK-00126</span>
+                                    <div class="fw-bold text-dark">Pythonではじめる機械学習</div>
+                                </td>
+                                <td><span class="badge bg-info text-dark">AI・データサイエンス</span></td>
+                                <td><i class="fa-solid fa-location-dot text-danger me-1"></i>B棚 - 1段目</td>
+                                <td><span class="badge bg-success px-2 py-1"><i class="fa-solid fa-circle-check me-1"></i>貸出可能</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 一括貸出申請モーダル -->
+    <div class="modal fade" id="userBatchRentalModal" tabindex="-1" aria-labelledby="userBatchRentalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="userBatchRentalModalLabel"><i class="fa-solid fa-hand-holding-book me-2"></i>一括貸出申請の確認</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">選択した書籍一覧</label>
+                            <ul class="list-group small mb-3" id="modalBookList">
+                                <!-- JavaScriptで動的に挿入 -->
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <label for="batchReturnDate" class="form-label fw-bold">共通返却予定日 <span class="badge bg-danger">必須</span></label>
+                            <input type="date" class="form-control" id="batchReturnDate" value="2026-11-25">
+                        </div>
+                        <div class="form-text small text-muted">※指定された保管場所から書籍をお取りください。</div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary px-4 fw-bold" data-bs-dismiss="modal" onclick="alert('選択した書籍の一括貸出申請を受け付けました。'); location.reload();">一括申請を確定する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 書籍管理システム All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 貸出上限数
+        const MAX_SELECTION = 2;
+
+        const checkboxes = document.querySelectorAll('.book-checkbox');
+        const selectionCountBadge = document.querySelector('#selectionCountBadge strong');
+        const selectedCountBtn = document.getElementById('selectedCountBtn');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const modalBookList = document.getElementById('modalBookList');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checkedCount = document.querySelectorAll('.book-checkbox:checked').length;
+
+                // 上限数に達した場合、未選択のチェックボックスを一時的に無効化する
+                if (checkedCount >= MAX_SELECTION) {
+                    checkboxes.forEach(box => {
+                        if (!box.checked) {
+                            box.disabled = true;
+                        }
+                    });
+                } else {
+                    checkboxes.forEach(box => {
+                        box.disabled = false;
+                    });
+                }
+
+                // 表示の更新
+                selectionCountBadge.textContent = checkedCount;
+                selectedCountBtn.textContent = checkedCount;
+
+                if (checkedCount > 0) {
+                    openModalBtn.disabled = false;
+                } else {
+                    openModalBtn.disabled = true;
+                }
+
+                // モーダル内のリストを更新
+                updateModalList();
+            });
+        });
+
+        function updateModalList() {
+            modalBookList.innerHTML = '';
+            const checkedBoxes = document.querySelectorAll('.book-checkbox:checked');
+            checkedBoxes.forEach(box => {
+                const bookTitle = box.value;
+                const location = box.getAttribute('data-location');
+                
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.innerHTML = `${bookTitle} <span class="badge bg-secondary">${location}</span>`;
+                modalBookList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+
+</html>

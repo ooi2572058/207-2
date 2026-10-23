@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>貸出申請の承認・管理 - しょかんくん（法人向け）</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #2c3e50 !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand i {
+            color: #18bc9c;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .card-custom {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .qr-placeholder {
+            width: 120px;
+            height: 120px;
+            background-color: #ffffff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 3rem;
+            margin: 0 auto;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー / base.html同期ナビゲーション（法人向け） -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand" href="home_corporate.html">
+                    <i class="fa-solid fa-building-user me-2"></i>しょかんくん <small class="fs-6 text-info">(法人向け)</small>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="home_corporate.html"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="corporate_rental.html"><i class="fa-solid fa-hand-holding-book me-1"></i>貸出管理</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="corporate_rental_approval.html"><i class="fa-solid fa-clipboard-check me-1"></i>貸出申請承認 <span class="badge bg-warning text-dark ms-1">2</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="corporate_settings.html"><i class="fa-solid fa-gear me-1"></i>法人設定</a>
+                        </li>
+                    </ul>
+
+                    <!-- ユーザー・法人メニュー -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-circle-user me-1"></i>株式会社テックブックス（管理者）
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="corporate_settings.html"><i class="fa-solid fa-gear me-2"></i>組織設定</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="index.html"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+
+            <!-- ページヘッダー -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold text-secondary mb-1"><i class="fa-solid fa-clipboard-check me-2"></i>ユーザーからの貸出申請 承認・管理</h3>
+                    <p class="text-muted small mb-0">メンバーが選択画面から申請した貸出内容を確認し、承認または拒否を行います。</p>
+                </div>
+                <div class="mt-2 mt-md-0">
+                    <span class="badge bg-warning text-dark p-2">承認待ち申請: <strong>2</strong> 件</span>
+                </div>
+            </div>
+
+            <!-- 非メンバー・共有アクセス用 QR/URL案内カード -->
+            <div class="card card-custom p-4 mb-4 bg-light border-start border-success border-4">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center mb-3 mb-md-0">
+                        <!-- QRコードプレビュー（実際のプロジェクトではQR生成ライブラリや画像に置き換え） -->
+                        <div class="qr-placeholder shadow-sm">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <span class="small text-muted d-block mt-2">社内掲示・本棚用QRコード</span>
+                    </div>
+                    <div class="col-md-9">
+                        <h5 class="fw-bold text-dark mb-2"><i class="fa-solid fa-share-nodes me-2 text-success"></i>非メンバー・ゲスト向け 貸出選択アクセス案内</h5>
+                        <p class="text-muted small mb-3">
+                            アカウント登録やログインをしていないメンバー外の方でも、下記の専用URLまたはQRコードを読み取ることで、簡易的に貸出選択画面へアクセスして申請を行うことができます。
+                        </p>
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-white" id="publicRentalUrl" value="https://shokan-kun.app/public/rental/corp_tech_books" readonly>
+                            <button class="btn btn-outline-success fw-bold px-3" type="button" onclick="copyPublicUrl()">
+                                <i class="fa-solid fa-copy me-1"></i>URLをコピー
+                            </button>
+                        </div>
+                        <div class="form-text small text-success mt-1" id="copyMsg" style="display: none;"><i class="fa-solid fa-check me-1"></i>専用URLをクリップボードにコピーしました！</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 申請一覧カード -->
+            <div class="card card-custom p-4 mb-4">
+                <h5 class="fw-bold text-secondary mb-3"><i class="fa-solid fa-list-check me-2"></i>未処理の申請一覧</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>申請日時</th>
+                                <th>申請者</th>
+                                <th>希望書籍・保管場所</th>
+                                <th>返却予定日</th>
+                                <th>ステータス</th>
+                                <th class="text-center">アクション（承認 / 拒否）</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 申請 1件目 -->
+                            <tr>
+                                <td>2026/10/25 14:15</td>
+                                <td>
+                                    <div class="fw-bold text-dark"><i class="fa-solid fa-user me-1 text-primary"></i>本好き太郎</div>
+                                    <small class="text-muted">ID: USR-0042</small>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled mb-0 small">
+                                        <li><strong>・Javaプログラミング入門 第2版</strong> <span class="badge bg-secondary">A棚 - 2段目</span></li>
+                                        <li><strong>・リーダブルコード</strong> <span class="badge bg-secondary">A棚 - 2段目</span></li>
+                                    </ul>
+                                </td>
+                                <td>2026/11/25</td>
+                                <td><span class="badge bg-warning text-dark px-2 py-1"><i class="fa-solid fa-clock me-1"></i>承認待ち</span></td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-success btn-sm fw-bold px-3" onclick="alert('申請を承認しました。ユーザーに通知が送信されます。'); location.reload();">
+                                            <i class="fa-solid fa-check me-1"></i>承認
+                                        </button>
+                                        <button class="btn btn-outline-danger btn-sm fw-bold px-3" data-bs-toggle="modal" data-bs-target="#rejectModal" data-user="本好き太郎">
+                                            <i class="fa-solid fa-xmark me-1"></i>拒否
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- 申請 2件目 -->
+                            <tr>
+                                <td>2026/10/25 11:30</td>
+                                <td>
+                                    <div class="fw-bold text-dark"><i class="fa-solid fa-user me-1 text-primary"></i>山田 花子</div>
+                                    <small class="text-muted">ID: USR-0089</small>
+                                </td>
+                                <td>
+                                    <ul class="list-unstyled mb-0 small">
+                                        <li><strong>・Pythonではじめる機械学習</strong> <span class="badge bg-secondary">B棚 - 1段目</span></li>
+                                    </ul>
+                                </td>
+                                <td>2026/11/15</td>
+                                <td><span class="badge bg-warning text-dark px-2 py-1"><i class="fa-solid fa-clock me-1"></i>承認待ち</span></td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-success btn-sm fw-bold px-3" onclick="alert('申請を承認しました。'); location.reload();">
+                                            <i class="fa-solid fa-check me-1"></i>承認
+                                        </button>
+                                        <button class="btn btn-outline-danger btn-sm fw-bold px-3" data-bs-toggle="modal" data-bs-target="#rejectModal" data-user="山田 花子">
+                                            <i class="fa-solid fa-xmark me-1"></i>拒否
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 処理済み履歴セクション -->
+            <div class="card card-custom p-4">
+                <h5 class="fw-bold text-muted mb-3"><i class="fa-solid fa-history me-2"></i>本日の処理済み履歴</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm text-muted align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>処理日時</th>
+                                <th>申請者</th>
+                                <th>書籍名</th>
+                                <th>結果</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026/10/24 18:00</td>
+                                <td>鈴木 一郎</td>
+                                <td>スッキリわかるJava入門 第3版</td>
+                                <td><span class="badge bg-success">承認済み</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 拒否理由入力モーダル -->
+    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold" id="rejectModalLabel"><i class="fa-solid fa-triangle-exclamation me-2"></i>貸出申請の拒否</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">対象ユーザー</label>
+                            <input type="text" class="form-control fw-bold bg-light" value="本好き太郎" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rejectReason" class="form-label fw-bold">拒否理由（任意・ユーザーに通知されます）</label>
+                            <textarea class="form-control" id="rejectReason" rows="3" placeholder="例: 該当書籍がすでに別件の研修で長期持ち出し中のため、今回は見送りとさせていただきます。"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-danger px-4 fw-bold" data-bs-dismiss="modal" onclick="alert('申請を拒否しました。');">拒否を確定する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 書籍管理システム All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function copyPublicUrl() {
+            const urlInput = document.getElementById('publicRentalUrl');
+            urlInput.select();
+            urlInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(urlInput.value);
+
+            const copyMsg = document.getElementById('copyMsg');
+            copyMsg.style.display = 'block';
+            setTimeout(() => {
+                copyMsg.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

@@ -71,7 +71,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            display: flex;
+            display: fקlex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
@@ -110,13 +110,14 @@
     <main class="py-4">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-9 col-lg-7">
 
                     <div class="card card-custom p-4 bg-white">
                         <div class="text-center mb-4">
-                            <h4 class="fw-bold text-dark"><i
-                                    class="fa-solid fa-user-gear me-2 text-primary"></i>プロフィール編集</h4>
-                            <p class="text-muted small mb-0">アイコン画像やご登録情報の変更が行えます</p>
+                            <h4 class="fw-bold text-dark">
+                                <i class="fa-solid fa-user-gear me-2 text-primary"></i>プロフィール編集
+                            </h4>
+                            <p class="text-muted small mb-0">アイコン画像や各種ご登録情報の変更・パスワードの更新が行えます</p>
                         </div>
 
                         <form action="profile_update.html" method="post" enctype="multipart/form-data">
@@ -124,11 +125,9 @@
                             <!-- アイコン画像変更エリア -->
                             <div class="text-center mb-4">
                                 <div class="profile-icon-wrapper mb-3">
-                                    <!-- デフォルトアイコン（画像がある場合は img タグに変更可能） -->
                                     <div class="profile-icon-img" id="iconPreview">
                                         <i class="fa-solid fa-user"></i>
                                     </div>
-                                    <!-- カメラバッジ（クリックでファイル選択） -->
                                     <label for="iconInput" class="icon-upload-badge" title="アイコン画像を選択">
                                         <i class="fa-solid fa-camera"></i>
                                     </label>
@@ -138,29 +137,101 @@
                                 <span class="badge bg-light text-dark border">JPEG / PNG（最大 5MB）</span>
                             </div>
 
-                            <!-- ユーザー名 -->
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small">ユーザー名 <span
-                                        class="badge bg-danger">必須</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                                    <input type="text" name="username" class="form-control" value="しょかん太郎"
-                                        placeholder="ユーザー名を入力" required>
+                            <div class="row">
+                                <!-- 氏名（本名） -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold small">氏名（本名） <span class="badge bg-danger">必須</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+                                        <input type="text" name="fullname" class="form-control" value="中野 智樹"
+                                            placeholder="例: 山田 太郎" required>
+                                    </div>
+                                </div>
+
+                                <!-- ニックネーム（ユーザー名） -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold small">ニックネーム（ユーザー名） <span class="badge bg-danger">必須</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-user-tag"></i></span>
+                                        <input type="text" name="username" class="form-control" value="しょかん太郎"
+                                            placeholder="表示用ニックネーム" required>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- メールアドレス -->
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small">メールアドレス <span
-                                        class="badge bg-danger">必須</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                                    <input type="email" name="mailaddress" class="form-control" value="taro@example.com"
-                                        placeholder="example@email.com" required>
+                            <div class="row">
+                                <!-- メールアドレス -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold small">メールアドレス <span class="badge bg-danger">必須</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                        <input type="email" name="mailaddress" class="form-control" value="taro@example.com"
+                                            placeholder="example@email.com" required>
+                                    </div>
+                                </div>
+
+                                <!-- 電話番号 -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold small">電話番号 <span class="badge bg-danger">必須</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                                        <input type="tel" name="phone" class="form-control" value="090-1234-5678"
+                                            placeholder="090-0000-0000" required>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- 自己紹介・メモ（任意） -->
+                            <!-- 住所 -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">住所 <span class="badge bg-danger">必須</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                                    <input type="text" name="address" class="form-control" value="大分県大分市生石町 2-1-1"
+                                        placeholder="都道府県・市区町村・番地・建物名" required>
+                                </div>
+                            </div>
+
+                            <!-- 所属法人（表示のみ） -->
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">所属法人（組織）</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-building"></i></span>
+                                    <input type="text" class="form-control bg-light" value="株式会社テックブックス" readonly>
+                                </div>
+                                <div class="form-text small text-muted">※所属法人の変更をご希望の場合は、各法人へお問い合わせください。</div>
+                            </div>
+
+                            <!-- パスワード変更セクション -->
+                            <hr class="my-4">
+                            <h5 class="fw-bold text-dark fs-6 mb-3"><i class="fa-solid fa-lock me-2 text-primary"></i>パスワードの変更</h5>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">新しいパスワード（変更する場合のみ入力）</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                                    <input type="password" name="new_password" class="form-control" placeholder="8文字以上の半角英数字・記号">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold small">新しいパスワード（確認）</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                                    <input type="password" name="new_password_confirm" class="form-control" placeholder="もう一度入力してください">
+                                </div>
+                            </div>
+
+                            <!-- 変更確定の本人確認（現在のパスワード） -->
+                            <div class="card bg-light p-3 mb-4 border">
+                                <div class="mb-0">
+                                    <label class="form-label fw-bold small text-danger">現在のパスワード <span class="badge bg-danger">変更確定に必須</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-shield-halved"></i></span>
+                                        <input type="password" name="current_password" class="form-control" placeholder="変更を確定するため入力してください" required>
+                                    </div>
+                                    <div class="form-text small text-muted">※プロフィール情報の更新、またはパスワード変更を保存するには現在のパスワードが必要です。</div>
+                                </div>
+                            </div>
+
+                            <!-- 自己紹介・メモ -->
                             <div class="mb-4">
                                 <label class="form-label fw-bold small">自己紹介・ひとこと（任意）</label>
                                 <textarea name="bio" class="form-control" rows="3"
