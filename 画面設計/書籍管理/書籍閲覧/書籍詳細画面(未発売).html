@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍詳細（未発売） - 書籍管理システム</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #2c3e50 !important;
+        }
+
+        .card-custom {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 大型表紙カバー */
+        .book-detail-cover {
+            width: 100%;
+            max-width: 220px;
+            height: 300px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <nav class="navbar navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="#">
+                    <i class="fa-solid fa-book-open me-2 text-info"></i>書籍管理システム
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-4">
+        <div class="container">
+
+            <!-- 戻るボタン -->
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="history.back()">
+                    <i class="fa-solid fa-arrow-left me-1"></i> 前の画面に戻る
+                </button>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- 左側：書籍表紙・未発売ステータス・通知登録ボタン -->
+                <div class="col-md-4 text-center">
+                    <div class="card card-custom p-4">
+                        <!-- 書籍表紙画像 -->
+                        <div class="book-detail-cover mb-3">
+                            Javaプログラミング入門 第3版<br><small class="text-warning">（新刊）</small>
+                        </div>
+
+                        <!-- 未発売ステータスバッジ -->
+                        <div class="mb-3">
+                            <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                                <i class="fa-solid fa-clock me-1"></i>未発売（発売予定）
+                            </span>
+                        </div>
+
+                        <!-- 通知登録ボタン（別リンク想定） -->
+                        <div class="d-grid gap-2">
+                            <a href="notification_settings.html?book_id=123" class="btn btn-primary fw-bold">
+                                <i class="fa-solid fa-bell me-2"></i>発売通知を登録する
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：詳細情報 -->
+                <div class="col-md-8">
+
+                    <!-- 基本情報カード -->
+                    <div class="card card-custom p-4 mb-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-info text-dark">ジャンル: プログラミング・Web開発</span>
+                        </div>
+
+                        <h3 class="fw-bold text-dark mb-2">Javaプログラミング入門 第3版</h3>
+                        <p class="text-muted mb-3">著者：山田 太郎 | 出版社：インプレス</p>
+
+                        <!-- 発売予定日ハイライトバナー -->
+                        <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
+                            <i class="fa-solid fa-calendar-days fs-4 me-3 text-warning"></i>
+                            <div>
+                                <span class="fw-bold">発売予定日：2026年11月25日</span><br>
+                                <small class="text-muted">発売日にマイライブラリへの自動追加や通知を受け取ることができます。</small>
+                            </div>
+                        </div>
+
+                        <!-- 詳細スペック構造 -->
+                        <h5 class="fw-bold fs-6 text-secondary border-bottom pb-2 mb-3">
+                            <i class="fa-solid fa-circle-info me-2"></i>書誌詳細
+                        </h5>
+                        <table class="table table-sm table-borderless mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="text-muted w-25">ISBN</th>
+                                    <td>978-4-7981-1111-1</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">内容紹介</th>
+                                    <td>大人気Java入門書の最新第3版。最新のJava 21機能やモダンな開発手法に対応し、解説と演習問題が一新された最新刊です。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 未発売のためレビューや感想はまだない状態の案内 -->
+                    <div class="card card-custom p-4 text-center text-muted py-5">
+                        <i class="fa-solid fa-pen-nib fs-2 mb-2 text-secondary"></i>
+                        <h5 class="fw-bold text-secondary">発売前の書籍のため、評価・感想はまだありません</h5>
+                        <p class="small mb-0">発売後にレビューや評価の投稿が可能になります。</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 書籍管理システム All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
