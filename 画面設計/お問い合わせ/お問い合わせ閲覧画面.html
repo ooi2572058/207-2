@@ -5,12 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お問い合わせ閲覧・管理 - しょかんくん 管理者</title>
-
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
     <style>
         :root {
             --admin-primary: #1a252f;
@@ -18,7 +14,7 @@
         }
 
         body {
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            font-family: "Helvetica Neue", Arial, sans-serif;
             background-color: var(--bg-light);
             min-height: 100vh;
             display: flex;
@@ -50,8 +46,6 @@
 </head>
 
 <body>
-
-    <!-- 管理者ヘッダー -->
     <header>
         <nav class="navbar navbar-dark navbar-admin">
             <div class="container-fluid px-4">
@@ -59,80 +53,26 @@
                     <i class="fa-solid fa-shield-halved me-2 text-warning"></i>しょかんくん 管理者ダッシュボード
                 </a>
                 <div class="d-flex align-items-center">
-                    <span class="text-white small me-3">
-                        <i class="fa-solid fa-user-shield me-1 text-warning"></i>システム管理者
-                    </span>
+                    <span class="text-white small me-3"><i
+                            class="fa-solid fa-user-shield me-1 text-warning"></i>システム管理者</span>
                     <a href="login.html" class="btn btn-outline-light btn-sm">ログアウト</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- メインコンテンツ -->
     <main class="py-4">
         <div class="container-fluid px-4">
-
-            <!-- ページヘッダー -->
             <div class="mb-4">
                 <h3 class="fw-bold text-dark mb-1">
                     <i class="fa-solid fa-inbox me-2 text-primary"></i>お問い合わせ閲覧・対応管理
                 </h3>
-                <p class="text-muted small mb-0">ユーザーから送信された不具合報告、改善要望、使い方に関するお問い合わせの一覧表示および回答対応を行います。</p>
+                <p class="text-muted small mb-0">ユーザーから送信されたお問い合わせの確認、ステータスの直接変更、および不要な項目の削除を行います。</p>
             </div>
 
-            <!-- フィルター・検索エリア -->
-            <div class="card card-custom p-3 bg-white mb-4">
-                <div class="row g-3 align-items-center">
-                    <!-- 報告種別フィルター -->
-                    <div class="col-md-3">
-                        <label class="form-label small fw-bold mb-1"><i
-                                class="fa-solid fa-filter me-1"></i>お問い合わせ種別</label>
-                        <select class="form-select form-select-sm" id="categoryFilter">
-                            <option value="all">すべての報告内容</option>
-                            <option value="bug">システムの不具合、エラー</option>
-                            <option value="complaint">機能への不満・改善要望</option>
-                            <option value="question">機能のわからないこと（使い方）</option>
-                            <option value="other">その他</option>
-                        </select>
-                    </div>
-
-                    <!-- ステータスフィルター -->
-                    <div class="col-md-3">
-                        <label class="form-label small fw-bold mb-1"><i
-                                class="fa-solid fa-clock-history me-1"></i>対応ステータス</label>
-                        <select class="form-select form-select-sm" id="statusFilter">
-                            <option value="all">すべてのステータス</option>
-                            <option value="unhandled">未対応</option>
-                            <option value="in_progress">対応中</option>
-                            <option value="completed">対応完了</option>
-                        </select>
-                    </div>
-
-                    <!-- 検索キーワード -->
-                    <div class="col-md-4">
-                        <label class="form-label small fw-bold mb-1"><i
-                                class="fa-solid fa-magnifying-glass me-1"></i>キーワード検索</label>
-                        <input type="text" class="form-control form-select-sm" placeholder="ユーザー名、メール、本文から検索...">
-                    </div>
-
-                    <!-- 絞り込みボタン -->
-                    <div class="col-md-2 d-flex align-items-end">
-                        <button type="button" class="btn btn-primary btn-sm w-100 fw-bold">
-                            <i class="fa-solid fa-filter me-1"></i>絞り込む
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- お問い合わせ一覧テーブル -->
             <div class="card card-custom p-4 bg-white">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold mb-0">受信一覧（全 4 件）</h5>
-                    <div>
-                        <span class="badge bg-danger me-1">未対応: 2件</span>
-                        <span class="badge bg-warning text-dark me-1">対応中: 1件</span>
-                        <span class="badge bg-secondary">完了: 1件</span>
-                    </div>
+                    <h5 class="fw-bold mb-0">受信一覧</h5>
                 </div>
 
                 <div class="table-responsive">
@@ -140,175 +80,73 @@
                         <thead class="table-light">
                             <tr>
                                 <th>受付ID</th>
-                                <th>送信者 / メールアドレス</th>
-                                <th>お問い合わせ種別</th>
-                                <th>詳細・内容プレビュー</th>
+                                <th>送信者 / メール</th>
+                                <th>種別</th>
+                                <th>内容プレビュー</th>
                                 <th>送信日時</th>
-                                <th>ステータス</th>
+                                <th>ステータス変更</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- 行1: 不具合 -->
                             <tr>
                                 <td>#INQ-0041</td>
                                 <td>
                                     <strong>山田 太郎</strong><br>
                                     <span class="text-muted small">taro@example.com</span>
                                 </td>
+                                <td><span class="badge bg-danger">不具合・エラー</span></td>
+                                <td class="small text-muted" style="max-width: 250px;">バーコード読み取り時、カメラが起動せずフリーズします。</td>
+                                <td class="small">2026-10-27</td>
                                 <td>
-                                    <span class="badge bg-danger">不具合・エラー</span>
+                                    <select class="form-select form-select-sm" style="width: 130px;">
+                                        <option value="unhandled" selected>未対応</option>
+                                        <option value="in_progress">対応中</option>
+                                        <option value="completed">対応完了</option>
+                                    </select>
                                 </td>
-                                <td class="small text-muted" style="max-width: 300px;">
-                                    書籍のバーコード読み取り時、カメラが起動せず画面がフリーズしてしまいます。...
-                                </td>
-                                <td class="small">2026-10-27 09:15</td>
-                                <td><span class="badge bg-danger">未対応</span></td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm me-1" data-bs-toggle="modal"
-                                        data-bs-target="#detailModal">
-                                        <i class="fa-solid fa-envelope-open me-1"></i>確認・返信
-                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm mb-1">詳細</button>
+                                    <!-- 削除ボタンに確認アラートを設定 -->
+                                    <button class="btn btn-outline-danger btn-sm mb-1"
+                                        onclick="return confirm('本当にこのお問い合わせ履歴を削除しますか？\n（この操作は取り消せません）');">削除</button>
                                 </td>
                             </tr>
-
-                            <!-- 行2: 不満・要望 -->
-                            <tr>
-                                <td>#INQ-0040</td>
-                                <td>
-                                    <strong>佐藤 花子</strong><br>
-                                    <span class="text-muted small">hanako@example.com</span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-warning text-dark">機能への不満</span>
-                                </td>
-                                <td class="small text-muted" style="max-width: 300px;">
-                                    貸出管理の返信リマインドメールの頻度をマイページから自由に変更できるようにしてほしいです。...
-                                </td>
-                                <td class="small">2026-10-26 18:40</td>
-                                <td><span class="badge bg-warning text-dark">対応中</span></td>
-                                <td>
-                                    <button class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal"
-                                        data-bs-target="#detailModal">
-                                        <i class="fa-solid fa-envelope-open me-1"></i>確認・返信
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- 行3: 使い方 -->
-                            <tr>
-                                <td>#INQ-0039</td>
-                                <td>
-                                    <strong>鈴木 一郎</strong><br>
-                                    <span class="text-muted small">ichiro@example.com</span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-info text-dark">機能の不明点</span>
-                                </td>
-                                <td class="small text-muted" style="max-width: 300px;">
-                                    法人向け設定で新しくメンバーを追加した際、権限を一般から管理者に変更する操作方法がわかりません。...
-                                </td>
-                                <td class="small">2026-10-26 11:20</td>
-                                <td><span class="badge bg-danger">未対応</span></td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm me-1" data-bs-toggle="modal"
-                                        data-bs-target="#detailModal">
-                                        <i class="fa-solid fa-envelope-open me-1"></i>確認・返信
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- 行4: その他 -->
                             <tr>
                                 <td>#INQ-0038</td>
                                 <td>
                                     <strong>高橋 健太</strong><br>
                                     <span class="text-muted small">kenta@example.com</span>
                                 </td>
+                                <td><span class="badge bg-secondary">その他</span></td>
+                                <td class="small text-muted" style="max-width: 250px;">利用規約の改定時期について質問があります。</td>
+                                <td class="small">2026-10-25</td>
                                 <td>
-                                    <span class="badge bg-secondary">その他</span>
+                                    <select class="form-select form-select-sm" style="width: 130px;">
+                                        <option value="unhandled">未対応</option>
+                                        <option value="in_progress">対応中</option>
+                                        <option value="completed" selected>対応完了</option>
+                                    </select>
                                 </td>
-                                <td class="small text-muted" style="max-width: 300px;">
-                                    利用規約の改定時期について質問があります。...
-                                </td>
-                                <td class="small">2026-10-25 15:00</td>
-                                <td><span class="badge bg-secondary">対応完了</span></td>
                                 <td>
-                                    <button class="btn btn-outline-secondary btn-sm me-1" data-bs-toggle="modal"
-                                        data-bs-target="#detailModal">
-                                        <i class="fa-solid fa-eye me-1"></i>閲覧
-                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm mb-1">詳細</button>
+                                    <!-- 削除ボタンに確認アラートを設定 -->
+                                    <button class="btn btn-outline-danger btn-sm mb-1"
+                                        onclick="return confirm('本当にこのお問い合わせ履歴を削除しますか？\n（この操作は取り消せません）');">削除</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- お問い合わせ詳細・返信 モーダル -->
-    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="detailModalLabel">
-                        <i class="fa-solid fa-envelope-open me-2 text-primary"></i>お問い合わせ詳細・回答作成 (#INQ-0041)
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- ユーザーからの受信内容 -->
-                    <div class="card bg-light p-3 mb-3 border-0">
-                        <div class="row small text-muted mb-2">
-                            <div class="col-sm-6"><strong>送信者:</strong> 山田 太郎 (taro@example.com)</div>
-                            <div class="col-sm-6 text-sm-end"><strong>受信日時:</strong> 2026-10-27 09:15</div>
-                        </div>
-                        <div class="mb-2">
-                            <span class="badge bg-danger me-1">不具合・エラー</span>
-                        </div>
-                        <p class="mb-0 text-dark small" style="white-space: pre-wrap;">
-                            書籍のバーコード読み取り時、カメラが起動せず画面がフリーズしてしまいます。
-                            端末はiPadを使用しております。対応方法を教えていただけますでしょうか。</p>
-                    </div>
-
-                    <!-- 回答入力フォーム -->
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small">対応ステータスの変更</label>
-                            <select class="form-select form-select-sm" style="width: 200px;">
-                                <option value="unhandled">未対応</option>
-                                <option value="in_progress" selected>対応中</option>
-                                <option value="completed">対応完了</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small">ユーザーへの回答メール作成</label>
-                            <textarea class="form-control" rows="6"
-                                placeholder="ユーザー宛にメール送信する回答文章を入力してください..."></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                    <button type="button" class="btn btn-success fw-bold">
-                        <i class="fa-solid fa-paper-plane me-1"></i>回答メールを送信して保存
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- フッター -->
     <footer class="footer">
         <div class="container">
             <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん 管理者機能</p>
         </div>
     </footer>
-
-    <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

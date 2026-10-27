@@ -66,19 +66,9 @@
             <h3 class="fw-bold text-dark mb-1">
                 <i class="fa-solid fa-box-open text-warning me-2"></i>出品物報告閲覧
             </h3>
-            <p class="text-muted small mb-4">不当な価格や違法・書籍に無関係な商品として報告された出品物の一覧・対応管理を行います。</p>
+            <p class="text-muted small mb-4">通報された出品物のステータス変更および対応終了項目の削除を行います。</p>
 
             <div class="card card-custom p-4 bg-white">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold mb-0">通報された出品物一覧</h5>
-                    <select class="form-select form-select-sm" style="width: 180px;">
-                        <option value="all">すべての報告理由</option>
-                        <option value="price">不当な価格</option>
-                        <option value="illegal">違法・不純物</option>
-                        <option value="irrelevant">書籍無関係</option>
-                    </select>
-                </div>
-
                 <div class="table-responsive">
                     <table class="table table-hover align-middle border-top">
                         <thead class="table-light">
@@ -86,9 +76,8 @@
                                 <th>報告ID</th>
                                 <th>対象商品 / 出品者</th>
                                 <th>報告理由</th>
-                                <th>報告詳細・コメント</th>
                                 <th>報告日時</th>
-                                <th>ステータス</th>
+                                <th>ステータス変更</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -100,12 +89,20 @@
                                     <span class="text-muted small">出品者: 悪質ショップA</span>
                                 </td>
                                 <td><span class="badge bg-warning text-dark">不当な価格</span></td>
-                                <td class="small text-muted">定価2,000円の書籍に対して10万円で高額転売されています。</td>
-                                <td class="small">2026-10-26 14:20</td>
-                                <td><span class="badge bg-danger">未対応</span></td>
+                                <td class="small">2026-10-26</td>
                                 <td>
-                                    <button class="btn btn-outline-primary btn-sm mb-1">詳細</button>
-                                    <button class="btn btn-danger btn-sm mb-1">出品取り下げ</button>
+                                    <select class="form-select form-select-sm" style="width: 130px;">
+                                        <option value="unhandled" selected>未対応</option>
+                                        <option value="in_progress">対応中</option>
+                                        <option value="resolved">対応完了</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm mb-1"
+                                        onclick="return confirm('対象の出品物を取り下げ処理（非公開化）しますか？');">取り下げ</button>
+                                    <!-- 削除ボタンに確認アラートを設定 -->
+                                    <button class="btn btn-outline-danger btn-sm mb-1"
+                                        onclick="return confirm('本当にこの報告ログを削除しますか？\n（この操作は取り消せません）');">削除</button>
                                 </td>
                             </tr>
                         </tbody>

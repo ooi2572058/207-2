@@ -66,28 +66,18 @@
             <h3 class="fw-bold text-dark mb-1">
                 <i class="fa-solid fa-comment-slash text-info me-2"></i>書籍評価報告閲覧
             </h3>
-            <p class="text-muted small mb-4">不適切なレビューや誹謗中傷としてユーザーから報告された書籍評価の一覧・対応管理を行います。</p>
+            <p class="text-muted small mb-4">通報されたレビューのステータス変更および対応終了項目の削除を行います。</p>
 
             <div class="card card-custom p-4 bg-white">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold mb-0">通報された書籍レビュー一覧</h5>
-                    <select class="form-select form-select-sm" style="width: 180px;">
-                        <option value="all">すべての報告種別</option>
-                        <option value="defamation">誹謗中傷・暴言</option>
-                        <option value="spoiler">ネタバレ・不適切</option>
-                    </select>
-                </div>
-
                 <div class="table-responsive">
                     <table class="table table-hover align-middle border-top">
                         <thead class="table-light">
                             <tr>
                                 <th>報告ID</th>
                                 <th>対象書籍 / 投稿者</th>
-                                <th>レビュー投稿内容</th>
-                                <th>報告理由</th>
+                                <th>レビュー内容</th>
                                 <th>報告日時</th>
-                                <th>ステータス</th>
+                                <th>ステータス変更</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -98,13 +88,21 @@
                                     <strong>鬼滅の刃 (1)</strong><br>
                                     <span class="text-muted small">投稿者: 匿名ユーザーX</span>
                                 </td>
-                                <td class="small">「作者に対する暴言・個人的な誹謗中傷の文章...」</td>
-                                <td><span class="badge bg-danger">誹謗中傷・不適切</span></td>
-                                <td class="small">2026-10-27 08:30</td>
-                                <td><span class="badge bg-danger">未対応</span></td>
+                                <td class="small text-muted">「作者に対する暴言・誹謗中傷...」</td>
+                                <td class="small">2026-10-27</td>
                                 <td>
-                                    <button class="btn btn-outline-primary btn-sm mb-1">内容確認</button>
-                                    <button class="btn btn-warning btn-sm mb-1">レビュー削除</button>
+                                    <select class="form-select form-select-sm" style="width: 130px;">
+                                        <option value="unhandled" selected>未対応</option>
+                                        <option value="in_progress">対応中</option>
+                                        <option value="resolved">対応完了</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm mb-1"
+                                        onclick="return confirm('対象の書籍レビュー投稿自体を物理削除しますか？');">レビュー削除</button>
+                                    <!-- 削除ボタンに確認アラートを設定 -->
+                                    <button class="btn btn-outline-danger btn-sm mb-1"
+                                        onclick="return confirm('本当にこの通報履歴をリストから削除しますか？\n（この操作は取り消せません）');">削除</button>
                                 </td>
                             </tr>
                         </tbody>
