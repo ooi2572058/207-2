@@ -69,6 +69,14 @@
             margin: 0 auto;
         }
 
+        .reason-list-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 8px;
+        }
+
         .footer {
             background-color: #2c3e50;
             color: #ffffff;
@@ -143,7 +151,7 @@
                 </div>
             </div>
 
-            <!-- ★ ユーザーリクエスト受信用 QRコード & 専用URLカード ★ -->
+            <!-- ユーザーリクエスト受信用 QRコード & 専用URLカード -->
             <div class="card card-custom p-4 mb-4 bg-light border-start border-primary border-4">
                 <div class="row align-items-center">
                     <div class="col-md-3 text-center mb-3 mb-md-0">
@@ -179,12 +187,12 @@
                                 <th>ISBN / 書籍名・著者</th>
                                 <th class="text-center text-nowrap">リクエスト件数</th>
                                 <th class="text-center text-nowrap">蔵書保有ステータス</th>
-                                <th>主なリクエスト理由・メモ</th>
+                                <th style="width: 35%;">リクエスト理由・コメント</th>
                                 <th class="text-center text-nowrap">操作</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- リクエスト 1件目（未保有・人気） -->
+                            <!-- リクエスト 1件目（複数件・5件） -->
                             <tr>
                                 <td>
                                     <span class="badge bg-secondary d-inline-block mb-1">978-4798160000</span>
@@ -198,7 +206,23 @@
                                     <span class="badge bg-outline-secondary text-secondary border px-2 py-1"><i class="fa-solid fa-circle-xmark me-1"></i>未保有</span>
                                 </td>
                                 <td>
-                                    <div class="small text-muted">「フロントエンドチームの研修用教材として社内ライブラリに追加してほしいです。」（他4名）</div>
+                                    <div class="small text-muted mb-1">
+                                        <strong>代表コメント：</strong>「フロントエンドチームの研修用教材として...」
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm py-0 px-2 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#reasons1">
+                                        <i class="fa-solid fa-list-ul me-1"></i>すべての理由を表示 (5件)
+                                    </button>
+                                    <div class="collapse" id="reasons1">
+                                        <div class="reason-list-box small">
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="border-bottom pb-1 mb-1"><strong>本好き太郎</strong> (10/25): 「フロントエンドチームの研修用教材として社内ライブラリに追加してほしいです。」</li>
+                                                <li class="border-bottom pb-1 mb-1"><strong>山田 花子</strong> (10/24): 「新規プロジェクトでVue 3を使う予定があるため必読書として。」</li>
+                                                <li class="border-bottom pb-1 mb-1"><strong>開発 次郎</strong> (10/23): 「Composition APIの書き方をチーム全体で統一したい。」</li>
+                                                <li class="border-bottom pb-1 mb-1"><strong>鈴木 一郎</strong> (10/22): 「個人でも購入予定ですが、社内共有用にぜひ！」</li>
+                                                <li><strong>高橋 美咲</strong> (10/20): 「最新のベストプラクティスをキャッチアップしたいため。」</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="text-center text-nowrap">
                                     <div class="d-inline-flex gap-2">
@@ -212,7 +236,7 @@
                                 </td>
                             </tr>
 
-                            <!-- リクエスト 2件目（保有済み） -->
+                            <!-- リクエスト 2件目（2件） -->
                             <tr>
                                 <td>
                                     <span class="badge bg-secondary d-inline-block mb-1">978-4873117584</span>
@@ -226,7 +250,20 @@
                                     <span class="badge bg-success px-2 py-1 fs-6"><i class="fa-solid fa-circle-check me-1"></i>保有済み (1冊)</span>
                                 </td>
                                 <td>
-                                    <div class="small text-muted">「人気で常に貸出中になっているため、増刷（2冊目）を希望します。」</div>
+                                    <div class="small text-muted mb-1">
+                                        <strong>代表コメント：</strong>「人気で常に貸出中になっているため...」
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm py-0 px-2 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#reasons2">
+                                        <i class="fa-solid fa-list-ul me-1"></i>すべての理由を表示 (2件)
+                                    </button>
+                                    <div class="collapse" id="reasons2">
+                                        <div class="reason-list-box small">
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="border-bottom pb-1 mb-1"><strong>佐藤 健</strong> (10/25): 「人気で常に貸出中になっているため、増刷（2冊目）を希望します。」</li>
+                                                <li><strong>中村 恵子</strong> (10/21): 「新入社員のコードレビューのバイブルとして複数冊あると助かります。」</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="text-center text-nowrap">
                                     <div class="d-inline-flex gap-2">
@@ -240,7 +277,7 @@
                                 </td>
                             </tr>
 
-                            <!-- リクエスト 3件目（未保有） -->
+                            <!-- リクエスト 3件目（1件のみの場合はボタン不要またはシンプル表示） -->
                             <tr>
                                 <td>
                                     <span class="badge bg-secondary d-inline-block mb-1">978-4297123456</span>
@@ -254,7 +291,7 @@
                                     <span class="badge bg-outline-secondary text-secondary border px-2 py-1"><i class="fa-solid fa-circle-xmark me-1"></i>未保有</span>
                                 </td>
                                 <td>
-                                    <div class="small text-muted">「インフラ構築の勉強用に一読したいため。」</div>
+                                    <div class="small text-muted">「インフラ構築の勉強用に一読したいため。」<br><span class="text-muted" style="font-size: 0.75rem;">(リクエスト者: 伊藤 誠)</span></div>
                                 </td>
                                 <td class="text-center text-nowrap">
                                     <div class="d-inline-flex gap-2">
