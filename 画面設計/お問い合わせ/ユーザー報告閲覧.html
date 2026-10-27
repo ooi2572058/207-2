@@ -90,14 +90,16 @@
                                 <td class="small text-muted">高額出品の繰り返し</td>
                                 <td>
                                     <select class="form-select form-select-sm" style="width: 140px;">
-                                        <option value="warned" selected>未対応</option>
-                                        <option value="banned">対応中</option>
+                                        <option value="unhandled" selected>未対応</option>
+                                        <option value="in_progress">対応中</option>
                                         <option value="resolved">対応完了</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <button class="btn btn-warning btn-sm mb-1"
-                                        onclick="return confirm('対象ユーザー宛に警告メールを送信しますか？');">警告</button>
+                                    <!-- 警告ボタン：モーダルを起動 -->
+                                    <button class="btn btn-warning btn-sm mb-1 fw-bold" data-bs-toggle="modal" data-bs-target="#actionModal" data-username="悪質ショップA">
+                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>対応
+                                    </button>
                                     <!-- 削除ボタンに確認アラートを設定 -->
                                     <button class="btn btn-outline-danger btn-sm mb-1"
                                         onclick="return confirm('本当にこのユーザー報告履歴を削除しますか？\n（この操作は取り消せません）');">削除</button>
@@ -110,12 +112,79 @@
         </div>
     </main>
 
+    <!-- 対応・処分モーダル (modal fade) -->
+    <div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="actionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title fw-bold" id="actionModalLabel"><i class="fa-solid fa-gavel me-2"></i>ユーザーへの対応・処分実行</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">対象ユーザー</label>
+                            <input type="text" class="form-control fw-bold bg-light" id="targetUser" value="悪質ショップA" readonly>
+                        </div>
+
+                        <!-- 処分区分選択 -->
+                        <div class="mb-3">
+                            <label for="actionType" class="form-label fw-bold small">対応・処分区分 <span class="badge bg-danger">必須</span></label>
+                            <select class="form-select" id="actionType" onchange="toggleSuspensionPeriod()">
+                                <option value="notice">注意（通告・厳重注意メール）</option>
+                                <option value="warning" selected>警告（ペナルティ付与）</option>
+                                <option value="suspension">利用停止</option>
+                            </select>
+                        </div>
+
+                        <!-- 利用停止期間（利用停止選択時のみ表示） -->
+                        <div class="mb-3" id="suspensionPeriodWrapper" style="display: none;">
+                            <label for="suspensionPeriod" class="form-label fw-bold small">利用停止期間 <span class="badge bg-danger">必須</span></label>
+                            <select class="form-select" id="suspensionPeriod">
+                                <option value="1week">1週間</option>
+                                <option value="1month">1カ月</option>
+                                <option value="3months">3カ月</option>
+                                <option value="6months">6カ月</option>
+                                <option value="1year">1年</option>
+                                <option value="permanent">永久（アカウント凍結）</option>
+                            </select>
+                        </div>
+
+                        <!-- 対応理由 -->
+                        <div class="mb-3">
+                            <label for="actionReason" class="form-label fw-bold small">対応理由（ユーザーへ通知されます） <span class="badge bg-danger">必須</span></label>
+                            <textarea class="form-control" id="actionReason" rows="4" placeholder="例: 利用規約第〇条（禁止事項）に違反する高額出品の常態化が確認されたため、警告処分といたします。" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-danger px-4 fw-bold" onclick="alert('対応内容を保存し、ユーザーへ通知メールを送信しました。'); location.reload();">対応を実行する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん 管理者機能</p>
         </div>
     </footer>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 利用停止が選択された場合のみ「利用停止期間」のセレクトボックスを表示する切り替えスクリプト
+        function toggleSuspensionPeriod() {
+            const actionType = document.getElementById('actionType').value;
+            const periodWrapper = document.getElementById('suspensionPeriodWrapper');
+            if (actionType === 'suspension') {
+                periodWrapper.style.display = 'block';
+            } else {
+                periodWrapper.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 
 </html>
