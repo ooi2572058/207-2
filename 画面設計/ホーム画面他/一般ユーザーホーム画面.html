@@ -34,6 +34,11 @@
             border: none;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-3px);
         }
 
         .user-welcome-card {
@@ -166,10 +171,11 @@
                         <span class="fw-bold text-dark small">発売日カレンダー</span>
                     </a>
                 </div>
+                <!-- 「購入リクエスト」ボタンの代わりに「出品物一覧」ボタンを配置 -->
                 <div class="col">
-                    <a href="purchase_request.html" class="card card-custom p-3 text-center text-decoration-none h-100">
-                        <i class="fa-solid fa-paper-plane text-secondary fa-2x mb-2"></i>
-                        <span class="fw-bold text-dark small">購入リクエスト</span>
+                    <a href="listing_list.html" class="card card-custom p-3 text-center text-decoration-none h-100">
+                        <i class="fa-solid fa-store text-success fa-2x mb-2"></i>
+                        <span class="fw-bold text-dark small">出品物一覧</span>
                     </a>
                 </div>
                 <div class="col">
