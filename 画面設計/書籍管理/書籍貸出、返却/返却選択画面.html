@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍の返却 - しょかんくん</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (アイコン) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .book-img-placeholder {
+            width: 50px;
+            height: 70px;
+            background-color: #6c757d;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <nav class="navbar navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-white" href="home_user.html">
+                    <i class="fa-solid fa-book-open me-2 text-info"></i>しょかんくん
+                </a>
+                <div class="d-flex align-items-center">
+                    <span class="text-white small me-3">
+                        <i class="fa-solid fa-user-check me-1 text-info"></i>山田 太郎 さん
+                    </span>
+                    <a href="home_user.html" class="btn btn-outline-light btn-sm">
+                        <i class="fa-solid fa-house me-1"></i>ホームに戻る
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="py-5">
+        <div class="container">
+
+            <!-- パンくずリスト導線 -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb small">
+                    <li class="breadcrumb-item"><a href="home_user.html" class="text-decoration-none">ホーム</a></li>
+                    <li class="breadcrumb-item"><a href="library_list.html" class="text-decoration-none">個人ライブラリ</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">書籍の返却手続き</li>
+                </ol>
+            </nav>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <div class="card card-custom bg-white p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <h4 class="fw-bold text-dark mb-1">
+                                    <i class="fa-solid fa-hand-holding-hand text-success me-2"></i>借りている書籍の返却
+                                </h4>
+                                <p class="text-muted small mb-0">現在借りている書籍の一覧です。返却する書籍を選択して「返却手続きを確定する」ボタンを押してください。</p>
+                            </div>
+                        </div>
+
+                        <!-- 返却対象選択フォーム -->
+                        <form action="return_complete.html" method="post">
+
+                            <div class="table-responsive mb-4">
+                                <table class="table table-hover align-middle border-top">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width: 50px;" class="text-center">
+                                                <input class="form-check-input" type="checkbox" id="selectAll">
+                                            </th>
+                                            <th style="width: 70px;">表紙</th>
+                                            <th>書籍情報</th>
+                                            <th>貸出元・所持者</th>
+                                            <th>貸出日</th>
+                                            <th>返却期限</th>
+                                            <th>状態</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- 行1: 通常貸出中 -->
+                                        <tr>
+                                            <td class="text-center">
+                                                <input class="form-check-input book-checkbox" type="checkbox"
+                                                    name="return_book_ids" value="B-1001" checked>
+                                            </td>
+                                            <td>
+                                                <div class="book-img-placeholder">鬼滅(1)</div>
+                                            </td>
+                                            <td>
+                                                <strong>鬼滅の刃 (1) 残酷</strong><br>
+                                                <span class="text-muted small">著者: 吾峠呼世晴 / 出版社: 集英社</span><br>
+                                                <span class="badge bg-light text-dark border">ISBN:
+                                                    978-4-08-880723-2</span>
+                                            </td>
+                                            <td class="small">組織ライブラリ（本社）</td>
+                                            <td class="small">2026-10-15</td>
+                                            <td class="small text-primary fw-bold">2026-10-29 (あと2日)</td>
+                                            <td><span class="badge bg-success">貸出中</span></td>
+                                        </tr>
+
+                                        <!-- 行2: 返却期限間近/超過 -->
+                                        <tr>
+                                            <td class="text-center">
+                                                <input class="form-check-input book-checkbox" type="checkbox"
+                                                    name="return
