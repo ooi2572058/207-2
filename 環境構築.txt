@@ -1,9 +1,0 @@
-ワークスペースフォルダ名をteam207-2してドキュメント直下に移動
-VScodeでCtrl+@
-cd Django
-py -m venv venv
-cd venv\scripts
-activate
-pip intall Django
-cd ..\..\syokankun
-py manage.py runserver
