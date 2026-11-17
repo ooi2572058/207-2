@@ -143,7 +143,7 @@
                                     <label class="form-label fw-bold small">氏名（本名） <span class="badge bg-danger">必須</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
-                                        <input type="text" name="fullname" class="form-control" value="中野 智樹"
+                                        <input type="text" name="fullname" class="form-control" value=""
                                             placeholder="例: 山田 太郎" required>
                                     </div>
                                 </div>
@@ -153,7 +153,7 @@
                                     <label class="form-label fw-bold small">ニックネーム（ユーザー名） <span class="badge bg-danger">必須</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa-solid fa-user-tag"></i></span>
-                                        <input type="text" name="username" class="form-control" value="しょかん太郎"
+                                        <input type="text" name="username" class="form-control" value=""
                                             placeholder="表示用ニックネーム" required>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@
                                     <label class="form-label fw-bold small">メールアドレス <span class="badge bg-danger">必須</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                                        <input type="email" name="mailaddress" class="form-control" value="taro@example.com"
+                                        <input type="email" name="mailaddress" class="form-control" value=""
                                             placeholder="example@email.com" required>
                                     </div>
                                 </div>
@@ -175,28 +175,67 @@
                                     <label class="form-label fw-bold small">電話番号 <span class="badge bg-danger">必須</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
-                                        <input type="tel" name="phone" class="form-control" value="090-1234-5678"
+                                        <input type="tel" name="phone" class="form-control" value=""
                                             placeholder="090-0000-0000" required>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- 住所（任意に変更） -->
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small">住所 <span class="badge bg-secondary">任意</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
-                                    <input type="text" name="address" class="form-control" value="大分県大分市生石町 2-1-1"
-                                        placeholder="都道府県・市区町村・番地・建物名">
+                            <!-- 住所欄（JS連動セレクトボックス＆郵便番号検索対応・初期値空） -->
+                            <div class="card bg-light p-3 mb-3 border">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <label class="form-label fw-bold small text-secondary mb-0">
+                                        <i class="fa-solid fa-location-dot me-1"></i> 住所情報 <span class="badge bg-secondary">任意</span>
+                                    </label>
+                                    <span id="zipStatus" class="small text-muted"></span>
+                                </div>
+                                
+                                <div class="row">
+                                    <!-- 郵便番号 -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="postalCode" class="form-label text-muted" style="font-size: 0.75rem;">郵便番号（自動入力対応）</label>
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text"><i class="fa-solid fa-envelope-open-text"></i></span>
+                                            <input type="text" id="postalCode" name="postal_code" class="form-control" value="" placeholder="例: 870-0024" maxlength="8">
+                                            <button type="button" class="btn btn-outline-primary" id="zipSearchBtn" title="郵便番号から住所を検索">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- 都道府県（JSで全47都道府県を生成・未選択状態） -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="prefectureSelect" class="form-label text-muted" style="font-size: 0.75rem;">都道府県</label>
+                                        <select class="form-select form-select-sm" id="prefectureSelect" name="prefecture">
+                                            <option value="" selected>都道府県を選択</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- 市（都道府県に応じてJSで動的生成・未選択状態） -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="citySelect" class="form-label text-muted" style="font-size: 0.75rem;">市（市区町村）</label>
+                                        <select class="form-select form-select-sm" id="citySelect" name="city">
+                                            <option value="" selected>市区町村を選択</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- 番地・町名、建物名、部屋番 -->
+                                <div class="mb-0">
+                                    <label for="addressDetails" class="form-label text-muted" style="font-size: 0.75rem;">番地・町名、建物名、部屋番</label>
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-text"><i class="fa-solid fa-house"></i></span>
+                                        <input type="text" id="addressDetails" name="address_details" class="form-control" value="" placeholder="例: 生石町 2-1-1 〇〇ビル 201号室">
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- 所属法人（表示のみ） -->
+                            <!-- 所属法人（未設定状態） -->
                             <div class="mb-3">
                                 <label class="form-label fw-bold small">所属法人（組織）</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="fa-solid fa-building"></i></span>
-                                    <input type="text" class="form-control bg-light" value="株式会社テックブックス" readonly>
+                                    <input type="text" class="form-control bg-light" value="" placeholder="未所属" readonly>
                                 </div>
                                 <div class="form-text small text-muted">※所属法人の変更をご希望の場合は、各法人へお問い合わせください。</div>
                             </div>
@@ -208,14 +247,14 @@
                                 <label class="form-label fw-bold small">新しいパスワード（変更する場合のみ入力）</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                                    <input type="password" name="new_password" class="form-control" placeholder="8文字以上の半角英数字・記号">
+                                    <input type="password" name="new_password" class="form-control" value="" placeholder="8文字以上の半角英数字・記号">
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label class="form-label fw-bold small">新しいパスワード（確認）</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-                                    <input type="password" name="new_password_confirm" class="form-control" placeholder="もう一度入力してください">
+                                    <input type="password" name="new_password_confirm" class="form-control" value="" placeholder="もう一度入力してください">
                                 </div>
                             </div>
 
@@ -225,7 +264,7 @@
                                     <label class="form-label fw-bold small text-danger">現在のパスワード <span class="badge bg-danger">変更確定に必須</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fa-solid fa-shield-halved"></i></span>
-                                        <input type="password" name="current_password" class="form-control" placeholder="変更を確定するため入力してください" required>
+                                        <input type="password" name="current_password" class="form-control" value="" placeholder="変更を確定するため入力してください" required>
                                     </div>
                                     <div class="form-text small text-muted">※プロフィール情報の更新、またはパスワード変更を保存するには現在のパスワードが必要です。</div>
                                 </div>
@@ -235,7 +274,7 @@
                             <div class="mb-4">
                                 <label class="form-label fw-bold small">自己紹介・ひとこと（任意）</label>
                                 <textarea name="bio" class="form-control" rows="3"
-                                    placeholder="読みたい本や好きなジャンルなどを記入できます">技術書を中心に読んでいます。よろしくお願いします！</textarea>
+                                    placeholder="読みたい本や好きなジャンルなどを記入できます"></textarea>
                             </div>
 
                             <!-- 保存・キャンセルボタン -->
@@ -274,8 +313,9 @@
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- 画像プレビュー用JavaScript -->
+    <!-- 画像プレビュー & 都道府県・市区町村連動＆郵便番号検索スクリプト -->
     <script>
+        // 1. 画像プレビュー機能
         function previewImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -287,6 +327,174 @@
                 reader.readAsDataURL(file);
             }
         }
+
+        // 2. 全47都道府県データ
+        const PREFECTURES = [
+            "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
+            "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",
+            "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県",
+            "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県",
+            "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県",
+            "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県",
+            "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"
+        ];
+
+        // 3. 都道府県別の主な市区町村データ（フォールバック＆即時表示用）
+        const CITIES_BY_PREF = {
+            "北海道": ["札幌市中央区", "札幌市北区", "札幌市東区", "函館市", "小樽市", "旭川市", "釧路市", "帯広市", "北見市", "苫小牧市"],
+            "青森県": ["青森市", "弘前市", "八戸市", "黒石市", "五所川原市", "十和田市", "三沢市", "むつ市"],
+            "岩手県": ["盛岡市", "宮古市", "大船渡市", "花巻市", "北上市", "久慈市", "遠野市", "一関市", "奥州市"],
+            "宮城県": ["仙台市青葉区", "仙台市宮城野区", "仙台市若林区", "仙台市太白区", "仙台市泉区", "石巻市", "塩竈市", "気仙沼市", "名取市", "多賀城市"],
+            "秋田県": ["秋田市", "能代市", "横手市", "大館市", "男鹿市", "湯沢市", "鹿角市", "由利本荘市"],
+            "山形県": ["山形市", "米沢市", "鶴岡市", "酒田市", "新庄市", "寒河江市", "上山市", "天童市"],
+            "福島県": ["福島市", "会津若松市", "郡山市", "いわき市", "白河市", "須賀川市", "喜多方市", "相馬市"],
+            "茨城県": ["水戸市", "日立市", "土浦市", "古河市", "石岡市", "結城市", "龍ケ崎市", "下妻市", "つくば市", "ひたちなか市"],
+            "栃木県": ["宇都宮市", "足利市", "栃木市", "佐野市", "鹿沼市", "日光市", "小山市", "真岡市", "那須塩原市"],
+            "群馬県": ["前橋市", "高崎市", "桐生市", "伊勢崎市", "太田市", "沼田市", "館林市", "渋川市", "藤岡市"],
+            "埼玉県": ["さいたま市大宮区", "さいたま市浦和区", "川越市", "熊谷市", "川口市", "行田市", "所沢市", "加須市", "春日部市", "狭山市", "越谷市"],
+            "千葉県": ["千葉市中央区", "千葉市花見川区", "千葉市稲毛区", "千葉市美浜区", "銚子市", "市川市", "船橋市", "館山市", "木更津市", "松戸市", "柏市", "浦安市"],
+            "東京都": ["千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区", "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区", "八王子市", "立川市", "武蔵野市", "三鷹市", "府中市", "調布市", "町田市"],
+            "神奈川県": ["横浜市中区", "横浜市西区", "横浜市港北区", "川崎市川崎区", "川崎市中原区", "相模原市中央区", "横須賀市", "平塚市", "鎌倉市", "藤沢市", "小田原市", "茅ヶ崎市", "厚木市"],
+            "新潟県": ["新潟市中央区", "長岡市", "三条市", "柏崎市", "新発田市", "小千谷市", "加茂市", "十日町市", "上越市", "佐渡市"],
+            "富山県": ["富山市", "高岡市", "魚津市", "氷見市", "滑川市", "黒部市", "砺波市", "射水市"],
+            "石川県": ["金沢市", "七尾市", "小松市", "輪島市", "珠洲市", "加賀市", "羽咋市", "白山市", "野々市市"],
+            "福井県": ["福井市", "敦賀市", "小浜市", "大野市", "勝山市", "鯖江市", "あわら市", "越前市", "坂井市"],
+            "山梨県": ["甲府市", "富士吉田市", "都留市", "山梨市", "大月市", "韮崎市", "南アルプス市", "北杜市", "甲斐市"],
+            "長野県": ["長野市", "松本市", "上田市", "岡谷市", "飯田市", "諏訪市", "須坂市", "小諸市", "伊那市", "塩尻市", "安曇野市"],
+            "岐阜県": ["岐阜市", "大垣市", "高山市", "多治見市", "関市", "中津川市", "美濃市", "瑞浪市", "羽島市", "各務原市"],
+            "静岡県": ["静岡市葵区", "静岡市駿河区", "静岡市清水区", "浜松市中央区", "沼津市", "熱海市", "三島市", "富士宮市", "伊東市", "富士市", "磐田市", "焼津市", "掛川市"],
+            "愛知県": ["名古屋市中区", "名古屋市中村区", "名古屋市千種区", "名古屋市東区", "豊橋市", "岡崎市", "一宮市", "瀬戸市", "半田市", "春日井市", "豊川市", "刈谷市", "豊田市", "安城市", "小牧市"],
+            "三重県": ["津市", "四日市市", "伊勢市", "松阪市", "桑名市", "鈴鹿市", "名張市", "尾鷲市", "亀山市", "鳥羽市", "志摩市"],
+            "滋賀県": ["大津市", "彦根市", "長浜市", "近江八幡市", "草津市", "守山市", "栗東市", "甲賀市", "野洲市", "東近江市"],
+            "京都府": ["京都市北区", "京都市上京区", "京都市左京区", "京都市中京区", "京都市東山区", "京都市下京区", "京都市伏見区", "福知山市", "舞鶴市", "綾部市", "宇治市", "亀岡市", "長岡京市"],
+            "大阪府": ["大阪市北区", "大阪市中央区", "大阪市西区", "大阪市天王寺区", "大阪市浪速区", "大阪市淀川区", "堺市堺区", "岸和田市", "豊中市", "池田市", "吹田市", "高槻市", "枚方市", "茨木市", "八尾市", "寝屋川市", "東大阪市"],
+            "兵庫県": ["神戸市中央区", "神戸市東灘区", "神戸市灘区", "姫路市", "尼崎市", "明石市", "西宮市", "洲本市", "芦屋市", "伊丹市", "加古川市", "宝塚市", "川西市"],
+            "奈良県": ["奈良市", "大和高田市", "大和郡山市", "天理市", "橿原市", "桜井市", "五條市", "御所市", "生駒市", "香芝市"],
+            "和歌山県": ["和歌山市", "海南市", "橋本市", "有田市", "御坊市", "田辺市", "新宮市", "紀の川市", "岩出市"],
+            "鳥取県": ["鳥取市", "米子市", "倉吉市", "境港市"],
+            "島根県": ["松江市", "浜田市", "出雲市", "益田市", "大田市", "安来市", "江津市", "雲南市"],
+            "岡山県": ["岡山市北区", "岡山市中区", "岡山市東区", "岡山市南区", "倉敷市", "津山市", "玉野市", "笠岡市", "総社市"],
+            "広島県": ["広島市中区", "広島市東区", "広島市南区", "広島市西区", "呉市", "竹原市", "三原市", "尾道市", "福山市", "東広島市", "廿日市市"],
+            "山口県": ["下関市", "宇部市", "山口市", "萩市", "防府市", "下松市", "岩国市", "光市", "長門市", "柳井市", "周南市"],
+            "徳島県": ["徳島市", "鳴門市", "小松島市", "阿南市", "吉野川市", "阿波市", "美馬市", "三好市"],
+            "香川県": ["高松市", "丸亀市", "坂出市", "善通寺市", "観音寺市", "さぬき市", "東かがわ市", "三豊市"],
+            "愛媛県": ["松山市", "今治市", "宇和島市", "八幡浜市", "新居浜市", "西条市", "大洲市", "伊予市", "四国中央市"],
+            "高知県": ["高知市", "室戸市", "安芸市", "南国市", "土佐市", "須崎市", "宿毛市", "土佐清水市", "四万十市"],
+            "福岡県": ["北九州市小倉北区", "北九州市八幡西区", "福岡市東区", "福岡市博多区", "福岡市中央区", "福岡市南区", "福岡市西区", "久留米市", "飯塚市", "大牟田市", "春日市", "大野城市", "宗像市", "太宰府市"],
+            "佐賀県": ["佐賀市", "唐津市", "鳥栖市", "多久市", "伊万里市", "武雄市", "鹿島市", "小城市", "嬉野市"],
+            "長崎県": ["長崎市", "佐世保市", "島原市", "諫早市", "大村市", "平戸市", "松浦市", "対馬市", "壱岐市", "五島市"],
+            "熊本県": ["熊本市中央区", "熊本市東区", "熊本市西区", "熊本市南区", "熊本市北区", "八代市", "人吉市", "荒尾市", "水俣市", "玉名市", "天草市", "合志市"],
+            "大分県": ["大分市", "別府市", "中津市", "日田市", "佐伯市", "臼杵市", "津久見市", "竹田市", "豊後高田市", "杵築市", "宇佐市", "豊後大野市", "由布市", "国東市"],
+            "宮崎県": ["宮崎市", "都城市", "延岡市", "日南市", "小林市", "日向市", "串間市", "西都市", "えびの市"],
+            "鹿児島県": ["鹿児島市", "鹿屋市", "枕崎市", "阿久根市", "出水市", "指宿市", "西之表市", "垂水市", "薩摩川内市", "霧島市", "奄美市"],
+            "沖縄県": ["那覇市", "宜野湾市", "石垣市", "浦添市", "名護市", "糸満市", "沖縄市", "豊見城市", "うるま市", "宮古島市", "南城市"]
+        };
+
+        const prefSelect = document.getElementById('prefectureSelect');
+        const citySelect = document.getElementById('citySelect');
+        const postalInput = document.getElementById('postalCode');
+        const addressDetailsInput = document.getElementById('addressDetails');
+        const zipStatus = document.getElementById('zipStatus');
+
+        // 都道府県セレクトボックスの初期化（初期選択なし）
+        function initPrefectures() {
+            PREFECTURES.forEach(pref => {
+                const option = document.createElement('option');
+                option.value = pref;
+                option.textContent = pref;
+                prefSelect.appendChild(option);
+            });
+        }
+
+        // 選択された都道府県に応じて市区町村セレクトボックスを更新
+        async function updateCities(prefName, targetCity = "") {
+            if (!prefName) {
+                citySelect.innerHTML = '<option value="" selected>市区町村を選択</option>';
+                return;
+            }
+
+            citySelect.innerHTML = '<option value="">読み込み中...</option>';
+
+            let cities = [];
+            try {
+                const res = await fetch(`https://geoapi.heartrails.com/api/json?method=getCities&prefecture=${encodeURIComponent(prefName)}`);
+                const data = await res.json();
+                if (data.response && data.response.location) {
+                    cities = data.response.location.map(item => item.city);
+                }
+            } catch (e) {
+                cities = CITIES_BY_PREF[prefName] || [];
+            }
+
+            if (cities.length === 0) {
+                cities = CITIES_BY_PREF[prefName] || [];
+            }
+
+            if (targetCity && !cities.includes(targetCity)) {
+                cities.unshift(targetCity);
+            }
+
+            citySelect.innerHTML = '<option value="">市区町村を選択</option>';
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                if (city === targetCity) option.selected = true;
+                citySelect.appendChild(option);
+            });
+        }
+
+        // 都道府県変更イベント
+        prefSelect.addEventListener('change', function () {
+            updateCities(this.value);
+        });
+
+        // 郵便番号検索機能（zipcloud APIを利用）
+        async function searchAddressByZip() {
+            const rawZip = postalInput.value.replace(/[^0-9]/g, '');
+            if (rawZip.length !== 7) {
+                zipStatus.innerHTML = '<span class="text-danger">※7桁の数字を入力してください</span>';
+                return;
+            }
+
+            postalInput.value = `${rawZip.slice(0, 3)}-${rawZip.slice(3)}`;
+            zipStatus.innerHTML = '<span class="text-primary"><i class="fa-solid fa-spinner fa-spin me-1"></i>検索中...</span>';
+
+            try {
+                const res = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${rawZip}`);
+                const data = await res.json();
+
+                if (data.results && data.results.length > 0) {
+                    const result = data.results[0];
+                    const pref = result.address1;
+                    const city = result.address2;
+                    const town = result.address3;
+
+                    prefSelect.value = pref;
+                    await updateCities(pref, city);
+                    addressDetailsInput.value = town;
+                    zipStatus.innerHTML = '<span class="text-success"><i class="fa-solid fa-check me-1"></i>住所を反映しました</span>';
+                } else {
+                    zipStatus.innerHTML = '<span class="text-danger">該当する住所が見つかりませんでした</span>';
+                }
+            } catch (error) {
+                zipStatus.innerHTML = '<span class="text-danger">住所の取得に失敗しました</span>';
+            }
+        }
+
+        document.getElementById('zipSearchBtn').addEventListener('click', searchAddressByZip);
+        postalInput.addEventListener('input', function () {
+            const digits = this.value.replace(/[^0-9]/g, '');
+            if (digits.length === 7) {
+                searchAddressByZip();
+            }
+        });
+
+        // ページ読み込み時はすべての項目が空・未選択の状態で初期化
+        document.addEventListener('DOMContentLoaded', () => {
+            initPrefectures();
+        });
     </script>
 </body>
+
 </html>
