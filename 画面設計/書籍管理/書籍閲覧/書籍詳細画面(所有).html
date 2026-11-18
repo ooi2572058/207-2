@@ -156,16 +156,18 @@
                         <div class="book-detail-cover mb-3">
                             鬼滅の刃 (1)
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <span class="badge bg-primary fs-6 px-3 py-2">
                                 <i class="fa-solid fa-book-bookmark me-1"></i>所有中（マイライブラリ）
                             </span>
                         </div>
+                        <!-- ★ 物理 / 電子のラベル表示を追加 -->
+                        <div class="mb-3">
+                            <span class="badge bg-success px-2 py-1" style="font-size: 0.75rem;">
+                                <i class="fa-solid fa-book me-1"></i>物理書籍
+                            </span>
+                        </div>
                         <div class="d-grid gap-2">
-                            <!-- メモボタン（モーダル起動） -->
-                            <button type="button" class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#memoModal">
-                                <i class="fa-solid fa-pen-to-square me-2"></i>読書メモを編集・確認
-                            </button>
                             <a href="listing_new.html" class="btn btn-success fw-bold text-white">
                                 <i class="fa-solid fa-hand-holding-dollar me-2"></i>この本を古本マーケットに出品
                             </a>
@@ -245,23 +247,29 @@
                     <i class="fa-solid fa-layer-group me-2 text-primary"></i>「鬼滅の刃」のその他の巻（シリーズ一覧）
                 </h4>
                 <div class="horizontal-scroll-container">
-                    <!-- シリーズ巻 2 -->
+                    <!-- シリーズ巻 2 (物理) -->
                     <div class="series-book-item" onclick="location.href='book_detail.html?id=102'">
                         <div class="series-book-cover">鬼滅の刃 (2)</div>
                         <div class="series-book-title" title="鬼滅の刃 (2)">鬼滅の刃 (2)</div>
-                        <div class="text-success small fw-bold mt-1">
-                            <i class="fa-solid fa-circle-check me-1"></i>所有中
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <span class="text-success small fw-bold" style="font-size: 0.7rem;">
+                                <i class="fa-solid fa-circle-check me-1"></i>所有中
+                            </span>
+                            <span class="badge bg-success" style="font-size: 0.55rem;">物理</span>
                         </div>
                     </div>
-                    <!-- シリーズ巻 3 -->
+                    <!-- シリーズ巻 3 (電子) -->
                     <div class="series-book-item" onclick="location.href='book_detail.html?id=103'">
                         <div class="series-book-cover">鬼滅の刃 (3)</div>
                         <div class="series-book-title" title="鬼滅の刃 (3)">鬼滅の刃 (3)</div>
-                        <div class="text-success small fw-bold mt-1">
-                            <i class="fa-solid fa-circle-check me-1"></i>所有中
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <span class="text-success small fw-bold" style="font-size: 0.7rem;">
+                                <i class="fa-solid fa-circle-check me-1"></i>所有中
+                            </span>
+                            <span class="badge bg-info text-dark" style="font-size: 0.55rem;">電子</span>
                         </div>
                     </div>
-                    <!-- シリーズ巻 4 -->
+                    <!-- シリーズ巻 4 (未所持) -->
                     <div class="series-book-item" onclick="location.href='book_detail.html?id=104'">
                         <div class="series-book-cover">鬼滅の刃 (4)</div>
                         <div class="series-book-title" title="鬼滅の刃 (4)">鬼滅の刃 (4)</div>
@@ -269,7 +277,7 @@
                             <i class="fa-solid fa-circle-xmark me-1"></i>未所持
                         </div>
                     </div>
-                    <!-- シリーズ巻 5 -->
+                    <!-- シリーズ巻 5 (未所持) -->
                     <div class="series-book-item" onclick="location.href='book_detail.html?id=105'">
                         <div class="series-book-cover">鬼滅の刃 (5)</div>
                         <div class="series-book-title" title="鬼滅の刃 (5)">鬼滅の刃 (5)</div>

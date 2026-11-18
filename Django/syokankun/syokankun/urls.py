@@ -14,8 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    # # 認証・アカウント
+    # path('accounts/', include('accounts.urls')),
+    
+    # # 書籍・検索・カレンダー
+    # path('books/', include('books.urls')),
+    
+    # # ライブラリ
+    # path('library/', include('library.urls')),
+    
+    # # 貸出・返却
+    # path('lendings/', include('lendings.urls')),
+    
+    # # EC・販売・出品
+    # path('shop/', include('shop.urls')),
+    
+    # # コミュニティ・評価・問い合わせ
+    # path('community/', include('community.urls')),
+    
+    # トップページ
+    path('', include('books.urls')),
 ]

@@ -259,10 +259,15 @@
                         <div class="card-body p-2 d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <span class="badge series-badge" style="font-size: 0.65rem;"><i class="fa-solid fa-layer-group me-1"></i>シリーズ</span>
+                                <!-- 所有数バッジを維持 -->
                                 <span class="badge bg-danger fw-bold" style="font-size: 0.7rem;"><i class="fa-solid fa-book-bookmark me-1"></i>所有: 3冊</span>
                             </div>
                             <h6 class="fw-bold text-dark text-truncate mb-1" title="鬼滅の刃">鬼滅の刃</h6>
-                            <p class="text-muted small mb-2 text-truncate" style="font-size: 0.75rem;">漫画・コミック</p>
+                            <!-- 物理・電子ラベルを併記 -->
+                            <div class="mb-2">
+                                <span class="badge bg-success" style="font-size: 0.6rem;">物理 2冊</span>
+                                <span class="badge bg-info text-dark" style="font-size: 0.6rem;">電子 1冊</span>
+                            </div>
                             <button class="btn btn-outline-primary btn-sm py-1 mt-auto fw-bold" style="font-size: 0.75rem;">
                                 保有本を表示 <i class="fa-solid fa-chevron-down ms-1"></i>
                             </button>
@@ -279,10 +284,14 @@
                         <div class="card-body p-2 d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <span class="badge series-badge" style="font-size: 0.65rem;"><i class="fa-solid fa-layer-group me-1"></i>シリーズ</span>
+                                <!-- 所有数バッジを維持 -->
                                 <span class="badge bg-danger fw-bold" style="font-size: 0.7rem;"><i class="fa-solid fa-book-bookmark me-1"></i>所有: 2冊</span>
                             </div>
                             <h6 class="fw-bold text-dark text-truncate mb-1" title="SPY×FAMILY">SPY×FAMILY</h6>
-                            <p class="text-muted small mb-2 text-truncate" style="font-size: 0.75rem;">漫画・コミック</p>
+                            <!-- 物理・電子ラベルを併記 -->
+                            <div class="mb-2">
+                                <span class="badge bg-info text-dark" style="font-size: 0.6rem;">電子 2冊</span>
+                            </div>
                             <button class="btn btn-outline-primary btn-sm py-1 mt-auto fw-bold" style="font-size: 0.75rem;">
                                 保有本を表示 <i class="fa-solid fa-chevron-down ms-1"></i>
                             </button>
@@ -290,7 +299,7 @@
                     </div>
                 </div>
 
-                <!-- 3. 単行本カード -->
+                <!-- 3. 単行本カード（物理） -->
                 <div class="col-6 col-md-3 col-lg-2 col-xxl-1-5">
                     <div class="card book-card">
                         <div class="book-cover-placeholder">
@@ -299,10 +308,14 @@
                         <div class="card-body p-2 d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <span class="badge bg-secondary" style="font-size: 0.65rem;">単行本</span>
+                                <!-- 所有数バッジを維持 -->
                                 <span class="badge bg-primary fw-bold" style="font-size: 0.7rem;"><i class="fa-solid fa-book-bookmark me-1"></i>所有: 1冊</span>
                             </div>
                             <h6 class="fw-bold text-dark text-truncate mb-1" title="詳解 ソフトウェアアーキテクチャ">詳解 アーキテクチャ</h6>
-                            <p class="text-muted small mb-2 text-truncate" style="font-size: 0.75rem;">技術書・IT</p>
+                            <!-- 物理ラベル -->
+                            <div class="mb-2">
+                                <span class="badge bg-success" style="font-size: 0.6rem;"><i class="fa-solid fa-book me-1"></i>物理</span>
+                            </div>
                             <a href="book_detail.html?id=201" class="btn btn-outline-primary btn-sm py-1 mt-auto fw-bold" style="font-size: 0.75rem;">
                                 詳細を見る
                             </a>
@@ -310,7 +323,7 @@
                     </div>
                 </div>
 
-                <!-- 4. 単行本カード -->
+                <!-- 4. 単行本カード（電子） -->
                 <div class="col-6 col-md-3 col-lg-2 col-xxl-1-5">
                     <div class="card book-card">
                         <div class="book-cover-placeholder" style="background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);">
@@ -319,10 +332,14 @@
                         <div class="card-body p-2 d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <span class="badge bg-secondary" style="font-size: 0.65rem;">単行本</span>
+                                <!-- 所有数バッジを維持 -->
                                 <span class="badge bg-primary fw-bold" style="font-size: 0.7rem;"><i class="fa-solid fa-book-bookmark me-1"></i>所有: 1冊</span>
                             </div>
                             <h6 class="fw-bold text-dark text-truncate mb-1" title="クリーンアーキテクチャ">クリーンアーキテクチャ</h6>
-                            <p class="text-muted small mb-2 text-truncate" style="font-size: 0.75rem;">技術書・IT</p>
+                            <!-- 電子ラベル -->
+                            <div class="mb-2">
+                                <span class="badge bg-info text-dark" style="font-size: 0.6rem;"><i class="fa-solid fa-tablet-screen-button me-1"></i>電子</span>
+                            </div>
                             <a href="book_detail.html?id=202" class="btn btn-outline-primary btn-sm py-1 mt-auto fw-bold" style="font-size: 0.75rem;">
                                 詳細を見る
                             </a>
@@ -332,7 +349,7 @@
 
             </div>
 
-            <!-- 【展開エリア 1】「鬼滅の刃」の保有巻一覧カード群（各本ごとの所有冊数を追加表示） -->
+            <!-- 【展開エリア 1】「鬼滅の刃」の保有巻一覧カード群 -->
             <div class="collapse" id="seriesExpand1">
                 <div class="series-expansion-box shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
@@ -341,7 +358,7 @@
                         </h5>
                         <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#seriesExpand1" aria-label="閉じる"></button>
                     </div>
-                    <!-- 各巻カードごとの所有冊数明記 -->
+                    <!-- 各巻カードごとの所有数 ＆ 物理・電子ラベル -->
                     <div class="row g-3">
                         <div class="col-6 col-md-3 col-lg-2 col-xxl-1-5">
                             <div class="card book-card h-100">
@@ -351,7 +368,10 @@
                                         <span class="badge bg-primary" style="font-size: 0.65rem;">所有: 1冊</span>
                                     </div>
                                     <h6 class="fw-bold text-dark text-truncate mb-1">鬼滅の刃 (1)</h6>
-                                    <p class="text-muted small mb-2" style="font-size: 0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>本棚 A-1</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted small" style="font-size: 0.7rem;"><i class="fa-solid fa-location-dot me-1"></i>本棚 A-1</span>
+                                        <span class="badge bg-success" style="font-size: 0.6rem;">物理</span>
+                                    </div>
                                     <a href="book_detail.html?id=101" class="btn btn-outline-primary btn-sm py-0 mt-auto" style="font-size: 0.75rem;">詳細へ</a>
                                 </div>
                             </div>
@@ -364,7 +384,10 @@
                                         <span class="badge bg-primary" style="font-size: 0.65rem;">所有: 1冊</span>
                                     </div>
                                     <h6 class="fw-bold text-dark text-truncate mb-1">鬼滅の刃 (2)</h6>
-                                    <p class="text-muted small mb-2" style="font-size: 0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>本棚 A-1</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted small" style="font-size: 0.7rem;"><i class="fa-solid fa-location-dot me-1"></i>本棚 A-1</span>
+                                        <span class="badge bg-success" style="font-size: 0.6rem;">物理</span>
+                                    </div>
                                     <a href="book_detail.html?id=102" class="btn btn-outline-primary btn-sm py-0 mt-auto" style="font-size: 0.75rem;">詳細へ</a>
                                 </div>
                             </div>
@@ -377,7 +400,10 @@
                                         <span class="badge bg-primary" style="font-size: 0.65rem;">所有: 1冊</span>
                                     </div>
                                     <h6 class="fw-bold text-dark text-truncate mb-1">鬼滅の刃 (3)</h6>
-                                    <p class="text-muted small mb-2" style="font-size: 0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>本棚 A-1</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted small" style="font-size: 0.7rem;"><i class="fa-solid fa-tablet-screen-button me-1"></i>クラウド</span>
+                                        <span class="badge bg-info text-dark" style="font-size: 0.6rem;">電子</span>
+                                    </div>
                                     <a href="book_detail.html?id=103" class="btn btn-outline-primary btn-sm py-0 mt-auto" style="font-size: 0.75rem;">詳細へ</a>
                                 </div>
                             </div>
@@ -386,7 +412,7 @@
                 </div>
             </div>
 
-            <!-- 【展開エリア 2】「SPY×FAMILY」の保有巻一覧カード群（各本ごとの所有冊数を追加表示） -->
+            <!-- 【展開エリア 2】「SPY×FAMILY」の保有巻一覧カード群 -->
             <div class="collapse" id="seriesExpand2">
                 <div class="series-expansion-box shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
@@ -395,7 +421,7 @@
                         </h5>
                         <button type="button" class="btn-close" data-bs-toggle="collapse" data-bs-target="#seriesExpand2" aria-label="閉じる"></button>
                     </div>
-                    <!-- 各巻カードごとの所有冊数明記 -->
+                    <!-- 各巻カードごとの所有数 ＆ 物理・電子ラベル -->
                     <div class="row g-3">
                         <div class="col-6 col-md-3 col-lg-2 col-xxl-1-5">
                             <div class="card book-card h-100">
@@ -405,7 +431,10 @@
                                         <span class="badge bg-primary" style="font-size: 0.65rem;">所有: 1冊</span>
                                     </div>
                                     <h6 class="fw-bold text-dark text-truncate mb-1">SPY×FAMILY (1)</h6>
-                                    <p class="text-muted small mb-2" style="font-size: 0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>本棚 B-2</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted small" style="font-size: 0.7rem;"><i class="fa-solid fa-tablet-screen-button me-1"></i>クラウド</span>
+                                        <span class="badge bg-info text-dark" style="font-size: 0.6rem;">電子</span>
+                                    </div>
                                     <a href="book_detail.html?id=301" class="btn btn-outline-primary btn-sm py-0 mt-auto" style="font-size: 0.75rem;">詳細へ</a>
                                 </div>
                             </div>
@@ -418,7 +447,10 @@
                                         <span class="badge bg-primary" style="font-size: 0.65rem;">所有: 1冊</span>
                                     </div>
                                     <h6 class="fw-bold text-dark text-truncate mb-1">SPY×FAMILY (2)</h6>
-                                    <p class="text-muted small mb-2" style="font-size: 0.75rem;"><i class="fa-solid fa-location-dot me-1"></i>本棚 B-2</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted small" style="font-size: 0.7rem;"><i class="fa-solid fa-tablet-screen-button me-1"></i>クラウド</span>
+                                        <span class="badge bg-info text-dark" style="font-size: 0.6rem;">電子</span>
+                                    </div>
                                     <a href="book_detail.html?id=302" class="btn btn-outline-primary btn-sm py-0 mt-auto" style="font-size: 0.75rem;">詳細へ</a>
                                 </div>
                             </div>

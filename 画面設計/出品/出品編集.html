@@ -64,15 +64,6 @@
             font-weight: 600;
         }
 
-        /* 通知バッジ */
-        .notification-badge {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            font-size: 0.65rem;
-            padding: 0.25em 0.4em;
-        }
-
         /* ==========================================================================
             カード & コンポーネントスタイル
             ========================================================================== */
@@ -108,6 +99,12 @@
         .btn-secondary-custom:hover {
             background-color: #128f76;
             color: #ffffff;
+        }
+
+        /* 編集不可フィールドの見た目調整 */
+        input[readonly], select:disabled {
+            background-color: #e9ecef !important;
+            opacity: 1;
         }
 
         /* ==========================================================================
@@ -160,9 +157,6 @@
             border-radius: 3px;
         }
 
-        /* ==========================================================================
-            出品画面用（このページ固有の追加スタイル）
-            ========================================================================== */
         .page-title {
             font-size: 1.4rem;
             font-weight: bold;
@@ -178,24 +172,12 @@
             padding-left: 1.1rem;
         }
 
-        /* ==========================================================================
-            フッター
-            ========================================================================== */
         .footer {
             background-color: var(--primary-color);
             color: #ffffff;
             padding: 1.5rem 0;
             margin-top: auto;
             font-size: 0.9rem;
-        }
-
-        .footer a {
-            color: var(--secondary-color);
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -239,20 +221,37 @@
                     <form action="listing_list.html" method="post" enctype="multipart/form-data" id="editForm">
                         <input type="hidden" name="id" value="1">
                         
+                        <!-- 出品対象の書籍選択プルダウン -->
                         <div class="mb-3">
-                            <label for="title" class="form-label">商品名（書籍タイトル） <span class="badge bg-danger">必須</span></label>
-                            <input type="text" class="form-control" id="title" name="title" value="サンプル書籍タイトル 1" required>
+                            <label for="targetBook" class="form-label">出品対象の書籍選択 <span class="badge bg-danger">必須</span></label>
+                            <select class="form-select" id="targetBook" name="target_book_id" required>
+                                <option value="" disabled>-- 保有している書籍から選択してください --</option>
+                                <option value="1" data-title="サンプル書籍タイトル 1" data-isbn="978-4-0000-0000-0" data-author="著者名 太郎" selected>サンプル書籍タイトル 1（鬼滅の刃 1巻）</option>
+                                <option value="2" data-title="詳解 ソフトウェアアーキテクチャ (第2版)" data-isbn="978-4-296-12345-6" data-author="太郎 技評">詳解 ソフトウェアアーキテクチャ (第2版)</option>
+                                <option value="3" data-title="実践プログラミング継続的インテグレーション" data-isbn="978-4-873-11987-2" data-author="次郎 プロ">実践プログラミング継続的インテグレーション</option>
+                            </select>
+                            <div class="form-text">選択した書籍のタイトル、ISBN、著者は自動で補完され変更できません。</div>
                         </div>
+
+                        <!-- 商品名（自動補完・編集不可） -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">商品名（書籍タイトル）</label>
+                            <input type="text" class="form-control" id="title" name="title" value="サンプル書籍タイトル 1" readonly required>
+                        </div>
+
                         <div class="row">
+                            <!-- ISBN（自動補完・編集不可） -->
                             <div class="col-md-6 mb-3">
                                 <label for="isbn" class="form-label">ISBN</label>
-                                <input type="text" class="form-control" id="isbn" name="isbn" value="978-4-0000-0000-0">
+                                <input type="text" class="form-control" id="isbn" name="isbn" value="978-4-0000-0000-0" readonly>
                             </div>
+                            <!-- 著者（自動補完・編集不可） -->
                             <div class="col-md-6 mb-3">
                                 <label for="author" class="form-label">著者</label>
-                                <input type="text" class="form-control" id="author" name="author" value="著者名">
+                                <input type="text" class="form-control" id="author" name="author" value="著者名 太郎" readonly>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label for="category" class="form-label">カテゴリ</label>
@@ -274,7 +273,6 @@
                                     <option value="やや汚れあり">やや汚れあり</option>
                                     <option value="汚れあり">汚れあり</option>
                                 </select>
-                                <!-- モダールを開くヘルプリンク -->
                                 <div class="form-text mt-1">
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#conditionGuideModal" class="text-decoration-none">
                                         <i class="fa-solid fa-circle-question me-1"></i>商品の状態の判断基準について
@@ -296,10 +294,8 @@
                             <label class="form-label fw-bold">商品画像管理</label>
                             <div class="form-text mb-2">現在登録されている画像を確認・削除できます。また、新しい画像を追加で複数選択してアップロードできます。</div>
 
-                            <!-- プレビューと削除ボタンが表示されるコンテナ -->
                             <div id="imagePreviewContainer" class="d-flex flex-wrap mb-3"></div>
 
-                            <!-- 新規画像追加用ファイル入力（複数選択可） -->
                             <input type="file" class="form-control" id="images" name="images" accept="image/*" multiple>
                         </div>
 
@@ -366,6 +362,21 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // ==========================================
+            // 出版対象書籍選択による自動補完処理
+            // ==========================================
+            const targetBookSelect = document.getElementById('targetBook');
+            const titleInput = document.getElementById('title');
+            const isbnInput = document.getElementById('isbn');
+            const authorInput = document.getElementById('author');
+
+            targetBookSelect.addEventListener('change', function () {
+                const selectedOption = this.options[this.selectedIndex];
+                titleInput.value = selectedOption.getAttribute('data-title') || '';
+                isbnInput.value = selectedOption.getAttribute('data-isbn') || '';
+                authorInput.value = selectedOption.getAttribute('data-author') || '';
+            });
+
+            // ==========================================
             // 画像プレビュー＆削除制御処理
             // ==========================================
             const imageInput = document.getElementById('images');
@@ -430,7 +441,7 @@
                             badge.style.background = 'rgba(24, 188, 156, 0.8)';
 
                             const deleteBtn = document.createElement('button');
-                            deleteBtn.className = 'delete-btn';
+                            deleteBtn.className, deleteBtn.className = 'delete-btn';
                             deleteBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
                             deleteBtn.type = 'button';
 

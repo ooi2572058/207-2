@@ -209,7 +209,11 @@
                         <!-- タイトル -->
                         <div class="mb-3">
                             <label for="title" class="form-label fw-bold">商品名（書籍タイトル） <span class="badge bg-danger">必須</span></label>
-                            <input type="text" class="form-control" id="title" name="title" required placeholder="例：詳解 ソフトウェアアーキテクチャ">
+                            <select class="form-select" id="title" name="title" >
+                                <option value="">商品を選択してください</option>
+                                <option>キメツ</option>
+                                <option>ドラゴンボール</option>
+                            </select>
                         </div>
 
                         <!-- ISBN & 著者 -->
@@ -223,6 +227,27 @@
                                 <input type="text" class="form-control" id="author" name="author">
                             </div>
                         </div>
+                        <script type="text/javascript">
+                            const title = document.getElementById("title")
+                            const isbn = document.getElementById("isbn")
+                            const author = document.getElementById("author")
+                            
+                            title.addEventListener("change",function(){
+                                const selectedtitle = title.value
+                                if (selectedtitle === "キメツ") {
+                                    isbn.value = "43333"
+                                    author.value = "ごとうげ"
+                                } else if (selectedtitle === "ドラゴンボール"){
+                                    isbn.value = "11111"
+                                    author.value = "とりやま"
+                                } else {
+                                    isbn.value = ""
+                                    author.value = ""
+                                }
+                                
+                            })
+
+                        </script>
 
                         <!-- カテゴリ・状態・価格 -->
                         <div class="row">
