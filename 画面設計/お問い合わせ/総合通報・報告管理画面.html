@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>総合通報・報告管理 - しょかんくん 管理者</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --admin-primary: #1a252f;
+            --bg-light: #f4f6f9;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar-admin {
+            background-color: var(--admin-primary) !important;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .footer {
+            background-color: var(--admin-primary);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-dark navbar-admin">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand fw-bold text-white" href="#">
+                    <i class="fa-solid fa-shield-halved me-2 text-warning"></i>しょかんくん 管理者ダッシュボード
+                </a>
+                <div class="d-flex align-items-center">
+                    <span class="text-white small me-3"><i
+                            class="fa-solid fa-user-shield me-1 text-warning"></i>システム管理者</span>
+                    <a href="login.html" class="btn btn-outline-light btn-sm">ログアウト</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-4">
+        <div class="container-fluid px-4">
+            <h3 class="fw-bold text-dark mb-1">
+                <i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>総合通報・報告管理
+            </h3>
+            <p class="text-muted small mb-4">ユーザー、出品物、書籍評価に対するすべての通報・報告のステータス変更および対応管理を行います。</p>
+
+            <!-- 絞り込みタブ / フィルターボタン群 -->
+            <div class="card card-custom p-3 mb-4 bg-white">
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <span class="fw-bold small text-muted me-2"><i class="fa-solid fa-filter me-1"></i>絞り込み:</span>
+                    <button type="button" class="btn btn-dark btn-sm active"
+                        onclick="filterReports('all', this)">すべて表示</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        onclick="filterReports('user', this)"><i
+                            class="fa-solid fa-user-slash me-1 text-danger"></i>ユーザー報告</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        onclick="filterReports('item', this)"><i
+                            class="fa-solid fa-box-open me-1 text-warning"></i>出品物報告</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        onclick="filterReports('review', this)"><i
+                            class="fa-solid fa-comment-slash me-1 text-info"></i>書籍評価報告</button>
+                </div>
+            </div>
+
+            <!-- 一覧テーブルカード -->
+            <div class="card card-custom p-4 bg-white">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle border-top">
+                        <thead class="table-light">
+                            <tr>
+                                <th>種別</th>
+                                <th>報告ID / 対象</th>
+                                <th>内容・理由</th>
+                                <th>報告日時</th>
+                                <th>ステータス</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody">
+                            <!-- 1. ユーザー報告行 -->
+                            <tr data-category="user">
+                                <td><span class="badge bg-danger">ユーザー報告</span></td>
+                                <td>
+                                    <strong>悪質ショップA</strong><br>
+                                    <span class="text-muted small">bad_user_a@example.com</span>
+                                </td>
+                                <td><span class="text-muted small">高額出品の繰り返し（被通報: 5回）</span></td>
+                                <td class="small">2026-10-25</td>
+                                <td>
+                                    <select class="form-select form-select-sm" style="width: 130px;">
+                                        <option value="unhandled" selected>未対応</option>
+                                        <option value="in_progress">対応中</option>
+                                        <option value="resolved">対応完了</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm mb-1 fw-bold" data-bs-toggle="modal"
+                                        data-bs-target="#actionModal" data-username="悪質ショップA">
+                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>対応
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm mb-1"
+                                        onclick="return confirm('本当にこのユーザー報告履歴を削除しますか？');">削除</button>
+                                </td>
+                            </tr>
+
+                            <!-- 2. 出品物報告行 -->
+                            <tr data-category="item">
+                                <td><span class="badge bg-warning text-dark">出品物報告</span></td>
+                                <td>
+                                    #ITM-0032<br>
+                                    <strong>プレミア限定版小説 (10万円)</strong><br>
+                                    <span class="text-muted small">出品者: 悪質ショップA</span>
+                                </td>
+                                <td><span class="badge bg-warning text-dark">不当な価格</span></td>
+                                <td class="small">2026-10-26</td>
+                                <td>
+                                    <select class="form-select form-select-sm" style="width: 130px;">
+                                        <option value="unhandled" selected>未対応</option>
+                                        <option value="in_progress">対応中</option>
+                                        <option value="resolved">対応完了</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm mb-1"
+                                        onclick="return confirm('対象の出品物を取り下げ処理（非公開化）しますか？');">取り下げ</button>
+                                    <button class="btn btn-outline-danger btn-sm mb-1"
+                                        onclick="return confirm('本当にこの報告ログを削除しますか？');">削除</button>
+                                </td>
+                            </tr>
+
+                            <!-- 3. 書籍評価報告行 -->
+                            <tr data-category="review">
+                                <td><span class="badge bg-info text-dark">書籍評価報告</span></td>
+                                <td>
+                                    #REV-0015<br>
+                                    <strong>鬼滅の刃 (1)</strong><br>
+                                    <span class="text-muted small">投稿者: 匿名ユーザーX</span>
+                                </td>
+                                <td class="small text-muted">「作者に対する暴言・誹謗中傷...」</td>
+                                <td class="small">2026-10-27</td>
+                                <td>
+                                    <select class="form-select form-select-sm" style="width: 130px;">
+                                        <option value="unhandled" selected>未対応</option>
+                                        <option value="in_progress">対応中</option>
+                                        <option value="resolved">対応完了</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm mb-1"
+                                        onclick="return confirm('対象の書籍レビュー投稿自体を物理削除しますか？');">レビュー削除</button>
+                                    <button class="btn btn-outline-danger btn-sm mb-1"
+                                        onclick="return confirm('本当にこの通報履歴をリストから削除しますか？');">削除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 対応・処分モーダル (ユーザー報告用) -->
+    <div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="actionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title fw-bold" id="actionModalLabel"><i
+                            class="fa-solid fa-gavel me-2"></i>ユーザーへの対応・処分実行</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">対象ユーザー</label>
+                            <input type="text" class="form-control fw-bold bg-light" id="targetUser" value="悪質ショップA"
+                                readonly>
+                        </div>
+
+                        <!-- 処分区分選択 -->
+                        <div class="mb-3">
+                            <label for="actionType" class="form-label fw-bold small">対応・処分区分 <span
+                                    class="badge bg-danger">必須</span></label>
+                            <select class="form-select" id="actionType" onchange="toggleSuspensionPeriod()">
+                                <option value="notice">注意（通告・厳重注意メール）</option>
+                                <option value="warning" selected>警告（ペナルティ付与）</option>
+                                <option value="suspension">利用停止</option>
+                            </select>
+                        </div>
+
+                        <!-- 利用停止期間（利用停止選択時のみ表示） -->
+                        <div class="mb-3" id="suspensionPeriodWrapper" style="display: none;">
+                            <label for="suspensionPeriod" class="form-label fw-bold small">利用停止期間 <span
+                                    class="badge bg-danger">必須</span></label>
+                            <select class="form-select" id="suspensionPeriod">
+                                <option value="1week">1週間</option>
+                                <option value="1month">1カ月</option>
+                                <option value="3months">3カ月</option>
+                                <option value="6months">6カ月</option>
+                                <option value="1year">1年</option>
+                                <option value="permanent">永久（アカウント凍結）</option>
+                            </select>
+                        </div>
+
+                        <!-- 対応理由 -->
+                        <div class="mb-3">
+                            <label for="actionReason" class="form-label fw-bold small">対応理由（ユーザーへ通知されます） <span
+                                    class="badge bg-danger">必須</span></label>
+                            <textarea class="form-control" id="actionReason" rows="4"
+                                placeholder="例: 利用規約第〇条（禁止事項）に違反する高額出品の常態化が確認されたため、警告処分といたします。" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-danger px-4 fw-bold"
+                        onclick="alert('対応内容を保存し、ユーザーへ通知メールを送信しました。'); location.reload();">対応を実行する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 チーム開発書籍管理システム しょかんくん 管理者機能</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS & 絞り込み用スクリプト -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 報告種別の絞り込み関数
+        function filterReports(category, btn) {
+            // ボタンのアクティブ状態を切り替え
+            const buttons = document.querySelectorAll('.card .btn-sm');
+            buttons.forEach(b => {
+                b.classList.remove('btn-dark', 'active');
+                b.classList.add('btn-outline-secondary');
+            });
+            btn.classList.remove('btn-outline-secondary');
+            btn.classList.add('btn-dark', 'active');
+
+            // テーブルの行をフィルタリング
+            const rows = document.querySelectorAll('#reportTableBody tr');
+            rows.forEach(row => {
+                if (category === 'all' || row.getAttribute('data-category') === category) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // 利用停止が選択された場合のみ「利用停止期間」を表示する切り替えスクリプト
+        function toggleSuspensionPeriod() {
+            const actionType = document.getElementById('actionType').value;
+            const periodWrapper = document.getElementById('suspensionPeriodWrapper');
+            if (actionType === 'suspension') {
+                periodWrapper.style.display = 'block';
+            } else {
+                periodWrapper.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

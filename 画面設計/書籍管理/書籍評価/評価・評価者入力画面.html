@@ -98,46 +98,70 @@
     <!-- ヘッダー / base.html同期ナビゲーション -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container-fluid px-4">
-                <a class="navbar-brand" href="home.html">
+            <div class="container-fluid">
+                <!-- ロゴ / システム名 -->
+                <a class="navbar-brand" href="#">
                     <i class="fa-solid fa-book-open me-2"></i>しょかんくん
                 </a>
+
+                <!-- スマホ用トグルボタン -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <!-- ナビゲーションリンク -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="home.html"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                            <a class="nav-link active" href="#"><i class="fa-solid fa-house me-1"></i>ホーム</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="my_library.html"><i
-                                    class="fa-solid fa-book-bookmark me-1"></i>個人ライブラリ</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="listing_list.html"><i
-                                    class="fa-solid fa-store me-1"></i>古本マーケット</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-barcode me-1"></i>書籍登録</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="calendar.html"><i
-                                    class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                            <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
                         </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-hand-holding-hand me-1"></i>貸出管理</a>
+                        </＜li>-->
                     </ul>
 
-                    <!-- ユーザーメニュー -->
+                    <!-- 検索フォーム -->
+                    <form class="d-flex me-3" role="search">
+                        <div class="input-group">
+                            <input class="form-control form-control-sm" type="search" placeholder="ISBN・タイトル検索"
+                                aria-label="Search">
+                            <button class="btn btn-outline-light btn-sm" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- ユーザー / 通知ドロップダウン -->
                     <ul class="navbar-nav">
+                        <li class="nav-item me-2">
+                            <a class="nav-link position-relative" href="#">
+                                <i class="fa-solid fa-bell"></i>
+                                <span class="badge rounded-pill bg-danger notification-badge">3</span>
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-circle-user me-1"></i>本好き太郎
+                                <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow">
-                                <li><a class="dropdown-item" href="account_settings.html"><i
-                                            class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i
+                                            class="fa-solid fa-paper-plane me-2"></i>購入リクエスト</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="index.html"><i
+                                <li><a class="dropdown-item text-danger" href="#"><i
                                             class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
                             </ul>
                         </li>
