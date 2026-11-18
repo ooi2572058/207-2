@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}ホーム (未ログイン) - しょかんくん{% endblock %}
+
+{% block header %}
+<!-- 未ログイン専用ヘッダー -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-white" href="{% url 'books:index_0' %}">
+                <i class="fa-solid fa-book-open me-2 text-info"></i>しょかんくん
+            </a>
+            <div class="d-flex align-items-center">
+                <a href="login.html" class="btn btn-outline-light btn-sm me-2 fw-bold">ログイン</a>
+                <a href="signup.html" class="btn btn-info btn-sm text-white fw-bold">新規会員登録</a>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<!-- ヒーローバナー -->
+<div class="hero-section text-center shadow p-4 mb-4 rounded text-white" style="background: linear-gradient(135deg, #2c3e50, #34495e);">
+    <h2 class="fw-bold mb-2">みんなでつくる・共有する 書籍管理システム</h2>
+    <p class="mb-3 text-light small">蔵書の検索・閲覧や、ユーザー同士の書籍出品一覧・レビューを自由にチェックできます。</p>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="search_result.html" method="get" class="input-group input-group-lg">
+                <input type="text" class="form-control fs-6" placeholder="タイトル・著者名・ISBNコードで検索...">
+                <button class="btn btn-info text-white fw-bold fs-6" type="submit">
+                    <i class="fa-solid fa-magnifying-glass me-1"></i> 検索
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 機能クイックアクセス (公開機能) -->
+<div class="row row-cols-2 row-cols-md-4 g-3 mb-5">
+    <div class="col">
+        <a href="search.html" class="text-decoration-none">
+            <div class="card card-custom p-3 text-center h-100">
+                <i class="fa-solid fa-magnifying-glass text-primary fa-2x mb-2"></i>
+                <h6 class="fw-bold text-dark mb-0">書籍検索</h6>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="exhibition_list.html" class="text-decoration-none">
+            <div class="card card-custom p-3 text-center h-100">
+                <i class="fa-solid fa-store text-success fa-2x mb-2"></i>
+                <h6 class="fw-bold text-dark mb-0">みんなの出品一覧</h6>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="review_list.html" class="text-decoration-none">
+            <div class="card card-custom p-3 text-center h-100">
+                <i class="fa-solid fa-star text-warning fa-2x mb-2"></i>
+                <h6 class="fw-bold text-dark mb-0">最新レビュー一覧</h6>
+            </div>
+        </a>
+    </div>
+    <div class="col">
+        <a href="inquiry.html" class="text-decoration-none">
+            <div class="card card-custom p-3 text-center h-100">
+                <i class="fa-solid fa-envelope text-danger fa-2x mb-2"></i>
+                <h6 class="fw-bold text-dark mb-0">お問い合わせ</h6>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}
