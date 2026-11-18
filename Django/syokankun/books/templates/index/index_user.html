@@ -1,66 +1,58 @@
-{% extends 'base.html' %}
+{% extends 'base_user.html' %}
 
 {% block title %}ホーム - しょかんくん{% endblock %}
 
 {% block header %}
-<!-- 一般ユーザー専用ヘッダー -->
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-white" href="{% url 'books:index_1' %}">
-                <i class="fa-solid fa-book-open me-2 text-info"></i>しょかんくん
-            </a>
-            <div class="d-flex align-items-center">
-                
-                <!-- 通知ベルアイコン-->
-                <div class="dropdown me-3">
-                    <a href="#" class="text-white text-decoration-none position-relative dropdown-toggle" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-bell fa-lg"></i>
-                        {% if notifications %}
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ notifications|length }}
-                        </span>
-                        {% endif %}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow py-0" aria-labelledby="notificationDropdown" style="width: 320px;">
-                        <li class="dropdown-header bg-light fw-bold py-2 border-bottom text-dark">
-                            <i class="fa-solid fa-bell me-1 text-warning"></i> 通知一覧
-                        </li>
-                        
-                        <!-- 動的な通知ループ -->
-                        {% for notif in notifications %}
-                        <li>
-                            <a class="dropdown-item py-2 border-bottom text-wrap" href="#">
-                                <div class="fw-bold text-dark small">{{ notif.title }}</div>
-                                <div class="text-muted" style="font-size: 0.8rem;">{{ notif.message }}</div>
-                                <div class="text-muted text-end" style="font-size: 0.7rem;">{{ notif.created_at }}</div>
-                            </a>
-                        </li>
-                        {% empty %}
-                        <!-- 通知がない場合 -->
-                        <li><span class="dropdown-item text-muted small py-3 text-center d-block">新しい通知はありません</span></li>
-                        {% endfor %}
-                        
-                        <li><a class="dropdown-item text-center text-primary small py-2 fw-bold" href="#">すべての通知を見る</a></li>
-                    </ul>
-                </div>
+<li class="nav-item">
+    <a class="nav-link" href="#"><i class="fa-solid fa-book-bookmark me-1"></i>ダミー</a>
+</li>
+{% endblock %}
 
-                <!-- ユーザーメニュー -->
-                <div class="dropdown">
-                    <a href="#" class="dropdown-toggle text-white text-decoration-none fw-bold" id="userMenu" data-bs-toggle="dropdown">
-                        <i class="fa-solid fa-circle-user fa-lg me-1 text-info"></i> {{ username }} 様
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-gear me-2"></i>プロフィール編集</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-boxes-packing me-2"></i>出品履歴</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+{% block right_nav %}
+<li class="nav-item dropdown me-3">
+    <a href="#" class="nav-link position-relative dropdown-toggle" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-bell"></i>
+        {% if notifications %}
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ notifications|length }}
+        </span>
+        {% endif %}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end shadow py-0" aria-labelledby="notificationDropdown" style="width: 320px;">
+        <li class="dropdown-header bg-light fw-bold py-2 border-bottom text-dark">
+            <i class="fa-solid fa-bell me-1 text-warning"></i> 通知一覧
+        </li>
+        
+        <!-- 動的な通知ループ -->
+        {% for notif in notifications %}
+        <li>
+            <a class="dropdown-item py-2 border-bottom text-wrap" href="#">
+                <div class="fw-bold text-dark small">{{ notif.title }}</div>
+                <div class="text-muted" style="font-size: 0.8rem;">{{ notif.message }}</div>
+                <div class="text-muted text-end" style="font-size: 0.7rem;">{{ notif.created_at }}</div>
+            </a>
+        </li>
+        {% empty %}
+        <!-- 通知がない場合 -->
+        <li><span class="dropdown-item text-muted small py-3 text-center d-block">新しい通知はありません</span></li>
+        {% endfor %}
+        
+        <li><a class="dropdown-item text-center text-primary small py-2 fw-bold" href="#">すべての通知を見る</a></li>
+    </ul>
+</li>
+
+<!-- 検索エリアの右側に配置されるユーザーメニュー -->
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle fw-bold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+        <i class="fa-solid fa-circle-user me-1 text-info"></i> {{ username }} 様
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end shadow">
+        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-gear me-2"></i>プロフィール編集</a></li>
+        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-boxes-packing me-2"></i>出品履歴</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+    </ul>
+</li>
 {% endblock %}
 
 {% block content %}
