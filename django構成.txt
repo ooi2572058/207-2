@@ -15,9 +15,9 @@ views.py: LoginView, LogoutView, CreateView(新規登録), UpdateView(アカウ�
 
 
 ② books アプリ（書籍情報・検索・カレンダー）
-担当テーブル: books (書籍マスタ), series (シリーズ), release_notifications (発売日通知登録), purchase_requests (購入リクエスト)
+担当テーブル: books (書籍マスタ), series (シリーズ), release_notifications (発売日通知登録)
 
-対応画面: 書籍検索、書籍詳細、発売日カレンダー、通知登録、通知一覧、購入リクエスト
+対応画面: 書籍検索、書籍詳細、発売日カレンダー、通知登録、通知一覧
 
 Django構成要素:
 
@@ -63,9 +63,9 @@ views.py: カート機能（SessionまたはDB永続化）、購入フロー（�
 
 
 ⑥ community アプリ（レビュー・メッセージ・通報・問い合わせ）
-担当テーブル: reviews (評価・レビュー), messages (メッセージ), reports (通報), inquiries (お問い合わせ)
+担当テーブル: reviews (評価・レビュー), messages (メッセージ), reports (通報), inquiries (お問い合わせ), purchase_requests (購入リクエスト)
 
-対応画面: 書籍評価画面、出品物購入完了・ユーザー評価画面、メッセージ、お問い合わせ、各種報告閲覧
+対応画面: 書籍評価画面、出品物購入完了・ユーザー評価画面、メッセージ、お問い合わせ、各種報告閲覧、購入リクエスト
 
 Django構成要素:
 
