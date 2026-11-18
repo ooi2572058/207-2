@@ -18,16 +18,15 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'books:index_2' %}"><i class="fa-solid fa-house me-1"></i>ホーム</a>
                     </li>
-                    <!-- 追加: ライブラリ項目 -->
+                    <!-- ライブラリ項目 -->
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fa-solid fa-book-bookmark me-1"></i>ライブラリ</a>
                     </li>
-
                 </ul>
 
                 <!-- 右側メニュー（一般ホーム画面への遷移ボタン ＋ ユーザー・法人メニュー） -->
                 <ul class="navbar-nav align-items-center">
-                    <!-- 追加: 一般ホーム画面への切り替えボタン -->
+                    <!-- 一般ホーム画面への切り替えボタン -->
                     <li class="nav-item me-3">
                         <a href="{% url 'books:index_1' %}" class="btn btn-outline-light btn-sm fw-bold">
                             <i class="fa-solid fa-user me-1"></i>一般ホームへ
@@ -36,7 +35,7 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fa-solid fa-circle-user me-1"></i> {{ corporate_name|default:"株式会社テックブックス" }}（{{ role_title|default:"管理者" }}）
+                            <i class="fa-solid fa-circle-user me-1"></i> {{ corporate_name }}（{{ role_title }}）
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow">
                             <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>組織設定</a></li>
@@ -137,7 +136,7 @@
                     <i class="fa-solid fa-shop me-2"></i>ショップ（マーケットプレイス）
                 </a>
                 <a href="#" class="btn btn-outline-secondary text-start py-3 px-3 fw-bold">
-                    <i class="fa-solid fa-cart-shopping me-2"></i>カート
+                    <i class="fa-solid fa-book-medical me-2"></i>ライブラリ登録
                 </a>
             </div>
         </div>
