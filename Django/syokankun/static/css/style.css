@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   全体基本設定
+   ========================================================================== */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #18bc9c;
+    --accent-color: #e74c3c;
+    --bg-light: #f8f9fa;
+    --text-color: #333333;
+    --border-color: #e9ecef;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* ==========================================================================
+   ヘッダー・ナビゲーション
+   ========================================================================== */
+.navbar {
+    background-color: var(--primary-color) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #ffffff !important;
+}
+
+.navbar-brand i {
+    color: var(--secondary-color);
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+/* 通知バッジ */
+.notification-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 0.65rem;
+    padding: 0.25em 0.4em;
+}
+
+/* ==========================================================================
+   カード & コンポーネントスタイル
+   ========================================================================== */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: bold;
+}
+
+/* 書籍カードのホバー効果（一覧画面用） */
+.book-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* ボタンカスタム */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #1a252f;
+    border-color: #1a252f;
+}
+
+.btn-secondary-custom {
+    background-color: var(--secondary-color);
+    color: #ffffff;
+    border-color: var(--secondary-color);
+}
+
+.btn-secondary-custom:hover {
+    background-color: #128f76;
+    color: #ffffff;
+}
+
+/* 編集不可フィールドの見た目調整 */
+input[readonly], select:disabled {
+    background-color: #e9ecef !important;
+    opacity: 1;
+}
+
+/* ==========================================================================
+   フッター
+   ========================================================================== */
+.footer {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 1.5rem 0;
+    margin-top: auto;
+    font-size: 0.9rem;
+}
+
+.footer a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* カードの共通カスタムスタイル */
+.card-custom {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-3px);
+}
+
+/* ユーザーウェルカムエリアのグラデーションとスタイル */
+.user-welcome-card {
+    background: linear-gradient(135deg, #2c3e50, #1a252f);
+    color: white;
+    border-radius: 10px;
+}

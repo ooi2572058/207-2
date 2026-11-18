@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block title %}法人ダッシュボード - しょかんくん{% endblock %}
+
+{% block header %}
+<!-- ヘッダー / 法人向けナビゲーション -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="{% url 'books:index_2' %}">
+                <i class="fa-solid fa-building-user me-2"></i>しょかんくん <small class="fs-6 text-info">(法人向け)</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'books:index_2' %}"><i class="fa-solid fa-house me-1"></i>ホーム</a>
+                    </li>
+                    <!-- ライブラリ項目 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-book-bookmark me-1"></i>ライブラリ</a>
+                    </li>
+                </ul>
+
+                <!-- 右側メニュー（一般ホーム画面への遷移ボタン ＋ ユーザー・法人メニュー） -->
+                <ul class="navbar-nav align-items-center">
+                    <!-- 一般ホーム画面への切り替えボタン -->
+                    <li class="nav-item me-3">
+                        <a href="{% url 'books:index_1' %}" class="btn btn-outline-light btn-sm fw-bold">
+                            <i class="fa-solid fa-user me-1"></i>一般ホームへ
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-circle-user me-1"></i> {{ corporate_name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>組織設定</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<!-- ウェルカムバナー -->
+<div class="p-4 mb-4 bg-white card-custom border-start border-primary border-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <div>
+            <h3 class="fw-bold text-dark mb-1"><i class="fa-solid fa-building me-2 text-primary"></i>{{ corporate_name }} 管理者ダッシュボード</h3>
+            <p class="text-muted mb-0">社内ライブラリの蔵書状況、メンバーからの貸出・返却申請の確認を行えます。</p>
+        </div>
+        <div class="mt-3 mt-md-0">
+            <span class="badge bg-secondary p-2 fs-6">ログイン中:</span>
+        </div>
+    </div>
+</div>
+
+<!-- ステータス概要カード群 -->
+<div class="row g-4 mb-4">
+    <!-- 蔵書総数 -->
+    <div class="col-md-4">
+        <div class="card card-custom p-4 bg-primary text-white h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1">法人蔵書総数</h6>
+                    <h2 class="fw-bold mb-0">{{ total_books }} 冊</h2>
+                </div>
+                <i class="fa-solid fa-book stat-card-icon"></i>
+            </div>
+            <div class="mt-3 pt-2 border-top border-light border-opacity-25 small">
+                <a href="#" class="text-white text-decoration-none"><i class="fa-solid fa-arrow-right me-1"></i>蔵書一覧を確認する</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 貸出申請承認待ち -->
+    <div class="col-md-4">
+        <div class="card card-custom p-4 bg-warning text-dark h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-dark opacity-75 mb-1">貸出申請 承認待ち</h6>
+                    <h2 class="fw-bold mb-0">{{ rental_approval_count }} 件</h2>
+                </div>
+                <i class="fa-solid fa-clipboard-check stat-card-icon"></i>
+            </div>
+            <div class="mt-3 pt-2 border-top border-dark border-opacity-25 small">
+                <a href="#" class="text-dark fw-bold text-decoration-none"><i class="fa-solid fa-arrow-right me-1"></i>承認画面へ進む</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 返却申請確認待ち -->
+    <div class="col-md-4">
+        <div class="card card-custom p-4 bg-success text-white h-100">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="text-white-50 mb-1">返却申請 受領待ち</h6>
+                    <h2 class="fw-bold mb-0">{{ return_approval_count }} 件</h2>
+                </div>
+                <i class="fa-solid fa-rotate-left stat-card-icon"></i>
+            </div>
+            <div class="mt-3 pt-2 border-top border-light border-opacity-25 small">
+                <a href="#" class="text-white text-decoration-none"><i class="fa-solid fa-arrow-right me-1"></i>返却管理画面へ進む</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- クイックアクション & 最近のアクティビティ -->
+<div class="row g-4">
+    <!-- クイックメニュー -->
+    <div class="col-lg-5">
+        <div class="card card-custom p-4 h-100">
+            <h5 class="fw-bold text-secondary mb-3"><i class="fa-solid fa-bolt me-2 text-warning"></i>クイックメニュー</h5>
+            <div class="d-grid gap-3">
+                <a href="#" class="btn btn-outline-primary text-start py-3 px-3 fw-bold">
+                    <i class="fa-solid fa-cart-plus me-2"></i>購入リクエスト閲覧 
+                    
+                    {% if purchase_request_count %}
+                    <span class="badge bg-danger ms-2">{{ purchase_request_count }}件</span>
+                    {% endif %}
+                </a>
+                <a href="#" class="btn btn-outline-success text-start py-3 px-3 fw-bold">
+                    <i class="fa-solid fa-store me-2"></i>出品（古本マーケットへの出品）
+                </a>
+                <a href="#" class="btn btn-outline-info text-dark text-start py-3 px-3 fw-bold">
+                    <i class="fa-solid fa-shop me-2"></i>ショップ（マーケットプレイス）
+                </a>
+                <a href="#" class="btn btn-outline-secondary text-start py-3 px-3 fw-bold">
+                    <i class="fa-solid fa-book-medical me-2"></i>ライブラリ登録
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 最近の未処理・アクティビティログ -->
+    <div class="col-lg-7">
+        <div class="card card-custom p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-secondary mb-0"><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>最近の申請・通知</h5>
+                <span class="small text-muted">リアルタイム更新</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>種別</th>
+                            <th>ユーザー名</th>
+                            <th>内容</th>
+                            <th>時刻</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for activity in recent_activities %}
+                        <tr>
+                            <td><span class="badge bg-{{ activity.badge_color }} text-dark">{{ activity.type }}</span></td>
+                            <td>{{ activity.user_name }}</td>
+                            <td>{{ activity.content }}</td>
+                            <td class="small text-muted">{{ activity.time }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted small py-3">最近の申請はありません。</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}管理者ダッシュボード - しょかんくん{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* 管理者専用カラー */
+    .navbar-admin {
+        background-color: #c0392b !important;
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+<!-- ヘッダー (管理者専用カラー: 赤系) -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-admin">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-white" href="{% url 'books:index_3' %}">
+                <i class="fa-solid fa-user-shield me-2"></i>しょかんくん【管理者管理画面】
+            </a>
+            <div class="d-flex align-items-center">
+                <span class="text-white small me-3 fw-bold"><i class="fa-solid fa-lock me-1"></i>管理者ログイン中</span>
+                <a href="#" class="btn btn-outline-light btn-sm">ログアウト</a>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold text-dark mb-0"><i class="fa-solid fa-gauge me-2 text-danger"></i>システム管理ダッシュボード</h4>
+        <small class="text-muted">最終更新: {{ last_updated }}</small>
+    </div>
+
+    <!-- システム要監視ステータス -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card card-custom p-3 bg-white border-start border-danger border-4 h-100">
+                <div class="text-muted small fw-bold">未対応の通報レビュー</div>
+                <h3 class="fw-bold text-danger my-1">{{ pending_reviews_count }} <small class="fs-6">件</small></h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-custom p-3 bg-white border-start border-warning border-4 h-100">
+                <div class="text-muted small fw-bold">未対応の通報出品物</div>
+                <h3 class="fw-bold text-warning my-1">{{ pending_exhibitions_count }} <small class="fs-6">件</small></h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-custom p-3 bg-white border-start border-primary border-4 h-100">
+                <div class="text-muted small fw-bold">未回答のお問い合わせ</div>
+                <h3 class="fw-bold text-primary my-1">{{ pending_inquiries_count }} <small class="fs-6">件</small></h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-custom p-3 bg-white border-start border-success border-4 h-100">
+                <div class="text-muted small fw-bold">総登録会員数</div>
+                <h3 class="fw-bold text-success my-1">{{ total_users_count }} <small class="fs-6">名</small></h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理機能メニューエリア -->
+    <div class="card card-custom p-4 bg-white mb-4">
+        <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-list-check me-2 text-danger"></i>管理者メニュー</h5>
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            
+            <!-- 1. お問い合わせ対応 -->
+            <div class="col">
+                <div class="card border-primary border-2 h-100 p-3 bg-light shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="fw-bold text-primary mb-0"><i class="fa-solid fa-inbox me-2"></i>お問い合わせ対応</h6>
+                        {% if pending_inquiries_count %}
+                        <span class="badge bg-primary">{{ pending_inquiries_count }}件</span>
+                        {% endif %}
+                    </div>
+                    <p class="small text-muted mb-3">ユーザーからの質問・不具合報告の確認と返信対応を行います。</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-primary btn-sm fw-bold w-100">
+                            <i class="fa-solid fa-envelope-open-text me-1"></i>お問い合わせ一覧へ
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 報告対応（レビュー通報・出品物通報のボタンを1つに統合） -->
+            <div class="col">
+                <div class="card border-danger border-2 h-100 p-3 bg-light shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="fw-bold text-danger mb-0"><i class="fa-solid fa-triangle-exclamation me-2"></i>報告対応（通報・規約違反）</h6>
+                        {% if pending_reports_total %}
+                        <span class="badge bg-danger">{{ pending_reports_total }}件</span>
+                        {% endif %}
+                    </div>
+                    <p class="small text-muted mb-3">ユーザーからの通報があったレビューや出品物の確認・強制削除等を行います。</p>
+                    <div class="mt-auto">
+                        <a href="#" class="btn btn-danger btn-sm fw-bold w-100">
+                            <i class="fa-solid fa-shield-halved me-1"></i>報告一覧へ 
+                            {% if pending_reports_total %}({{ pending_reports_total }}){% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
