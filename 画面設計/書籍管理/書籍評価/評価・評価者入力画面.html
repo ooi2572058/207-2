@@ -111,26 +111,34 @@
                             <a class="nav-link" href="home.html"><i class="fa-solid fa-house me-1"></i>ホーム</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="my_library.html"><i class="fa-solid fa-book-bookmark me-1"></i>個人ライブラリ</a>
+                            <a class="nav-link" href="my_library.html"><i
+                                    class="fa-solid fa-book-bookmark me-1"></i>個人ライブラリ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="listing_list.html"><i class="fa-solid fa-store me-1"></i>古本マーケット</a>
+                            <a class="nav-link" href="listing_list.html"><i
+                                    class="fa-solid fa-store me-1"></i>古本マーケット</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="calendar.html"><i class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
+                            <a class="nav-link" href="calendar.html"><i
+                                    class="fa-solid fa-calendar-days me-1"></i>発売日カレンダー</a>
                         </li>
                     </ul>
 
                     <!-- ユーザーメニュー -->
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown">
                                 <i class="fa-solid fa-circle-user me-1"></i>本好き太郎
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow">
-                                <li><a class="dropdown-item" href="account_settings.html"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="index.html"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                                <li><a class="dropdown-item" href="account_settings.html"><i
+                                            class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger" href="index.html"><i
+                                            class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -193,11 +201,12 @@
 
                                 <!-- 確認ボタン -->
                                 <div class="d-grid gap-2">
-                                    <button type="button" class="btn btn-primary btn-lg fw-bold">
+                                    <button type="button" id="toConfirmBtn" class="btn btn-primary btn-lg fw-bold">
                                         確認画面へ進む <i class="fa-solid fa-arrow-right ms-1"></i>
                                     </button>
                                     <button type="button"
-                                        class="btn btn-link text-secondary text-decoration-none text-center" onclick="history.back()">キャンセル</button>
+                                        class="btn btn-link text-secondary text-decoration-none text-center"
+                                        onclick="history.back()">キャンセル</button>
                                 </div>
                             </form>
 
@@ -214,6 +223,22 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 確認画面へ入力データを渡す処理
+        document.getElementById('toConfirmBtn').addEventListener('click', function () {
+            const name = document.getElementById('reviewerName').value;
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+            const comment = document.getElementById('reviewComment').value;
+
+            // セッションストレージに入力値を一時保存
+            sessionStorage.setItem('review_name', name);
+            sessionStorage.setItem('review_rating', rating);
+            sessionStorage.setItem('review_comment', comment);
+
+            // 確認画面へ遷移
+            location.href = 'review_confirm.html';
+        });
+    </script>
 </body>
 
 </html>
