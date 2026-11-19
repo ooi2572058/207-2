@@ -66,7 +66,7 @@
             <h3 class="fw-bold text-dark mb-1">
                 <i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>総合通報・報告管理
             </h3>
-            <p class="text-muted small mb-4">ユーザー、出品物、書籍評価に対するすべての通報・報告のステータス変更および対応管理を行います。</p>
+            <p class="text-muted small mb-4">ユーザー、出品物、書籍評価に対するすべての通報・報告の編集および対応管理を行います。</p>
 
             <!-- 絞り込みタブ / フィルターボタン群 -->
             <div class="card card-custom p-3 mb-4 bg-white">
@@ -110,17 +110,12 @@
                                 </td>
                                 <td><span class="text-muted small">高額出品の繰り返し（被通報: 5回）</span></td>
                                 <td class="small">2026-10-25</td>
+                                <td><span class="badge bg-secondary">未対応</span></td>
                                 <td>
-                                    <select class="form-select form-select-sm" style="width: 130px;">
-                                        <option value="unhandled" selected>未対応</option>
-                                        <option value="in_progress">対応中</option>
-                                        <option value="resolved">対応完了</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm mb-1 fw-bold" data-bs-toggle="modal"
-                                        data-bs-target="#actionModal" data-username="悪質ショップA">
-                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>対応
+                                    <!-- 編集ボタン：ユーザー用モーダルを開く -->
+                                    <button class="btn btn-primary btn-sm mb-1 fw-bold" data-bs-toggle="modal"
+                                        data-bs-target="#userActionModal">
+                                        <i class="fa-solid fa-pen-to-square me-1"></i>編集
                                     </button>
                                     <button class="btn btn-outline-danger btn-sm mb-1"
                                         onclick="return confirm('本当にこのユーザー報告履歴を削除しますか？');">削除</button>
@@ -137,16 +132,13 @@
                                 </td>
                                 <td><span class="badge bg-warning text-dark">不当な価格</span></td>
                                 <td class="small">2026-10-26</td>
+                                <td><span class="badge bg-secondary">未対応</span></td>
                                 <td>
-                                    <select class="form-select form-select-sm" style="width: 130px;">
-                                        <option value="unhandled" selected>未対応</option>
-                                        <option value="in_progress">対応中</option>
-                                        <option value="resolved">対応完了</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm mb-1"
-                                        onclick="return confirm('対象の出品物を取り下げ処理（非公開化）しますか？');">取り下げ</button>
+                                    <!-- 編集ボタン：出品物用モーダルを開く -->
+                                    <button class="btn btn-primary btn-sm mb-1 fw-bold" data-bs-toggle="modal"
+                                        data-bs-target="#itemActionModal">
+                                        <i class="fa-solid fa-pen-to-square me-1"></i>編集
+                                    </button>
                                     <button class="btn btn-outline-danger btn-sm mb-1"
                                         onclick="return confirm('本当にこの報告ログを削除しますか？');">削除</button>
                                 </td>
@@ -162,16 +154,13 @@
                                 </td>
                                 <td class="small text-muted">「作者に対する暴言・誹謗中傷...」</td>
                                 <td class="small">2026-10-27</td>
+                                <td><span class="badge bg-secondary">未対応</span></td>
                                 <td>
-                                    <select class="form-select form-select-sm" style="width: 130px;">
-                                        <option value="unhandled" selected>未対応</option>
-                                        <option value="in_progress">対応中</option>
-                                        <option value="resolved">対応完了</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm mb-1"
-                                        onclick="return confirm('対象の書籍レビュー投稿自体を物理削除しますか？');">レビュー削除</button>
+                                    <!-- 編集ボタン：書籍評価用モーダルを開く -->
+                                    <button class="btn btn-primary btn-sm mb-1 fw-bold" data-bs-toggle="modal"
+                                        data-bs-target="#reviewActionModal">
+                                        <i class="fa-solid fa-pen-to-square me-1"></i>編集
+                                    </button>
                                     <button class="btn btn-outline-danger btn-sm mb-1"
                                         onclick="return confirm('本当にこの通報履歴をリストから削除しますか？');">削除</button>
                                 </td>
@@ -183,35 +172,40 @@
         </div>
     </main>
 
-    <!-- 対応・処分モーダル (ユーザー報告用) -->
-    <div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="actionModalLabel" aria-hidden="true">
+    <!-- Modal A: ユーザー報告用の編集・対応モーダル -->
+    <div class="modal fade" id="userActionModal" tabindex="-1" aria-labelledby="userActionModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title fw-bold" id="actionModalLabel"><i
-                            class="fa-solid fa-gavel me-2"></i>ユーザーへの対応・処分実行</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold" id="userActionModalLabel"><i
+                            class="fa-solid fa-user-slash me-2"></i>ユーザー報告の対応・編集</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="閉じる"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
                             <label class="form-label small text-muted">対象ユーザー</label>
-                            <input type="text" class="form-control fw-bold bg-light" id="targetUser" value="悪質ショップA"
-                                readonly>
+                            <input type="text" class="form-control fw-bold bg-light" value="悪質ショップA" readonly>
                         </div>
-
-                        <!-- 処分区分選択 -->
                         <div class="mb-3">
-                            <label for="actionType" class="form-label fw-bold small">対応・処分区分 <span
+                            <label for="userStatus" class="form-label fw-bold small">ステータス</label>
+                            <select class="form-select" id="userStatus">
+                                <option value="unhandled" selected>未対応</option>
+                                <option value="in_progress">対応中</option>
+                                <option value="resolved">対応完了</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userActionType" class="form-label fw-bold small">対応・処分区分 <span
                                     class="badge bg-danger">必須</span></label>
-                            <select class="form-select" id="actionType" onchange="toggleSuspensionPeriod()">
+                            <select class="form-select" id="userActionType" onchange="toggleSuspensionPeriod()">
                                 <option value="notice">注意（通告・厳重注意メール）</option>
                                 <option value="warning" selected>警告（ペナルティ付与）</option>
                                 <option value="suspension">利用停止</option>
                             </select>
                         </div>
-
-                        <!-- 利用停止期間（利用停止選択時のみ表示） -->
                         <div class="mb-3" id="suspensionPeriodWrapper" style="display: none;">
                             <label for="suspensionPeriod" class="form-label fw-bold small">利用停止期間 <span
                                     class="badge bg-danger">必須</span></label>
@@ -224,20 +218,114 @@
                                 <option value="permanent">永久（アカウント凍結）</option>
                             </select>
                         </div>
-
-                        <!-- 対応理由 -->
                         <div class="mb-3">
-                            <label for="actionReason" class="form-label fw-bold small">対応理由（ユーザーへ通知されます） <span
+                            <label for="userActionReason" class="form-label fw-bold small">対応理由（ユーザーへ通知されます） <span
                                     class="badge bg-danger">必須</span></label>
-                            <textarea class="form-control" id="actionReason" rows="4"
-                                placeholder="例: 利用規約第〇条（禁止事項）に違反する高額出品の常態化が確認されたため、警告処分といたします。" required></textarea>
+                            <textarea class="form-control" id="userActionReason" rows="3"
+                                placeholder="例: 利用規約に違反する高額出品の常態化が確認されたため。"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
                     <button type="button" class="btn btn-danger px-4 fw-bold"
-                        onclick="alert('対応内容を保存し、ユーザーへ通知メールを送信しました。'); location.reload();">対応を実行する</button>
+                        onclick="alert('ユーザー報告の変更内容を保存しました。'); location.reload();">変更を保存する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal B: 出品物報告用の編集・対応モーダル -->
+    <div class="modal fade" id="itemActionModal" tabindex="-1" aria-labelledby="itemActionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title fw-bold" id="itemActionModalLabel"><i
+                            class="fa-solid fa-box-open me-2"></i>出品物報告の対応・編集</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">対象商品 / 出品者</label>
+                            <input type="text" class="form-control fw-bold bg-light" value="プレミア限定版小説 (10万円) / 悪質ショップA"
+                                readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemStatus" class="form-label fw-bold small">ステータス</label>
+                            <select class="form-select" id="itemStatus">
+                                <option value="unhandled" selected>未対応</option>
+                                <option value="in_progress">対応中</option>
+                                <option value="resolved">対応完了</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemActionType" class="form-label fw-bold small">出品物への措置</label>
+                            <select class="form-select" id="itemActionType">
+                                <option value="none">措置なし（問題なし）</option>
+                                <option value="hide" selected>出品取り下げ（非公開化・削除）</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemActionReason" class="form-label fw-bold small">管理者メモ・出品者への通知コメント</label>
+                            <textarea class="form-control" id="itemActionReason" rows="3"
+                                placeholder="例: 不当な高額価格設定を確認したため出品を取り下げました。"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-warning px-4 fw-bold text-dark"
+                        onclick="alert('出品物報告の変更内容を保存しました。'); location.reload();">変更を保存する</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal C: 書籍評価報告用の編集・対応モーダル -->
+    <div class="modal fade" id="reviewActionModal" tabindex="-1" aria-labelledby="reviewActionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-dark">
+                    <h5 class="modal-title fw-bold" id="reviewActionModalLabel"><i
+                            class="fa-solid fa-comment-slash me-2"></i>書籍評価報告の対応・編集</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">対象書籍 / 投稿者</label>
+                            <input type="text" class="form-control fw-bold bg-light" value="鬼滅の刃 (1) / 投稿者: 匿名ユーザーX"
+                                readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewStatus" class="form-label fw-bold small">ステータス</label>
+                            <select class="form-select" id="reviewStatus">
+                                <option value="unhandled" selected>未対応</option>
+                                <option value="in_progress">対応中</option>
+                                <option value="resolved">対応完了</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewActionType" class="form-label fw-bold small">レビューへの措置</label>
+                            <select class="form-select" id="reviewActionType">
+                                <option value="none">措置なし（問題なし）</option>
+                                <option value="delete" selected>レビューコメントの削除（非表示）</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewActionReason" class="form-label fw-bold small">管理者メモ・投稿者への通知コメント</label>
+                            <textarea class="form-control" id="reviewActionReason" rows="3"
+                                placeholder="例: 利用規約に反する不適切な表現が含まれていたため削除しました。"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-info px-4 fw-bold"
+                        onclick="alert('書籍評価報告の変更内容を保存しました。'); location.reload();">変更を保存する</button>
                 </div>
             </div>
         </div>
@@ -249,12 +337,11 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS & 絞り込み用スクリプト -->
+    <!-- Bootstrap JS & スクリプト -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // 報告種別の絞り込み関数
         function filterReports(category, btn) {
-            // ボタンのアクティブ状態を切り替え
             const buttons = document.querySelectorAll('.card .btn-sm');
             buttons.forEach(b => {
                 b.classList.remove('btn-dark', 'active');
@@ -263,7 +350,6 @@
             btn.classList.remove('btn-outline-secondary');
             btn.classList.add('btn-dark', 'active');
 
-            // テーブルの行をフィルタリング
             const rows = document.querySelectorAll('#reportTableBody tr');
             rows.forEach(row => {
                 if (category === 'all' || row.getAttribute('data-category') === category) {
@@ -274,9 +360,9 @@
             });
         }
 
-        // 利用停止が選択された場合のみ「利用停止期間」を表示する切り替えスクリプト
+        // ユーザー報告のモーダル内：利用停止が選択された場合のみ期間選択を表示
         function toggleSuspensionPeriod() {
-            const actionType = document.getElementById('actionType').value;
+            const actionType = document.getElementById('userActionType').value;
             const periodWrapper = document.getElementById('suspensionPeriodWrapper');
             if (actionType === 'suspension') {
                 periodWrapper.style.display = 'block';
