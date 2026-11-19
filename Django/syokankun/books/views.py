@@ -12,12 +12,8 @@ class IndexUserView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        # ダミー数値を辞書に格納して渡す
+
         context['username'] =   "ユーザーネーム" 
-        context['rental_approval_count'] = 2
-        context['return_approval_count'] = 1
-        context['purchase_request_count'] = 3
         
         return context
 
