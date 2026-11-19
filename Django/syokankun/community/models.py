@@ -20,8 +20,7 @@ class Review(models.Model):
         related_name="given_reviews",
         verbose_name="レビュー者ID",
     )
-    # 定義書上で reviewee_id が No.5（NN: o）と No.8（NN: 空欄）に重複しているため、
-    # 実際のDBカラム名 conflict を防ぐため NULL許容で1フィールドに集約しています
+    
     reviewee = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         db_column="reviewee_id",
