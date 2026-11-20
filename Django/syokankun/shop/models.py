@@ -239,7 +239,7 @@ class OrderItem(models.Model):
         verbose_name_plural = "注文明細テーブル"
         constraints = [
             models.CheckConstraint(
-                condition=Q(product__isnull=False) | Q(user_product__isnull=False),
+                check=Q(product__isnull=False) | Q(user_product__isnull=False),
                 name="order_item_product_or_user_product_not_null",
             )
         ]
