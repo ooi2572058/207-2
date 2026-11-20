@@ -43,8 +43,7 @@ class BooksMaster(models.Model):
         max_length=255,
         verbose_name="タイトル",
     )
-    author = models.CharField(
-        max_length=255,
+    author = models.TextField(
         verbose_name="著者",
     )
     publisher = models.CharField(
@@ -56,11 +55,15 @@ class BooksMaster(models.Model):
         verbose_name="あらすじ",
     )
     image_url = models.CharField(
-        max_length=255,
+        max_length=500,
         verbose_name="参考画像url",
+        null=True,
+        blank=True
     )
     sales_date = models.DateField(
         verbose_name="発売日",
+        null=True,
+        blank=True
     )
     # series.id を参照する外部キー（DBカラム名は series_id、複数巻を許容するため一意制約なし）
     series = models.ForeignKey(
@@ -89,6 +92,12 @@ class BooksMaster(models.Model):
 class NotificationSetting(models.Model):
     """通知登録"""
 
+    class Timing(models.IntegerChoices):
+        ON_RELEASE = 0, "発売日当日"
+        ONE_DAY_BEFORE = 1, "1日前"
+        THREE_DAYS_BEFORE = 3, "3日前"
+        ONE_WEEK_BEFORE = 7, "1週間前"
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         db_column="user_id",
@@ -102,6 +111,8 @@ class NotificationSetting(models.Model):
         verbose_name="書籍ID",
     )
     notify_timing = models.IntegerField(
+        choices=Timing.choices,
+        default=Timing.ON_RELEASE,
         verbose_name="通知タイミング",
     )
     notify_email = models.BooleanField(
@@ -121,21 +132,25 @@ class NotificationSetting(models.Model):
         default=False,
         verbose_name="通知済みフラグ",
     )
-    created_at = models.DateField(
+    created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="作成日",
+        verbose_name="作成日時",
     )
-    updated_at = models.DateField(
+    updated_at = models.DateTimeField(
         auto_now=True,
-        null=True,
-        blank=True,
-        verbose_name="更新日",
+        verbose_name="更新日時",
     )
 
     class Meta:
         db_table = "notification_settings"
         verbose_name = "通知登録"
         verbose_name_plural = "通知登録"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "book"],
+                name="unique_user_book_notification",
+            )
+        ]
 
     def __str__(self):
         return f"通知設定 #{self.pk}"
