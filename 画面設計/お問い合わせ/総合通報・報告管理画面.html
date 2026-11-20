@@ -143,10 +143,8 @@
                                 <td>
                                     <button class="btn btn-primary btn-sm mb-1 fw-bold" data-bs-toggle="modal"
                                         data-bs-target="#userActionModal">
-                                        <i class="fa-solid fa-pen-to-square me-1"></i>編集
+                                        <i class="fa-solid fa-pen-to-square me-1"></i>対応
                                     </button>
-                                    <button class="btn btn-outline-danger btn-sm mb-1"
-                                        onclick="return confirm('本当にこのユーザー報告履歴を削除しますか？');">削除</button>
                                 </td>
                             </tr>
 
@@ -164,10 +162,8 @@
                                 <td>
                                     <button class="btn btn-primary btn-sm mb-1 fw-bold" data-bs-toggle="modal"
                                         data-bs-target="#itemActionModal">
-                                        <i class="fa-solid fa-pen-to-square me-1"></i>編集
+                                        <i class="fa-solid fa-pen-to-square me-1"></i>対応
                                     </button>
-                                    <button class="btn btn-outline-danger btn-sm mb-1"
-                                        onclick="return confirm('本当にこの報告ログを削除しますか？');">削除</button>
                                 </td>
                             </tr>
 
@@ -185,10 +181,8 @@
                                 <td>
                                     <button class="btn btn-primary btn-sm mb-1 fw-bold" data-bs-toggle="modal"
                                         data-bs-target="#reviewActionModal">
-                                        <i class="fa-solid fa-pen-to-square me-1"></i>編集
+                                        <i class="fa-solid fa-pen-to-square me-1"></i>対応
                                     </button>
-                                    <button class="btn btn-outline-danger btn-sm mb-1"
-                                        onclick="return confirm('本当にこの通報履歴をリストから削除しますか？');">削除</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -388,7 +382,7 @@
                             <div class="d-flex gap-2 align-items-center">
                                 <select class="form-select" id="reviewStatus" style="max-width: 220px;">
                                     <option value="unhandled">未対応</option>
-                                    <option value="in_progress">対応中</option>
+                                    <option value="in_progress" selected>対応中</option>
                                     <option value="resolved" selected>対応済み</option>
                                 </select>
                                 <button type="button" class="btn btn-outline-primary btn-sm fw-bold"
