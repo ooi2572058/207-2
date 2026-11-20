@@ -1,0 +1,105 @@
+{% extends 'base_user.html' %}
+{% load static %}
+
+{% block title %}出品物通報 | しょかんくん{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: var(--primary-color, #2c3e50);
+        border-left: 5px solid var(--secondary-color, #18bc9c);
+        padding-left: 0.75rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .page-desc {
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+        padding-left: 1.1rem;
+    }
+
+    .book-thumb {
+        height: 160px;
+        background: #e9ecef;
+        color: #adb5bd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        border-radius: 8px 8px 0 0;
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+<li class="nav-item">
+    <a class="nav-link" href="#"><i class="fa-solid fa-pen-to-square me-1"></i>出品登録</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link active" href="#"><i class="fa-solid fa-list me-1"></i>出品一覧</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#"><i class="fa-solid fa-clock-rotate-left me-1"></i>出品履歴</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<h1 class="page-title">出品物通報</h1>
+<p class="page-desc">不適切な出品物を通報できます。</p>
+
+<div class="card mb-4">
+    <div class="card-header"><i class="fa-solid fa-book me-2"></i>通報対象の出品物</div>
+    <div class="card-body d-flex align-items-center gap-3">
+        {% if listing.image %}
+        <img src="{{ listing.image.url }}" alt="{{ listing.title }}" class="rounded" style="width:80px;height:80px;object-fit:cover;">
+        {% else %}
+        <div class="book-thumb" style="width:80px;height:80px;font-size:1.8rem;border-radius:8px;">
+            <i class="fa-solid fa-book"></i>
+        </div>
+        {% endif %}
+        <div>
+            <h5 class="mb-1">{{ listing.title|default:"サンプル書籍タイトル 1" }}</h5>
+            <p class="text-muted mb-0">{{ listing.author|default:"著者名" }} ／ ¥{{ listing.price|default:"1,500" }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header"><i class="fa-solid fa-flag me-2 text-danger"></i>通報内容</div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ listing.id|default:1 }}">
+            <div class="mb-3">
+                <label class="form-label fw-bold">通報理由 <span class="badge bg-danger">必須</span></label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reason" id="r1" value="inappropriate" required>
+                    <label class="form-check-label" for="r1">不適切な内容（画像・説明文など）</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reason" id="r2" value="illegal">
+                    <label class="form-check-label" for="r2">違法・禁止されている品物</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reason" id="r3" value="fraud">
+                    <label class="form-check-label" for="r3">詐欺・虚偽の疑い</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="reason" id="r4" value="other">
+                    <label class="form-check-label" for="r4">その他</label>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="detail" class="form-label fw-bold">詳細（任意）</label>
+                <textarea class="form-control" id="detail" name="detail" rows="4" placeholder="通報の詳しい内容を入力してください"></textarea>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-paper-plane me-1"></i>通報する</button>
+                <a href="#" class="btn btn-outline-secondary">キャンセル</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

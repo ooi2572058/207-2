@@ -1,0 +1,299 @@
+{% extends 'base_user.html' %}
+{% load static %}
+
+{% block title %}出品登録 - しょかんくん{% endblock %}
+
+{% block extra_css %}
+<style>
+    .btn-secondary-custom {
+        background-color: var(--secondary-color, #18bc9c);
+        color: #ffffff;
+        border-color: var(--secondary-color, #18bc9c);
+    }
+
+    .btn-secondary-custom:hover {
+        background-color: #128f76;
+        color: #ffffff;
+    }
+
+    /* 編集不可フィールドの見た目調整 */
+    input[readonly] {
+        background-color: #e9ecef !important;
+        opacity: 1;
+        cursor: not-allowed;
+    }
+
+    /* プレビュー画像サムネイルのスタイル */
+    .preview-thumb-container {
+        position: relative;
+        display: inline-block;
+        width: 90px;
+        height: 90px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .preview-thumb-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .preview-thumb-container .delete-btn {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        background: rgba(231, 76, 60, 0.85);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+<li class="nav-item">
+    <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link active" href="#"><i class="fa-solid fa-pen-to-square me-1"></i>出品登録</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#"><i class="fa-solid fa-clock-rotate-left me-1"></i>出品履歴</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<h3 class="fw-bold text-secondary mb-1"><i class="fa-solid fa-pen-to-square me-2"></i>出品登録</h3>
+<p class="text-muted mb-4">品物を出品します。必要事項を入力してください。</p>
+
+<div class="card">
+    <div class="card-header bg-white py-3">
+        <i class="fa-solid fa-box-open me-2"></i>出品する品物の情報
+    </div>
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data" id="listingForm">
+            {% csrf_token %}
+
+            <!-- タイトル -->
+            <div class="mb-3">
+                <label for="title" class="form-label fw-bold">商品名（書籍タイトル） <span class="badge bg-danger">必須</span></label>
+                <select class="form-select" id="title" name="title" required>
+                    <option value="">商品を選択してください</option>
+                    <option value="キメツ">キメツ</option>
+                    <option value="ドラゴンボール">ドラゴンボール</option>
+                </select>
+            </div>
+
+            <!-- ISBN & 著者（readonly を追加して編集不可に） -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="isbn" class="form-label fw-bold">ISBN</label>
+                    <input type="text" class="form-control" id="isbn" name="isbn" placeholder="978-4-..." readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="author" class="form-label fw-bold">著者</label>
+                    <input type="text" class="form-control" id="author" name="author" readonly>
+                </div>
+            </div>
+
+            <!-- カテゴリ・状態・価格 -->
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="category" class="form-label fw-bold">カテゴリ</label>
+                    <select class="form-select" id="category" name="category">
+                        <option value="">選択してください</option>
+                        <option value="literature">文学・小説</option>
+                        <option value="tech">技術書</option>
+                        <option value="business">ビジネス</option>
+                        <option value="comic">漫画</option>
+                        <option value="other">その他</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="condition" class="form-label fw-bold">商品の状態</label>
+                    <select class="form-select" id="condition" name="condition">
+                        <option value="mint">新品同様</option>
+                        <option value="good">汚れ・傷なし</option>
+                        <option value="fair">やや傷あり</option>
+                        <option value="poor">傷あり</option>
+                        <option value="slightly_dirty">やや汚れあり</option>
+                        <option value="dirty">汚れあり</option>
+                    </select>
+                    <div class="form-text">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#conditionGuideModal" class="text-decoration-none">
+                            <i class="fa-solid fa-circle-question me-1"></i>商品の状態の判断基準について
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="price" class="form-label fw-bold">価格（円） <span class="badge bg-danger">必須</span></label>
+                    <input type="number" class="form-control" id="price" name="price" min="0" required placeholder="例：2400">
+                </div>
+            </div>
+
+            <!-- 商品説明 -->
+            <div class="mb-3">
+                <label for="description" class="form-label fw-bold">商品説明</label>
+                <textarea class="form-control" id="description" name="description" rows="4" placeholder="商品の状態、書き込みの有無、付属品などを詳しく記入してください。"></textarea>
+            </div>
+
+            <!-- 複数画像アップロード＆JSプレビュー表示エリア -->
+            <div class="mb-4">
+                <label for="images" class="form-label fw-bold">商品画像（複数選択可）</label>
+                <input type="file" class="form-control" id="images" name="images" accept="image/*" multiple>
+                <div class="form-text mb-2">表紙、背表紙、裏表紙、傷・汚れ箇所の写真など、複数の画像を同時に選択してアップロードできます。</div>
+
+                <!-- プレビューサムネイルが表示される領域 -->
+                <div id="imagePreviewContainer" class="d-flex flex-wrap"></div>
+            </div>
+
+            <!-- ボタン群 -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-secondary-custom"><i class="fa-solid fa-check me-1"></i>出品する</button>
+                <a href="#" class="btn btn-outline-secondary">キャンセル</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 商品の状態判断基準モーダル -->
+<div class="modal fade" id="conditionGuideModal" tabindex="-1" aria-labelledby="conditionGuideModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="conditionGuideModalLabel"><i class="fa-solid fa-circle-question me-2"></i>商品の状態の判断基準</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong class="text-success">新品同様</strong><br>
+                        <small class="text-muted">購入後ほとんど使用していない、シュリンク付きまたは非常に綺麗な状態。</small>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="text-primary">汚れ・傷なし</strong><br>
+                        <small class="text-muted">目立ったスレや折れがなく、読書に支障のない綺麗な状態。</small>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="text-info">やや傷あり</strong><br>
+                        <small class="text-muted">表紙に軽いスレ傷や角のわずかな折れがあるが、中身は綺麗な状態。</small>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="text-warning">傷あり</strong><br>
+                        <small class="text-muted">目立つ破れや深いキズ、折れなどがある状態。</small>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="text-warning">やや汚れあり</strong><br>
+                        <small class="text-muted">小口やカバーに軽度の日焼けやシミ、汚れが見られる状態。</small>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="text-danger">汚れあり</strong><br>
+                        <small class="text-muted">大きなシミや汚れ、水濡れ跡などがある状態。</small>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // ==========================================
+        // タイトル選択によるISBN・著者の自動補完
+        // ==========================================
+        const titleSelect = document.getElementById("title");
+        const isbnInput = document.getElementById("isbn");
+        const authorInput = document.getElementById("author");
+
+        titleSelect.addEventListener("change", function () {
+            const selectedTitle = this.value;
+            if (selectedTitle === "キメツ") {
+                isbnInput.value = "43333";
+                authorInput.value = "ごとうげ";
+            } else if (selectedTitle === "ドラゴンボール") {
+                isbnInput.value = "11111";
+                authorInput.value = "とりやま";
+            } else {
+                isbnInput.value = "";
+                authorInput.value = "";
+            }
+        });
+
+        // ==========================================
+        // 複数画像プレビュー＆削除制御処理
+        // ==========================================
+        const imageInput = document.getElementById('images');
+        const previewContainer = document.getElementById('imagePreviewContainer');
+
+        let dt = new DataTransfer();
+
+        imageInput.addEventListener('change', function (e) {
+            const files = e.target.files;
+            for (let i = 0; i < files.length; i++) {
+                dt.items.add(files[i]);
+            }
+            imageInput.files = dt.files;
+            renderPreviews();
+        });
+
+        function renderPreviews() {
+            previewContainer.innerHTML = '';
+            const files = imageInput.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+
+                if (!file.type.match('image.*')) continue;
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const thumbDiv = document.createElement('div');
+                    thumbDiv.className = 'preview-thumb-container';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                    deleteBtn.type = 'button';
+
+                    deleteBtn.addEventListener('click', function () {
+                        const newDt = new DataTransfer();
+                        for (let j = 0; j < files.length; j++) {
+                            if (j !== i) {
+                                newDt.items.add(files[j]);
+                            }
+                        }
+                        dt = newDt;
+                        imageInput.files = dt.files;
+                        renderPreviews();
+                    });
+
+                    thumbDiv.appendChild(img);
+                    thumbDiv.appendChild(deleteBtn);
+                    previewContainer.appendChild(thumbDiv);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -14,6 +14,7 @@
     <!-- 統合されたCSSスタイル -->
     <style>
         @charset "UTF-8";
+
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #18bc9c;
@@ -136,7 +137,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>書籍一覧</a>
-                        </li>   
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#"><i class="fa-solid fa-store me-1"></i>古本出品・マーケット</a>
                         </li>
@@ -146,13 +147,18 @@
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown">
                                 <i class="fa-solid fa-circle-user me-1"></i>ユーザー名
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow">
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>アカウント設定</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-danger" href="#"><i
+                                            class="fa-solid fa-right-from-bracket me-2"></i>ログアウト</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -169,18 +175,25 @@
                 <div class="col-lg-5 mb-4">
                     <div class="card p-3">
                         <!-- メインプレビュー画像 -->
-                        <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded mb-3" style="height: 350px;">
+                        <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded mb-3"
+                            style="height: 350px;">
                             <span class="fs-5"><i class="fa-solid fa-image me-2"></i>メイン画像プレビュー</span>
                         </div>
-                        
+
                         <!-- 横スクロール可能なサムネイル一覧エリア -->
                         <div class="thumbnail-scroll-container">
-                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item active" style="font-size: 0.7rem;">表紙</div>
-                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">背表紙</div>
-                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">裏表紙</div>
-                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">状態1</div>
-                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">状態2</div>
-                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item" style="font-size: 0.7rem;">付属品</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item active"
+                                style="font-size: 0.7rem;">表紙</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item"
+                                style="font-size: 0.7rem;">背表紙</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item"
+                                style="font-size: 0.7rem;">裏表紙</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item"
+                                style="font-size: 0.7rem;">状態1</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item"
+                                style="font-size: 0.7rem;">状態2</div>
+                            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded thumbnail-item"
+                                style="font-size: 0.7rem;">付属品</div>
                         </div>
                         <div class="form-text text-center mt-2">左右にスクロールして他の画像を確認できます</div>
                     </div>
@@ -200,12 +213,14 @@
                             <!-- 値段 -->
                             <div class="mb-4 bg-light p-3 rounded border">
                                 <span class="text-muted small d-block">販売価格（税込）</span>
-                                <h2 class="text-danger fw-bold mb-0">￥2,400 <span class="fs-6 text-muted fw-normal">（送料込み）</span></h2>
+                                <h2 class="text-danger fw-bold mb-0">￥2,400 <span
+                                        class="fs-6 text-muted fw-normal">（送料込み）</span></h2>
                             </div>
 
                             <!-- 古本の状態 -->
                             <div class="mb-4">
-                                <h6 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-circle-info me-1"></i>商品の状態</h6>
+                                <h6 class="fw-bold text-secondary mb-2"><i
+                                        class="fa-solid fa-circle-info me-1"></i>商品の状態</h6>
                                 <span class="badge bg-primary fs-6 py-2 px-3">やや傷あり</span>
                                 <p class="text-muted small mt-2 mb-0">
                                     カバーに微細なスレ傷がありますが、中身のページは書き込みや折れもなく綺麗な状態です。読書には支障ありません。
@@ -215,10 +230,12 @@
                             <hr class="my-4">
 
                             <!-- 出品ユーザー情報 -->
-                            <div class="d-flex align-items-center justify-content-between mb-4 bg-white p-3 rounded border">
+                            <div
+                                class="d-flex align-items-center justify-content-between mb-4 bg-white p-3 rounded border">
                                 <div class="d-flex align-items-center">
                                     <div class="me-3">
-                                        <i class="fa-solid fa-circle-user text-secondary" style="font-size: 2.5rem;"></i>
+                                        <i class="fa-solid fa-circle-user text-secondary"
+                                            style="font-size: 2.5rem;"></i>
                                     </div>
                                     <div>
                                         <h6 class="fw-bold mb-1">本好きエンジニア太郎</h6>
@@ -234,7 +251,8 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="#" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-user me-1"></i>プロフィール</a>
+                                    <a href="#" class="btn btn-outline-secondary btn-sm"><i
+                                            class="fa-solid fa-user me-1"></i>プロフィール</a>
                                 </div>
                             </div>
 
