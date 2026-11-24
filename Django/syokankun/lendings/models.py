@@ -4,10 +4,12 @@ from accounts.models import user
 from django.conf import settings
 
 # Create your models here.
+# ステータスの選択肢
 class Booleanstatus(models.Integerchoices):
     PENDING = 0,"処理待ち"
     SHIPPED = 1,"承認済み"
     CANCELED = 2,"却下"
+
 class LendingsModel(models.Model):
     book = models.ForeignKey(
         BooksMaster,verbose_name="書籍ID",db_column="book_id",on_delete=models.CASCADE)
