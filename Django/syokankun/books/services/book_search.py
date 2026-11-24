@@ -18,8 +18,6 @@ try:
     from books.models import Series
 except ImportError:
     Series = None
-    
-GEMINI_API_KEY=""
 
 RAKUTEN_BOOKS_API_URL = (
     "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
