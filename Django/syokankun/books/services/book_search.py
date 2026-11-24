@@ -19,6 +19,9 @@ try:
 except ImportError:
     Series = None
 
+
+
+
 RAKUTEN_BOOKS_API_URL = (
     "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
 )
