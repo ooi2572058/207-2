@@ -10,7 +10,7 @@ class UserBook(models.Model):
     """
 
     TYPE_CHOICES = [
-        (Falsex, "物理本"),
+        (False, "物理本"),
         (True, "ネット媒体"),
     ]
 
