@@ -102,7 +102,8 @@
         }
 
         /* 編集不可フィールドの見た目調整 */
-        input[readonly], select:disabled {
+        input[readonly],
+        select:disabled {
             background-color: #e9ecef !important;
             opacity: 1;
         }
@@ -192,14 +193,19 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="listing_new.html"><i class="fa-solid fa-pen-to-square me-1"></i>出品登録</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="listing_list.html"><i class="fa-solid fa-list me-1"></i>出品一覧</a></li>
-                        <li class="nav-item"><a class="nav-link" href="listing_history.html"><i class="fa-solid fa-clock-rotate-left me-1"></i>出品履歴</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listing_new.html"><i
+                                    class="fa-solid fa-pen-to-square me-1"></i>出品登録</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="listing_list.html"><i
+                                    class="fa-solid fa-list me-1"></i>出品一覧</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listing_history.html"><i
+                                    class="fa-solid fa-clock-rotate-left me-1"></i>出品履歴</a></li>
                     </ul>
                     <form class="d-flex me-3" role="search">
                         <div class="input-group">
-                            <input class="form-control form-control-sm" type="search" placeholder="ISBN・タイトル検索" aria-label="Search">
-                            <button class="btn btn-outline-light btn-sm" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <input class="form-control form-control-sm" type="search" placeholder="ISBN・タイトル検索"
+                                aria-label="Search">
+                            <button class="btn btn-outline-light btn-sm" type="submit"><i
+                                    class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
                     <ul class="navbar-nav">
@@ -220,15 +226,19 @@
                 <div class="card-body">
                     <form action="listing_list.html" method="post" enctype="multipart/form-data" id="editForm">
                         <input type="hidden" name="id" value="1">
-                        
+
                         <!-- 出品対象の書籍選択プルダウン -->
                         <div class="mb-3">
-                            <label for="targetBook" class="form-label">出品対象の書籍選択 <span class="badge bg-danger">必須</span></label>
+                            <label for="targetBook" class="form-label">出品対象の書籍選択 <span
+                                    class="badge bg-danger">必須</span></label>
                             <select class="form-select" id="targetBook" name="target_book_id" required>
                                 <option value="" disabled>-- 保有している書籍から選択してください --</option>
-                                <option value="1" data-title="サンプル書籍タイトル 1" data-isbn="978-4-0000-0000-0" data-author="著者名 太郎" selected>サンプル書籍タイトル 1（鬼滅の刃 1巻）</option>
-                                <option value="2" data-title="詳解 ソフトウェアアーキテクチャ (第2版)" data-isbn="978-4-296-12345-6" data-author="太郎 技評">詳解 ソフトウェアアーキテクチャ (第2版)</option>
-                                <option value="3" data-title="実践プログラミング継続的インテグレーション" data-isbn="978-4-873-11987-2" data-author="次郎 プロ">実践プログラミング継続的インテグレーション</option>
+                                <option value="1" data-title="サンプル書籍タイトル 1" data-isbn="978-4-0000-0000-0"
+                                    data-author="著者名 太郎" selected>サンプル書籍タイトル 1（鬼滅の刃 1巻）</option>
+                                <option value="2" data-title="詳解 ソフトウェアアーキテクチャ (第2版)" data-isbn="978-4-296-12345-6"
+                                    data-author="太郎 技評">詳解 ソフトウェアアーキテクチャ (第2版)</option>
+                                <option value="3" data-title="実践プログラミング継続的インテグレーション" data-isbn="978-4-873-11987-2"
+                                    data-author="次郎 プロ">実践プログラミング継続的インテグレーション</option>
                             </select>
                             <div class="form-text">選択した書籍のタイトル、ISBN、著者は自動で補完され変更できません。</div>
                         </div>
@@ -236,19 +246,22 @@
                         <!-- 商品名（自動補完・編集不可） -->
                         <div class="mb-3">
                             <label for="title" class="form-label">商品名（書籍タイトル）</label>
-                            <input type="text" class="form-control" id="title" name="title" value="サンプル書籍タイトル 1" readonly required>
+                            <input type="text" class="form-control" id="title" name="title" value="サンプル書籍タイトル 1"
+                                readonly required>
                         </div>
 
                         <div class="row">
                             <!-- ISBN（自動補完・編集不可） -->
                             <div class="col-md-6 mb-3">
                                 <label for="isbn" class="form-label">ISBN</label>
-                                <input type="text" class="form-control" id="isbn" name="isbn" value="978-4-0000-0000-0" readonly>
+                                <input type="text" class="form-control" id="isbn" name="isbn" value="978-4-0000-0000-0"
+                                    readonly>
                             </div>
                             <!-- 著者（自動補完・編集不可） -->
                             <div class="col-md-6 mb-3">
                                 <label for="author" class="form-label">著者</label>
-                                <input type="text" class="form-control" id="author" name="author" value="著者名 太郎" readonly>
+                                <input type="text" class="form-control" id="author" name="author" value="著者名 太郎"
+                                    readonly>
                             </div>
                         </div>
 
@@ -274,19 +287,23 @@
                                     <option value="汚れあり">汚れあり</option>
                                 </select>
                                 <div class="form-text mt-1">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#conditionGuideModal" class="text-decoration-none">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#conditionGuideModal"
+                                        class="text-decoration-none">
                                         <i class="fa-solid fa-circle-question me-1"></i>商品の状態の判断基準について
                                     </a>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="price" class="form-label">価格（円） <span class="badge bg-danger">必須</span></label>
-                                <input type="number" class="form-control" id="price" name="price" min="0" value="1500" required>
+                                <label for="price" class="form-label">価格（円） <span
+                                        class="badge bg-danger">必須</span></label>
+                                <input type="number" class="form-control" id="price" name="price" min="0" value="1500"
+                                    required>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">商品説明</label>
-                            <textarea class="form-control" id="description" name="description" rows="4">サンプルの商品説明です。</textarea>
+                            <textarea class="form-control" id="description" name="description"
+                                rows="4">サンプルの商品説明です。</textarea>
                         </div>
 
                         <!-- 既存画像＆新規追加画像プレビューセクション -->
@@ -300,7 +317,8 @@
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-secondary-custom"><i class="fa-solid fa-floppy-disk me-1"></i>更新する</button>
+                            <button type="submit" class="btn btn-secondary-custom"><i
+                                    class="fa-solid fa-floppy-disk me-1"></i>更新する</button>
                             <a href="listing_list.html" class="btn btn-outline-secondary">キャンセル</a>
                         </div>
                     </form>
@@ -311,15 +329,19 @@
 
     <!-- フッター -->
     <footer class="footer">
-        <div class="container text-center"><p class="mb-0">チーム開発書籍管理システム</p></div>
+        <div class="container text-center">
+            <p class="mb-0">チーム開発書籍管理システム</p>
+        </div>
     </footer>
 
     <!-- 商品の状態判断基準モーダル -->
-    <div class="modal fade" id="conditionGuideModal" tabindex="-1" aria-labelledby="conditionGuideModalLabel" aria-hidden="true">
+    <div class="modal fade" id="conditionGuideModal" tabindex="-1" aria-labelledby="conditionGuideModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="conditionGuideModalLabel"><i class="fa-solid fa-circle-question me-2"></i>商品の状態の判断基準</h5>
+                    <h5 class="modal-title fw-bold" id="conditionGuideModalLabel"><i
+                            class="fa-solid fa-circle-question me-2"></i>商品の状態の判断基準</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -427,7 +449,7 @@
                     if (!file.type.match('image.*')) continue;
 
                     const reader = new FileReader();
-                    (function(fileIndex, fileItem) {
+                    (function (fileIndex, fileItem) {
                         reader.onload = function (e) {
                             const thumbDiv = document.createElement('div');
                             thumbDiv.className = 'preview-thumb-container';

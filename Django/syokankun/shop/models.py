@@ -20,8 +20,7 @@ class Product(models.Model):
         max_length=255,
         verbose_name="商品画像パス",
     )
-    detail = models.CharField(
-        max_length=255,
+    detail = models.TextField(
         verbose_name="詳細",
     )
     genres = models.CharField(
@@ -42,7 +41,7 @@ class UserProduct(models.Model):
     """出品テーブル（user_products）"""
 
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        "accounts.users",
         db_column="user_id",
         on_delete=models.CASCADE,
         verbose_name="ユーザーid",
@@ -70,12 +69,10 @@ class UserProduct(models.Model):
     price = models.IntegerField(
         verbose_name="価格",
     )
-    overview = models.CharField(
-        max_length=255,
+    overview = models.TextField(
         verbose_name="商品説明",
     )
-    image_path = models.CharField(
-        max_length=255,
+    image_path = models.TextField(
         verbose_name="商品画像パス",
     )
     created_at = models.DateField(
@@ -137,11 +134,12 @@ class Order(models.Model):
     order_number = models.CharField(
         max_length=30,
         verbose_name="注文番号",
+        unique=True,
     )
     ordered_at = models.DateTimeField(
         verbose_name="注文日時",
     )
-    total_amount = models.IntegerField(
+    total_amount = models.models.PositiveIntegerField(
         verbose_name="合計金額",
     )
     payment_method = models.CharField(
@@ -151,7 +149,7 @@ class Order(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         db_column="user_id",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         verbose_name="ユーザーID",
     )
     user_name = models.CharField(
@@ -171,7 +169,7 @@ class Order(models.Model):
         verbose_name="都道府県",
     )
     city = models.CharField(
-        max_length=7,
+        max_length=50,
         verbose_name="市区町村",
     )
     address_line = models.CharField(
@@ -241,7 +239,7 @@ class OrderItem(models.Model):
         verbose_name_plural = "注文明細テーブル"
         constraints = [
             models.CheckConstraint(
-                condition=Q(product__isnull=False) | Q(user_product__isnull=False),
+                check=Q(product__isnull=False) | Q(user_product__isnull=False),
                 name="order_item_product_or_user_product_not_null",
             )
         ]

@@ -1,0 +1,200 @@
+{% extends 'base_user.html' %}
+{% load static %}
+
+{% block title %}出品履歴一覧 - しょかんくん{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card-custom {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .book-thumb {
+        width: 75px;
+        height: 100px;
+        border-radius: 6px;
+        object-fit: cover;
+        background: linear-gradient(135deg, #34495e, #2c3e50);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 0.7rem;
+        text-align: center;
+        padding: 4px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+</style>
+{% endblock %}
+
+{% block header %}
+<li class="nav-item">
+    <a class="nav-link" href="#"><i class="fa-solid fa-pen-to-square me-1"></i>出品登録</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#"><i class="fa-solid fa-list me-1"></i>出品一覧</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link active" href="#"><i class="fa-solid fa-clock-rotate-left me-1"></i>出品履歴</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+
+        <div class="card card-custom p-4 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold text-dark mb-0">
+                    <i class="fa-solid fa-boxes-packing me-2 text-primary"></i>自分の出品履歴
+                </h4>
+                <span class="badge bg-secondary fs-6">全 {{ listings|length|default:3 }} 件</span>
+            </div>
+
+            {% if listings %}
+                {% for item in listings %}
+                <div class="card border mb-3 p-3 {% if item.status != 'selling' %}bg-light{% endif %}">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            {% if item.image %}
+                            <img src="{{ item.image.url }}" alt="{{ item.title }}" class="book-thumb">
+                            {% else %}
+                            <div class="book-thumb">{{ item.title }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center mb-1">
+                                {% if item.status == 'selling' %}
+                                <span class="badge bg-success me-2">出品中 (未購入)</span>
+                                <small class="text-muted">出品日: {{ item.created_at|date:"Y/m/d" }}</small>
+                                {% elif item.status == 'in_transaction' %}
+                                <span class="badge bg-warning text-dark me-2">取引進行中 (購入済)</span>
+                                <small class="text-muted">購入者: {{ item.buyer_name|default:"購入者" }} 様</small>
+                                {% else %}
+                                <span class="badge bg-secondary me-2">取引完了</span>
+                                <small class="text-muted">完了日: {{ item.completed_at|date:"Y/m/d" }}</small>
+                                {% endif %}
+                            </div>
+                            <h5 class="fw-bold mb-1">{{ item.title }}</h5>
+                            <div class="fw-bold {% if item.status == 'selling' %}text-primary{% else %}text-dark{% endif %} mb-1">
+                                販売価格: ¥{{ item.price }}
+                                {% if item.status == 'selling' %}
+                                <small class="text-muted fw-normal">(送料込み)</small>
+                                {% endif %}
+                            </div>
+                            {% if item.status == 'selling' %}
+                            <small class="text-muted d-block">状態: {{ item.condition_label }}</small>
+                            {% elif item.status == 'in_transaction' %}
+                            <small class="text-muted d-block">※購入手続きが完了しているため、情報の編集・取消はできません。</small>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-3 text-md-end mt-3 mt-md-0">
+                            {% if item.status == 'selling' %}
+                            <a href="#" class="btn btn-primary btn-sm mb-2 w-100 fw-bold">
+                                <i class="fa-solid fa-pen me-1"></i>出品内容を編集
+                            </a>
+                            <form method="post" action="#" onsubmit="return confirm('この出品を取り下げますか？');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                    <i class="fa-solid fa-trash me-1"></i>出品を取り下げる
+                                </button>
+                            </form>
+                            {% elif item.status == 'in_transaction' %}
+                            <button type="button" class="btn btn-secondary btn-sm w-100" disabled>
+                                <i class="fa-solid fa-lock me-1"></i>編集不可
+                            </button>
+                            {% else %}
+                            <button type="button" class="btn btn-outline-secondary btn-sm w-100" disabled>
+                                取引完了済み
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- 初期表示・データ未連携時のサンプル履歴（3件） -->
+                <!-- 履歴アイテム 1：出品中（購入前・編集可能） -->
+                <div class="card border mb-3 p-3">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="book-thumb">Java入門 第2版</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center mb-1">
+                                <span class="badge bg-success me-2">出品中 (未購入)</span>
+                                <small class="text-muted">出品日: 2026/10/08</small>
+                            </div>
+                            <h5 class="fw-bold mb-1">Javaプログラミング入門 第2版</h5>
+                            <div class="fw-bold text-primary mb-1">
+                                販売価格: ¥1,200 <small class="text-muted fw-normal">(送料込み)</small>
+                            </div>
+                            <small class="text-muted d-block">状態: 目立った傷や汚れなし</small>
+                        </div>
+                        <div class="col-md-3 text-md-end mt-3 mt-md-0">
+                            <a href="#" class="btn btn-primary btn-sm mb-2 w-100 fw-bold">
+                                <i class="fa-solid fa-pen me-1"></i>出品内容を編集
+                            </a>
+                            <form method="post" action="#" onsubmit="return confirm('この出品を取り下げますか？');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                    <i class="fa-solid fa-trash me-1"></i>出品を取り下げる
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 履歴アイテム 2：取引進行中（購入完了・編集不可） -->
+                <div class="card border mb-3 p-3 bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="book-thumb" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">Webデザイン</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center mb-1">
+                                <span class="badge bg-warning text-dark me-2">取引進行中 (購入済)</span>
+                                <small class="text-muted">購入者: 山田 太郎 様</small>
+                            </div>
+                            <h5 class="fw-bold mb-1">Webデザイン完全ガイド</h5>
+                            <div class="fw-bold text-dark mb-1">販売価格: ¥1,800</div>
+                            <small class="text-muted d-block">※購入手続きが完了しているため、情報の編集・取消はできません。</small>
+                        </div>
+                        <div class="col-md-3 text-md-end mt-3 mt-md-0">
+                            <button type="button" class="btn btn-secondary btn-sm w-100" disabled>
+                                <i class="fa-solid fa-lock me-1"></i>編集不可
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 履歴アイテム 3：取引完了 -->
+                <div class="card border mb-3 p-3 bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="book-thumb" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">Go言語</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center mb-1">
+                                <span class="badge bg-secondary me-2">取引完了</span>
+                                <small class="text-muted">完了日: 2026/09/15</small>
+                            </div>
+                            <h5 class="fw-bold mb-1">Go言語実践開発テクニック</h5>
+                            <div class="fw-bold text-dark mb-1">販売価格: ¥2,100</div>
+                        </div>
+                        <div class="col-md-3 text-md-end mt-3 mt-md-0">
+                            <button type="button" class="btn btn-outline-secondary btn-sm w-100" disabled>
+                                取引完了済み
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
