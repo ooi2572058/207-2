@@ -19,12 +19,6 @@ try:
 except ImportError:
     Series = None
 
-
-
-
-RAKUTEN_BOOKS_API_URL = (
-    "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
-)
 REQUEST_INTERVAL_SEC = 1.1  # レート制限（1 req/sec）を考慮して余裕を持たせる
 
 SERIES_EXTRACTOR_PROMPT = """あなたは書籍データベースの検索補助AIです。
