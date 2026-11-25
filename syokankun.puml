@@ -1,0 +1,536 @@
+' しょかんくん シーケンス図（PlantUML）
+' ロバストネス図の 画面=boundary / 制御=control / エンティティ=entity をライフラインにしています
+
+@startuml 01_新規登録
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 新規登録
+hide footbox
+
+actor "ユーザー" as P0
+boundary "新規登録画面" as P1
+control "登録処理" as P2
+entity "アカウント" as P3
+boundary "登録完了画面" as P4
+
+P0 -> P1 : 新規登録を選択
+P0 -> P1 : 氏名・メール・パスワードを入力
+P1 -> P2 : 登録を依頼
+P2 -> P2 : 入力内容を検証
+P2 -> P3 : メールアドレスの重複を確認
+P3 --> P2 : 確認結果
+alt [入力不備・重複あり]
+P2 --> P1 : エラーを返す
+P1 --> P0 : エラーを表示
+else [正常]
+P2 -> P3 : アカウントを登録
+P3 --> P2 : 登録結果
+P2 -> P4 : 登録完了画面を表示
+P4 --> P0 : 登録完了を表示
+end
+@enduml
+
+@startuml 02_ログイン
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title ログイン
+hide footbox
+
+actor "ユーザー" as P0
+boundary "ログイン画面" as P1
+control "ログイン認証" as P2
+entity "アカウント" as P3
+boundary "ホーム画面" as P4
+
+P0 -> P1 : メールアドレス・パスワードを入力
+P1 -> P2 : 認証を依頼
+P2 -> P3 : アカウント情報を取得
+P3 --> P2 : アカウント情報
+P2 -> P2 : 入力内容と照合
+alt [認証成功]
+P2 -> P4 : ホーム画面を表示
+P4 --> P0 : ホーム画面を表示
+else [認証失敗]
+P2 --> P1 : エラーを返す
+P1 --> P0 : エラーを表示（再入力）
+end
+@enduml
+
+@startuml 03_ログアウト
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title ログアウト
+hide footbox
+
+actor "ユーザー" as P0
+boundary "ホーム画面" as P1
+control "ログアウト処理" as P2
+boundary "ログイン画面" as P3
+
+P0 -> P1 : ログアウトを押す
+P1 -> P2 : ログアウトを依頼
+P2 -> P2 : ログイン状態を破棄
+P2 -> P3 : ログイン画面を表示
+P3 --> P0 : ログイン画面を表示
+@enduml
+
+@startuml 04_書籍閲覧
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 書籍閲覧
+hide footbox
+
+actor "ユーザー" as P0
+boundary "書籍一覧画面" as P1
+control "書籍一覧表示" as P2
+entity "検索履歴" as P3
+entity "書籍" as P4
+control "書籍詳細表示" as P5
+boundary "書籍詳細画面" as P6
+
+P0 -> P1 : 書籍一覧ボタンを押す
+P1 -> P2 : 一覧表示を依頼
+P2 -> P4 : 書籍一覧を取得
+P4 --> P2 : 書籍情報
+P2 -> P3 : 検索履歴を取得
+P3 --> P2 : 検索履歴
+P2 --> P1 : 一覧を返す
+P1 --> P0 : 書籍一覧を表示
+P0 -> P1 : 書籍の画像を押す
+P1 -> P5 : 詳細表示を依頼
+P5 -> P4 : 書籍詳細を取得
+P4 --> P5 : 書籍詳細
+P5 -> P6 : 詳細を表示
+P6 --> P0 : 書籍詳細を表示
+@enduml
+
+@startuml 05_書籍登録
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 書籍登録
+hide footbox
+
+actor "ユーザー" as P0
+boundary "書籍登録入力画面" as P1
+control "書籍を検索する" as P2
+entity "書籍" as P3
+boundary "登録内容確認画面" as P4
+control "選択書籍を登録する" as P5
+boundary "書籍登録完了画面" as P6
+
+P0 -> P1 : 書籍登録を押す
+P0 -> P1 : 検索条件を入力
+P1 -> P2 : 書籍検索を依頼
+P2 -> P3 : 書籍を検索
+P3 --> P2 : 検索結果
+P2 -> P4 : 検索結果を表示
+P4 --> P0 : 登録内容を表示
+P0 -> P4 : 登録する書籍を選択
+P4 -> P5 : 登録を依頼
+P5 -> P3 : 書籍を登録
+P3 --> P5 : 登録結果
+P5 -> P6 : 完了を通知
+P6 --> P0 : 登録完了を表示
+@enduml
+
+@startuml 06_貸出管理
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 貸出管理（貸出申請・承認）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "貸出選択" as P1
+control "ライブラリを取得" as P2
+entity "法人ライブラリ" as P3
+control "借りる本を選択する" as P4
+control "貸出状態をチェックする" as P5
+entity "貸出状態" as P6
+control "貸出をリクエストする" as P7
+actor "法人" as P8
+boundary "貸出承認" as P9
+control "貸出を承認する" as P10
+control "貸出状態にする" as P11
+
+P0 -> P1 : 貸出選択を開く
+P1 -> P2 : ライブラリ取得を依頼
+P2 -> P3 : 取得
+P3 --> P2 : 蔵書一覧
+P2 --> P1 : 蔵書一覧を返す
+P1 --> P0 : 蔵書一覧を表示
+P0 -> P1 : 借りる本を選択
+P1 -> P4 : 選択を依頼
+P4 -> P5 : 貸出状態を確認
+P5 -> P6 : 取得
+P6 --> P5 : 貸出状態
+alt [貸出可能]
+P5 -> P7 : 貸出をリクエスト
+P7 -> P9 : 承認依頼を通知
+else [貸出不可]
+P5 --> P1 : 貸出不可を返す
+P1 --> P0 : 貸出不可を表示
+end
+P8 -> P9 : 貸出リクエストを確認
+P8 -> P9 : 承認する
+P9 -> P10 : 承認を依頼
+P10 -> P11 : 貸出状態への更新を依頼
+P11 -> P6 : 貸出中に更新
+P6 --> P11 : 更新結果
+P9 --> P8 : 承認完了を表示
+@enduml
+
+@startuml 07_返却管理
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 返却管理（返却申請・確認）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "返却選択" as P1
+control "ライブラリを取得" as P2
+entity "法人ライブラリ" as P3
+control "貸出状態をチェックする" as P4
+entity "貸出状態" as P5
+control "返す本を選択する" as P6
+control "返却をリクエストする" as P7
+actor "法人" as P8
+boundary "返却確認" as P9
+control "返却を確認する" as P10
+control "返却状態にする" as P11
+
+P0 -> P1 : 返却選択を開く
+P1 -> P2 : ライブラリ取得を依頼
+P2 -> P3 : 取得
+P3 --> P2 : 蔵書一覧
+P2 -> P4 : 借りている本の確認を依頼
+P4 -> P5 : 取得
+P5 --> P4 : 借りている本の状態
+P4 --> P1 : 借りている本を返す
+P1 --> P0 : 借りている本を表示
+P0 -> P1 : 返す本を選択
+P1 -> P6 : 選択を依頼
+P6 -> P7 : 返却をリクエスト
+P7 -> P9 : 返却リクエストを通知
+P8 -> P9 : 返却リクエストを確認
+P9 -> P10 : 確認を依頼
+P10 -> P11 : 返却状態への更新を依頼
+P11 -> P5 : 返却済みに更新
+P5 --> P11 : 更新結果
+P9 --> P8 : 確認完了を表示
+@enduml
+
+@startuml 08_販売（購入）
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 販売（カート〜購入）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "カート画面" as P1
+control "カートの商品を取得" as P2
+entity "カート" as P3
+boundary "購入情報画面" as P4
+control "入力内容を検証する" as P5
+entity "購入情報" as P6
+boundary "購入確認画面" as P7
+control "購入を確定する" as P8
+entity "注文" as P9
+boundary "購入完了画面" as P10
+
+P0 -> P1 : カートボタンを押す
+P1 -> P2 : 商品の取得を依頼
+P2 -> P3 : 商品を取得
+P3 --> P2 : カートの商品
+P2 -> P4 : 商品を表示
+P4 --> P0 : 購入情報入力を表示
+P0 -> P4 : 購入情報を入力
+P4 -> P5 : 検証を依頼
+P5 -> P5 : 入力内容を検証
+alt [入力エラー]
+P5 --> P4 : エラーを返す
+P4 --> P0 : エラーを表示
+else [正常]
+P5 -> P6 : 購入情報を保存
+P6 --> P5 : 保存結果
+P5 -> P7 : 確認内容を表示
+P7 --> P0 : 購入内容を表示
+end
+P0 -> P7 : 購入を確定
+P7 -> P8 : 確定を依頼
+P8 -> P9 : 注文を登録
+P9 --> P8 : 登録結果
+P8 -> P10 : 完了を通知
+P10 --> P0 : 購入完了を表示
+@enduml
+
+@startuml 09_アカウント管理
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title アカウント管理（ログイン情報の確認）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "ログイン画面" as P1
+control "ログインを認証する" as P2
+entity "アカウント" as P3
+boundary "ホーム画面" as P4
+
+P0 -> P1 : ログイン情報を入力
+P1 -> P2 : 認証を依頼
+P2 -> P3 : アカウント情報を照合
+P3 --> P2 : 照合結果
+P2 -> P4 : ホーム画面を表示
+P4 --> P0 : ホーム画面を表示
+@enduml
+
+@startuml 10_お問い合わせ
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title お問い合わせ
+hide footbox
+
+actor "ユーザー" as P0
+boundary "お問い合わせ入力" as P1
+control "お問い合わせ内容送信" as P2
+entity "お問い合わせ内容" as P3
+control "お問い合わせ内容取得" as P4
+boundary "お問い合わせ内容閲覧" as P5
+actor "アドミン" as P6
+
+P0 -> P1 : お問い合わせ内容を入力
+P1 -> P2 : 送信を依頼
+P2 -> P3 : 内容を保存
+P3 --> P2 : 保存結果
+P2 --> P1 : 送信完了を返す
+P1 --> P0 : 送信完了を表示
+P6 -> P5 : お問い合わせ閲覧を開く
+P5 -> P4 : 取得を依頼
+P4 -> P3 : 内容を取得
+P3 --> P4 : お問い合わせ内容
+P4 --> P5 : 内容を返す
+P5 --> P6 : お問い合わせ内容を表示
+@enduml
+
+@startuml 11_メッセージ
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title メッセージ
+hide footbox
+
+actor "ユーザー" as P0
+boundary "メッセージ一覧" as P1
+control "メッセージ一覧を表示する" as P2
+control "メッセージ・ユーザー名を取得（一覧）" as P3
+entity "メッセージ内容" as P4
+entity "ユーザー情報" as P5
+control "メッセージ・ユーザー名を取得（個別）" as P6
+control "メッセージを表示" as P7
+boundary "メッセージ" as P8
+
+P0 -> P1 : メッセージ一覧を開く
+P1 -> P2 : 一覧表示を依頼
+P2 -> P3 : 取得を依頼
+P3 -> P4 : メッセージを取得
+P4 --> P3 : メッセージ
+P3 -> P5 : ユーザー名を取得
+P5 --> P3 : ユーザー名
+P3 --> P2 : 取得結果を返す
+P2 --> P1 : 一覧を返す
+P1 --> P0 : メッセージ一覧を表示
+P0 -> P1 : ユーザーを選択
+P1 -> P6 : 取得を依頼
+P6 -> P4 : やり取りを取得
+P4 --> P6 : メッセージ
+P6 -> P5 : ユーザー名を取得
+P5 --> P6 : ユーザー名
+P6 -> P7 : 取得結果を返す
+P7 -> P8 : メッセージを表示
+P8 --> P0 : メッセージを表示
+@enduml
+
+@startuml 12_書籍検索
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 書籍検索
+hide footbox
+
+actor "ユーザー" as P0
+boundary "書籍検索画面" as P1
+control "書籍検索" as P2
+entity "API" as P3
+boundary "検索結果表示" as P4
+
+P0 -> P1 : 書籍検索画面を開く
+P0 -> P1 : タイトル等を入力
+P1 -> P2 : 検索を依頼
+P2 -> P3 : 書籍を取得
+P3 --> P2 : 書籍情報
+alt [該当あり]
+P2 -> P4 : 検索結果を渡す
+P4 --> P0 : 検索結果を表示
+else [該当なし]
+P2 -> P4 : 該当なしを渡す
+P4 --> P0 : 該当なしを表示
+end
+@enduml
+
+@startuml 13_発売日カレンダー
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 発売日カレンダー・通知一覧
+hide footbox
+
+actor "ユーザー" as P0
+boundary "発売日カレンダー" as P1
+boundary "通知一覧" as P2
+control "発売日を取得する" as P3
+entity "API" as P4
+control "登録している通知を取得" as P5
+entity "登録通知" as P6
+
+P0 -> P1 : カレンダーを開く
+P1 -> P3 : リクエスト
+P3 -> P4 : 発売日をリクエスト
+P4 --> P3 : 発売日情報
+P3 --> P1 : 発売日を返す
+P1 --> P0 : カレンダーを表示
+P0 -> P2 : 通知一覧を開く
+P2 -> P3 : リクエスト
+P3 -> P5 : 通知の取得を依頼
+P5 -> P6 : 通知を取得
+P6 --> P5 : 登録通知
+P5 --> P3 : 通知を返す
+P3 -> P4 : 発売日をリクエスト
+P4 --> P3 : 発売日情報
+P3 --> P2 : 発売日と通知を返す
+P2 --> P0 : 通知一覧を表示
+@enduml
+
+@startuml 14_評価（レビュー）
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 評価（レビュー）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "評価入力" as P1
+control "評価内容送信" as P2
+entity "評価レビュー内容" as P3
+boundary "評価閲覧" as P4
+control "評価内容取得" as P5
+
+P0 -> P1 : 評価・感想を入力
+P1 -> P2 : 送信を依頼
+P2 -> P3 : 評価を登録
+P3 --> P2 : 登録結果
+P2 --> P1 : 送信完了を返す
+P1 --> P0 : 送信完了を表示
+P0 -> P4 : 評価閲覧を開く
+P4 -> P5 : 取得を依頼
+P5 -> P3 : データ参照
+P3 --> P5 : 評価レビュー
+P5 --> P4 : レビューを返す
+P4 --> P0 : レビューを表示
+@enduml
+
+@startuml 15_出品（登録）
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 出品（出品情報の登録）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "出品" as P1
+control "出品情報登録" as P2
+entity "出品物" as P3
+
+P0 -> P1 : 出品画面にアクセス
+P0 -> P1 : 出品情報を入力
+P1 -> P2 : 登録を依頼
+P2 -> P3 : 出品情報を送信
+P3 --> P2 : 登録結果
+P2 --> P1 : 登録完了を返す
+P1 --> P0 : 登録完了を表示
+@enduml
+
+@startuml 16_出品（一覧）
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 出品（出品物一覧）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "出品物一覧" as P1
+control "出品情報取得" as P2
+entity "出品物" as P3
+
+P0 -> P1 : 出品物一覧にアクセス
+P1 -> P2 : 取得を依頼
+P2 -> P3 : 出品情報を取得
+P3 --> P2 : 出品情報
+P2 --> P1 : 出品情報を返す
+P1 --> P0 : 出品物一覧を表示
+@enduml
+
+@startuml 17_出品（詳細）
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 出品（出品物詳細）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "出品物詳細" as P1
+control "出品情報取得" as P2
+entity "出品物" as P3
+
+P0 -> P1 : 出品物詳細にアクセス
+P1 -> P2 : 取得を依頼
+P2 -> P3 : 出品情報を取得
+P3 --> P2 : 出品情報
+P2 --> P1 : 出品情報を返す
+P1 --> P0 : 出品物詳細を表示
+@enduml
+
+@startuml 18_出品（編集）
+skinparam defaultFontName "Noto Sans CJK JP"
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 160
+title 出品（出品情報の編集）
+hide footbox
+
+actor "ユーザー" as P0
+boundary "出品情報編集" as P1
+control "出品情報取得" as P2
+control "情報の編集" as P3
+entity "出品物" as P4
+
+P0 -> P1 : 出品情報編集にアクセス
+P1 -> P2 : 取得を依頼
+P2 -> P4 : 出品情報を取得
+P4 --> P2 : 出品情報
+P2 --> P1 : 出品情報を返す
+P1 --> P0 : 編集画面を表示
+P0 -> P1 : 内容を編集
+P1 -> P3 : 編集を依頼
+P3 -> P4 : 編集内容を送信
+P4 --> P3 : 更新結果
+P3 --> P1 : 更新完了を返す
+P1 --> P0 : 更新完了を表示
+@enduml
