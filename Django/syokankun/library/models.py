@@ -1,51 +1,59 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 
 
-class UserBook(models.Model):
-    """保有書籍テーブル (user_books)
-
-    ユーザーがどの本を所有しているかと、その書籍に対する個人の備考を管理する。
-    定義元: テーブル定義書「保有書籍テーブル」
-    """
-
-    TYPE_CHOICES = [
-        (False, "物理本"),
-        (True, "ネット媒体"),
-    ]
-
+class Library(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,  
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="user_books",
-        verbose_name="ユーザー",
+        null=True,
+        blank=True,
+        related_name="libraries",
     )
-
+    company = models.ForeignKey(
+        "Company",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="libraries",
+        db_column="companies_id",
+    )
     book = models.ForeignKey(
-        "books.Book",
-        on_delete=models.PROTECT,  
-        related_name="user_books",
-        verbose_name="書籍",
+        "BookMaster",
+        on_delete=models.CASCADE,
+        related_name="libraries",
     )
-
     memo = models.CharField(
-        "メモ",
         max_length=255,
         null=True,
         blank=True,
     )
-
     type = models.BooleanField(
-        "書籍タイプ",
-        choices=TYPE_CHOICES,
-        default=False,
-        help_text="False=物理本、True=ネット媒体",
+        default=False,  # False=物理本, True=ネット媒体
+    )
+    lend_status = models.BooleanField(
+        default=False,  # False=貸出可能, True=貸出不可
+        null=True,
+        blank=True,
     )
 
     class Meta:
-        db_table = "user_books"
-        verbose_name = "保有書籍"
-        verbose_name_plural = "保有書籍"
+        db_table = "libraries"
+        constraints = [
+            # user と company のどちらか一方は必ず NOT NULL である制約
+            models.CheckConstraint(
+                condition=Q(user__isnull=False) | Q(company__isnull=False),
+                name="library_user_or_company_not_null",
+            )
+        ]
+
+    def clean(self):
+        super().clean()
+        if not self.user and not self.company:
+            raise ValidationError("ユーザーまたは法人のどちらか一方を指定してください。")
 
     def __str__(self):
-        return f"{self.user_id}:{self.book_id}"
+        owner = f"User:{self.user_id}" if self.user_id else f"Company:{self.company_id}"
+        return f"{owner} - Book:{self.book_id}"
