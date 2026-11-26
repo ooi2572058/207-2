@@ -1,0 +1,125 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block title %}お問い合わせ閲覧・管理 - しょかんくん 管理者{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-2 px-md-4">
+    <div class="mb-4">
+        <h3 class="fw-bold text-dark mb-1">
+            <i class="fa-solid fa-inbox me-2 text-primary"></i>お問い合わせ閲覧・対応管理
+        </h3>
+        <p class="text-muted small mb-0">ユーザーから送信されたお問い合わせの確認、ステータスの直接変更、および不要な項目の削除を行います。</p>
+    </div>
+
+    <div class="card admin-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">受信一覧</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle border-top">
+                <thead class="table-light">
+                    <tr>
+                        <th>受付ID</th>
+                        <th>送信者 / メール</th>
+                        <th>種別</th>
+                        <th>内容プレビュー</th>
+                        <th>送信日時</th>
+                        <th>ステータス変更</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if inquiries %}
+                        {% for inq in inquiries %}
+                        <tr>
+                            <td>{{ inq.code|default:inq.id }}</td>
+                            <td>
+                                <strong>{{ inq.sender_name }}</strong><br>
+                                <span class="text-muted small">{{ inq.email }}</span>
+                            </td>
+                            <td>
+                                {% if inq.category == 'bug' %}
+                                <span class="badge bg-danger">{{ inq.category_label|default:"不具合・エラー" }}</span>
+                                {% elif inq.category == 'account' %}
+                                <span class="badge bg-warning text-dark">{{ inq.category_label|default:"アカウント関連" }}</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ inq.category_label|default:"その他" }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="small text-muted" style="max-width: 250px;">{{ inq.content|truncatechars:60 }}</td>
+                            <td class="small">{{ inq.created_at|date:"Y-m-d" }}</td>
+                            <td>
+                                <form method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="update_status">
+                                    <input type="hidden" name="inquiry_id" value="{{ inq.id }}">
+                                    <select name="status" class="form-select form-select-sm" style="width: 130px;" onchange="this.form.submit()">
+                                        <option value="unhandled" {% if inq.status == 'unhandled' %}selected{% endif %}>未対応</option>
+                                        <option value="in_progress" {% if inq.status == 'in_progress' %}selected{% endif %}>対応中</option>
+                                        <option value="completed" {% if inq.status == 'completed' %}selected{% endif %}>対応完了</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" class="d-inline"
+                                    onsubmit="return confirm('本当にこのお問い合わせ履歴を削除しますか？\n（この操作は取り消せません）');">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="inquiry_id" value="{{ inq.id }}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm mb-1">削除</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>#INQ-0041</td>
+                            <td>
+                                <strong>山田 太郎</strong><br>
+                                <span class="text-muted small">taro@example.com</span>
+                            </td>
+                            <td><span class="badge bg-danger">不具合・エラー</span></td>
+                            <td class="small text-muted" style="max-width: 250px;">バーコード読み取り時、カメラが起動せずフリーズします。</td>
+                            <td class="small">2026-10-27</td>
+                            <td>
+                                <select class="form-select form-select-sm" style="width: 130px;">
+                                    <option value="unhandled" selected>未対応</option>
+                                    <option value="in_progress">対応中</option>
+                                    <option value="completed">対応完了</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger btn-sm mb-1"
+                                    onclick="return confirm('本当にこのお問い合わせ履歴を削除しますか？\n（この操作は取り消せません）');">削除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#INQ-0038</td>
+                            <td>
+                                <strong>高橋 健太</strong><br>
+                                <span class="text-muted small">kenta@example.com</span>
+                            </td>
+                            <td><span class="badge bg-secondary">その他</span></td>
+                            <td class="small text-muted" style="max-width: 250px;">利用規約の改定時期について質問があります。</td>
+                            <td class="small">2026-10-25</td>
+                            <td>
+                                <select class="form-select form-select-sm" style="width: 130px;">
+                                    <option value="unhandled">未対応</option>
+                                    <option value="in_progress">対応中</option>
+                                    <option value="completed" selected>対応完了</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger btn-sm mb-1"
+                                    onclick="return confirm('本当にこのお問い合わせ履歴を削除しますか？\n（この操作は取り消せません）');">削除</button>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
