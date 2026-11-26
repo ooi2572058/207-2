@@ -165,12 +165,29 @@
                             <p class="text-muted small text-center mb-4">アカウントを作成して「しょかんくん」を始めましょう。</p>
 
                             <form action="login.html" method="post">
-                                <!-- ユーザー名 -->
+                                <!-- ニックネーム -->
                                 <div class="mb-3">
-                                    <label for="username" class="form-label fw-bold">ユーザー名 <span
+                                    <label for="nickname" class="form-label fw-bold">ニックネーム <span
                                             class="badge bg-danger">必須</span></label>
-                                    <input type="text" class="form-control" id="username" name="username"
+                                    <input type="text" class="form-control" id="nickname" name="nickname"
                                         placeholder="例：本好き太郎" required>
+                                </div>
+
+                                <!-- 本名（苗字・名） -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">本名 <span class="badge bg-danger">必須</span></label>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label for="last_name" class="form-label small text-muted mb-1">苗字</label>
+                                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                                placeholder="例：山田" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="first_name" class="form-label small text-muted mb-1">名</label>
+                                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                                placeholder="例：太郎" required>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- メールアドレス -->
