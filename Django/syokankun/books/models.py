@@ -79,6 +79,7 @@ class BooksMaster(models.Model):
         blank=True,
         verbose_name="巻数",
     )
+    genre = models.CharField(max_length=255,verbose_name="ジャンル")
 
     class Meta:
         db_table = "books_master"

@@ -41,5 +41,9 @@ class user_book(models.Model):
     memo = models.CharField(verbose_name="メモ",null=True,blank=True)
     type = models.BooleanField(verbose_name="書籍タイプ",default=False)
     @property
-    def status_label(self):
+    def type_label(self):
         return "ネット媒体" if self.type else "物理本"
+    lend_status = models.BooleanField(verbose_name="貸出ステータス",null=True,blank=True)
+    @property
+    def status_label(self):
+        return "貸出不可" if self.lend_status else "貸出可能"
