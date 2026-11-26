@@ -80,10 +80,6 @@ class Message(models.Model):
         default=False,
         verbose_name="既読フラグ",
     )
-    created_at = models.DateField(
-        auto_now_add=True,
-        verbose_name="作成日",
-    )
     updated_at = models.DateField(
         auto_now=True,
         null=True,
