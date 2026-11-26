@@ -2,16 +2,16 @@ from django.conf import settings
 from django.db import models
 
 
+
 class Review(models.Model):
     """評価テーブル"""
-
-    book_type = models.CharField(
+    class integerstatus(models.IntegerChoices):
+        USER = 0,"user"
+        BOOK = 1,"book"
+    type = models.IntegerField(
         max_length=20,
-        verbose_name="書籍評価",
-    )
-    transaction_type = models.CharField(
-        max_length=20,
-        verbose_name="取引評価",
+        choices=integerstatus.choices,
+        verbose_name="評価タイプ",
     )
     reviewer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -30,22 +30,6 @@ class Review(models.Model):
         related_name="received_reviews",
         verbose_name="被レビュー者・被評価者ID",
     )
-    book = models.ForeignKey(
-        "BooksMaster",
-        db_column="book_id",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name="書籍ID",
-    )
-    order = models.ForeignKey(
-        "Order",
-        db_column="order_id",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name="注文ID",
-    )
     rating = models.IntegerField(
         verbose_name="評価",
     )
@@ -58,12 +42,7 @@ class Review(models.Model):
         auto_now_add=True,
         verbose_name="作成日",
     )
-    updated_at = models.DateField(
-        auto_now=True,
-        null=True,
-        blank=True,
-        verbose_name="更新日",
-    )
+
 
     class Meta:
         db_table = "reviews"
