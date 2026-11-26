@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """ユーザーテーブル (users)"""
+    """ユーザーテーブル (user)"""
 
     class Role(models.IntegerChoices):
         GENERAL = 1, "一般ユーザー"

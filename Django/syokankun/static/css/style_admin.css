@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   管理者画面 全体基本設定
+   ========================================================================== */
+:root {
+    --admin-primary: #1a252f;
+    --admin-secondary: #18bc9c;
+    --admin-accent: #e74c3c;
+    --admin-bg-light: #f4f6f9;
+    --admin-text-color: #333333;
+    --admin-border-color: #dee2e6;
+}
+
+body.admin-body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--admin-bg-light);
+    color: var(--admin-text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-main {
+    flex: 1;
+}
+
+/* ==========================================================================
+   管理者ヘッダー・ナビゲーション
+   ========================================================================== */
+.navbar-admin {
+    background-color: var(--admin-primary) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.navbar-admin .navbar-brand {
+    font-weight: 700;
+    color: #ffffff !important;
+}
+
+.navbar-admin .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar-admin .nav-link:hover,
+.navbar-admin .nav-link.active {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   カード & コンポーネントスタイル
+   ========================================================================== */
+.admin-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+}
+
+.admin-card .card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--admin-border-color);
+    font-weight: 700;
+}
+
+/* モーダル内の報告内容スクロール領域 */
+.report-detail-box {
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border: 1px solid var(--admin-border-color);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+/* ==========================================================================
+   管理者フッター
+   ========================================================================== */
+.footer-admin {
+    background-color: var(--admin-primary);
+    color: #ffffff;
+    padding: 1.5rem 0;
+    margin-top: auto;
+    font-size: 0.9rem;
+    text-align: center;
+}
