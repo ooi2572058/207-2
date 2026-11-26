@@ -231,33 +231,16 @@
                             </select>
                         </div>
 
-                        <!-- ISBN & 著者（readonly を追加して編集不可に） -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="isbn" class="form-label fw-bold">ISBN</label>
-                                <input type="text" class="form-control" id="isbn" name="isbn" placeholder="978-4-..."
-                                    readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="author" class="form-label fw-bold">著者</label>
-                                <input type="text" class="form-control" id="author" name="author" readonly>
-                            </div>
+                        <!-- ISBN（readonly を追加して編集不可に） -->
+                        <div class="mb-3">
+                            <label for="isbn" class="form-label fw-bold">ISBN</label>
+                            <input type="text" class="form-control" id="isbn" name="isbn" placeholder="978-4-..."
+                                readonly>
                         </div>
 
-                        <!-- カテゴリ・状態・価格 -->
+                        <!-- 状態・価格 -->
                         <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="category" class="form-label fw-bold">カテゴリ</label>
-                                <select class="form-select" id="category" name="category">
-                                    <option value="">選択してください</option>
-                                    <option>文学・小説</option>
-                                    <option>技術書</option>
-                                    <option>ビジネス</option>
-                                    <option>漫画</option>
-                                    <option>その他</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="condition" class="form-label fw-bold">商品の状態</label>
                                 <select class="form-select" id="condition" name="condition">
                                     <option>新品同様</option>
@@ -274,7 +257,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="price" class="form-label fw-bold">価格（円） <span
                                         class="badge bg-danger">必須</span></label>
                                 <input type="number" class="form-control" id="price" name="price" min="0" required
@@ -368,23 +351,19 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // ==========================================
-            // タイトル選択によるISBN・著者の自動補完
+            // タイトル選択によるISBNの自動補完
             // ==========================================
             const titleSelect = document.getElementById("title");
             const isbnInput = document.getElementById("isbn");
-            const authorInput = document.getElementById("author");
 
             titleSelect.addEventListener("change", function () {
                 const selectedTitle = this.value;
                 if (selectedTitle === "キメツ") {
                     isbnInput.value = "43333";
-                    authorInput.value = "ごとうげ";
                 } else if (selectedTitle === "ドラゴンボール") {
                     isbnInput.value = "11111";
-                    authorInput.value = "とりやま";
                 } else {
                     isbnInput.value = "";
-                    authorInput.value = "";
                 }
             });
 
