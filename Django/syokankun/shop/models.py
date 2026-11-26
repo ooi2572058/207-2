@@ -139,7 +139,7 @@ class Order(models.Model):
     ordered_at = models.DateTimeField(
         verbose_name="注文日時",
     )
-    total_amount = models.models.PositiveIntegerField(
+    total_amount = models.PositiveIntegerField(
         verbose_name="合計金額",
     )
     payment_method = models.CharField(
