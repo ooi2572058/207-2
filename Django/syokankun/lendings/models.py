@@ -14,7 +14,7 @@ class LendingsModel(models.Model):
     book = models.ForeignKey(
         BooksMaster,verbose_name="書籍ID",db_column="book_id",on_delete=models.CASCADE)
     user = models.ForeignKey(
-        settings.AUTH_USER_MODELS,verbose_name="ユーザーID",
+        settings.AUTH_USER_MODEL,verbose_name="ユーザーID",
         db_column="user_id,",on_delete=models.CASCADE)
     type = models.BooleanField(
         verbose_name="貸出タイプ",
@@ -34,7 +34,7 @@ class LendingsModel(models.Model):
 
 class user_book(models.Model):
     user = models.ForeignKey(
-            settings.AUTH_USER_MODELS,verbose_name="ユーザーID",
+            settings.AUTH_USER_MODEL,verbose_name="ユーザーID",
             db_column="user_id,",on_delete=models.CASCADE)
     book = models.ForeignKey(
             BooksMaster,verbose_name="書籍ID",db_column="book_id",on_delete=models.CASCADE)
