@@ -468,7 +468,7 @@ P2 --> P1 : 登録完了を返す
 P1 --> P0 : 登録完了を表示
 @enduml
 
-@startuml 16_出品（一覧）
+@startuml 16_出品（一覧）   
 skinparam defaultFontName "Noto Sans CJK JP"
 skinparam sequenceMessageAlign center
 skinparam maxMessageSize 160
